@@ -112,6 +112,17 @@ export default {
 <p><img src="https://imgur.com/z73X0Vd.jpg") style="border:2px white solid;padding:5px;text-align:center; height:35vh;"></p>
 <p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">官網</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="color: #0563c1;"><u><a href="https://www.hsinfei.com/"><span style="font-family: GenYoGothicTW-Bold, serif;">https://www.hsinfei.com/</span></a></u></span></p>
 <p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">地址</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="color: #1d2129;"><span style="font-family: GenYoGothicTW-Bold;"><span style="font-size: medium;">台南市中西區民生路一段167號3F</span></p>`
+        },
+        {
+          name: '海派甜心',
+          link: 'https://www.hsinfei.com/',
+          content: `<p align="center">
+<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">新飛在菲律賓遊學領域，不只是菲律賓遊學代辦，而是自詡為學員的全方位海外英語學習協助顧問，從一開始的諮詢、到中間的代辦過程、及出發後的在地照顧，皆一應俱全。且這中間過程新飛不會向學員收取代辦費，因為新飛做為菲律賓語言學校在台灣的代理，是由學校會給予新飛合理的合作費用。</span></span></span></p>
+<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">最後，希望能夠藉由分享新飛國際的經驗，讓您也能一同體會這份感動，了解到學英文其實是可以很快樂、很有效率的。然後藉由這段過程，提升台灣競爭力，增加國際觀，成為遨遊世界通行無阻的菁英！</span></span></span></p>
+<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">Hsinfei Always Touches Your Heart!</span></span></span></p>
+<p><img src="https://imgur.com/z73X0Vd.jpg") style="border:2px white solid;padding:5px;text-align:center; height:35vh;"></p>
+<p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">官網</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="color: #0563c1;"><u><a href="https://www.hsinfei.com/" target="_blank"><span style="font-family: GenYoGothicTW-Bold, serif;">https://www.hsinfei.com/</span></a></u></span></p>
+<p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">地址</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="color: #1d2129;"><span style="font-family: GenYoGothicTW-Bold;"><span style="font-size: medium;">台南市中西區民生路一段167號3F</span></p>`
         }
       ]
     }

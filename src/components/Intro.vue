@@ -8,20 +8,20 @@
         span(id="intro_activity_number_2")
     div(class="intro_layout")
       section(class="intro_counter_section")
-        div(class="intro_countdown_number")
+        //div(class="intro_countdown_number")
           span(id="intro_number_1")
           span(id="intro_number_2")
-        div(class="intro_countdown_dot")
+        //div(class="intro_countdown_dot")
           span(id="intro_dot_1")
           span(id="intro_dot_2")
           span(id="intro_dot_3")
-      //section(class="intro_wheel_section")
-      //section(class="intro_logo_section")
-      div(class="intro_dot")
-      div(class="intro_dot2")
+      section(class="intro_wheel_section")
+      section(class="intro_logo_section")
+      //div(class="intro_dot")
+      //div(class="intro_dot2")
       div(class="intro_menu")
         ul
-          router-link(tag="li" v-bind:to="'/' + urlText[index]" v-for="(text, index) of menuText" v-bind:key="text" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/intro/menu_${index + 1}.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/' + urlText[index]" v-for="(text, index) of menuText" v-bind:key="text" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_${index + 1}.svg`) + ')'}")
             p {{text}}
 </template>
 
@@ -30,8 +30,8 @@ export default {
   name: 'IntroPage',
   data: function () {
     return {
-      menuText: ['', '', '', '', '', ''],
-      urlText: ['news', 'parent', 'activity', 'department', 'sign-up', 'sponsor'],
+      menuText: ['', '', '', '', '', '', ''],
+      urlText: ['news', 'parent', 'activity', 'department', 'sign-up', 'sponsor', 'about'],
       numberDom1: null,
       numberDom2: null,
       numberDom3: null,
@@ -50,8 +50,8 @@ export default {
   },
   methods: {
     timeCounter: function () {
-      const timeStr1 = '2020/3/8 00:00'
-      const timeStr2 = '2020/3/8 00:00'
+      const timeStr1 = '2021/2/27 00:00'
+      const timeStr2 = '2021/2/27 00:00'
       const startDate = new Date()
       let endDate = new Date(timeStr1)
       let spantime = (endDate - startDate) / 1000
@@ -128,6 +128,7 @@ export default {
     *{
       font-family: 'Noto Sans TC'!important;
     }
+
     .intro_page {
       position: absolute;
       display: flex;
@@ -137,7 +138,7 @@ export default {
       width: 100vw;
       margin: 0;
       padding: 0;
-      background: white;
+      background: #f7f2e5;
       overflow: hidden;
     }
 
@@ -145,15 +146,22 @@ export default {
       position: absolute;
       top: 0;
       top: -5vh;
-      background: #F8F6E8;
-      background-image: url("../assets/logo.svg");
+      background: rgb(227, 243, 241);
+      //background-image: url("../assets/logo.svg");
+      background-image: url("../assets/14/intro/background.svg");
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
       background-repeat: no-repeat;
-      background-size: 80% 80%;
+      background-size: cover;
+      //  background-size: 100% 100%;
       background-position: 50% 50%;
-      height: 61vh;
+      height: 62vh;
       width: 100vw;
       transform: skewY(-5deg);
+      z-index: 1;
     }
+
     .intro_title {
       position: absolute;
       z-index: 20;
@@ -162,7 +170,7 @@ export default {
       display: inline-block;
       border-radius: 50px;
       text-align: center;
-      color: white;
+      color: rgb(255, 255, 255);
       padding: 6vw 10vw 6vw 10vw;
       font-size: 5vw;
       font-weight: 500;
@@ -178,17 +186,16 @@ export default {
     .intro_layout {
       display: grid;
       grid-template-columns: 100vw;
-      grid-template-rows: 10vh 3fr 1.5fr;
+      grid-template-rows: 10vh 1.8fr 2fr;
       grid-template-areas: "empty"
         "logo"
         "menu";
-      grid-gap: 12vw;
+      grid-gap: 10vw;
       align-items: center;
       justify-items: center;
       width: 100vw;
       height: 100vh;
     }
-
     .intro_counter_section {
       display: none;
     }
@@ -199,10 +206,15 @@ export default {
       grid-area: logo;
       justify-self: center;
       align-self: center;
+      width: 50vw;
+      height: 50vw;
 
-      width: 30vw;
-      height: 30vw;
-      background-image: url("../assets/logo.svg");
+      //  background-image: url("../assets/logo.svg");
+      background-image: url("../assets/14/intro/logoText.svg");
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
       background-repeat: no-repeat;
       background-size: 100% 100%;
       z-index: 50;
@@ -211,7 +223,6 @@ export default {
     .intro_menu {
       grid-area: menu;
       align-self: center;
-
       display: flex;
       width: 100%;
       height: 100%;
@@ -219,15 +230,16 @@ export default {
       justify-items: center;
       align-items: center;
 
-      z-index: 5;
+      z-index: 0;
 
-      padding: 5vw;
+      padding: 8vw;
       box-sizing: border-box;
 
       ul {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, 1fr);
+
         justify-content: center;
         align-content: center;
         align-items: center;
@@ -236,11 +248,11 @@ export default {
         height: 100%;
         li {
           justify-self: center;
-          align-self: center;
+          align-self: flex-end;
 
           display: inline-block;
-          width: 30vw;
-          height: 30vw;
+          width: 22vw;
+          height: 22vw;
           margin: 2vw 0;
           box-sizing: border-box;
 
@@ -297,16 +309,23 @@ export default {
       margin: 0;
       padding: 0;
     }
+
     .intro_background {
       position: absolute;
       z-index: -1;
       background: #F8F6E8;
+      background-image: url("../assets/14/intro/background.svg");
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
       height: 100vh;
       width: 100vw;
     }
+
     .intro_dot {
       position: absolute;
-      right:-2vw;
+      right:0vw;
       top:-22vw;
       z-index: 0;
       background-image: url("../assets/intro/dotssss.svg");
@@ -314,6 +333,7 @@ export default {
       height: 40vw;
       width: 40vw;
     }
+
     .intro_dot2 {
       position: absolute;
       left:-2vw;
@@ -324,12 +344,13 @@ export default {
       height: 40vw;
       width: 40vw;
     }
+
     .intro_layout {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 0.2fr;
+      grid-template-columns: 1.2fr 0.1fr 0.9fr;
       grid-template-rows:1fr;
-      grid-template-areas:"time menu";
-      grid-gap: 2vw;
+      grid-template-areas:"time none menu";
+      grid-gap: 1vw;
       align-items: center;
       justify-items: center;
       width: 100vw;
@@ -337,6 +358,7 @@ export default {
     }
 
     .intro_counter_section {
+      //  border: solid 1px;
       grid-area: time;
       justify-self: flex-end;
       align-self: center;
@@ -344,11 +366,12 @@ export default {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-      grid-template-areas: "empty empty""dot dot";
-      background-image: url("../assets/countdown.svg");
+      grid-template-areas: "empty empty" "dot dot";
+      //background-image: url("../assets/countdown.svg");
+      background-image: url("../assets/14/intro/logoText.svg");
       background-repeat: no-repeat;
-      background-position: right bottom;
-      background-size: 80% 125%;
+      background-position: left 25% top 30%;
+      background-size: 63% 63%;
       width: 45vw;
       height: 45vw;
 
@@ -362,7 +385,7 @@ export default {
           display: inline-block;
           width: 20%;
           height: 50%;
-          margin-bottom: 6vw;
+          margin-bottom: 15vw;
           background-image: url("../assets/number_0.svg");
           background-size: 125% 125%;
           background-position: 50% 0%;
@@ -370,16 +393,18 @@ export default {
       }
 
       .intro_countdown_dot {
+
         grid-area: dot;
         display: flex;
         justify-items: flex-end;
         justify-content: flex-end;
         align-items: flex-end;
+
         span {
           width: 1.5vw;
           height: 1.5vw;
           margin: 0.8vw;
-          margin-bottom: 5vw;
+          margin-bottom: 10vw;
           background-image: url("../assets/dot.svg");
           background-repeat: no-repeat;
           background-size: 100% 100%;
@@ -389,8 +414,8 @@ export default {
     }
 
     .intro_menu {
+      //  border: solid 1px;
       grid-area: menu;
-      align-self: center;
 
       display: flex;
       flex-wrap: nowrap;
@@ -398,31 +423,36 @@ export default {
       height: 80%;
       justify-content: center;
       justify-items: center;
-      align-items: center;
+      align-content: center;
+      align-self: center;
+      align-items: flex-start;
       z-index: 5;
 
       ul {
         display: inline-block;
+        vertical-align: center;
         list-style-type: none;
-        margin: 0;
+        margin: 0 3vw;
         padding: 0;
         li {
           display: inline-block;
           align-self: center;
-          width: 10vw;
-          height: 10vw;
-          margin: 0 1vw;
+          justify-content: center;
+          width: 11vw;
+          height: 11vw;
+          margin: 0 2vw;
           box-sizing: border-box;
 
           background-repeat: no-repeat;
           background-position: 60% 15%;
           background-size: 75% 75%;
+
           &:last-child {
             background-position: 60% 15%;
             background-size: 75% 75%;
           }
 
-          border: 0px solid #DD4A43;
+          border: 0px solid rgb(38, 115, 187);
           border-radius: 0px;
           box-sizing: content-box;
 
@@ -431,7 +461,7 @@ export default {
           cursor: pointer;
           &:hover {
             border-width: 0.2vw;
-            border-radius: 1vw;
+            border-radius: 2vw;
             background-size: 90% 90%;
           }
           &:active {
