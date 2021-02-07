@@ -7,8 +7,9 @@
         ul(id="list")
           li(v-for="(iter, index) of news" v-bind:key="iter.Title" v-on:click="currentIndex = currentIndex == -1 ? index : (currentIndex == index ? -1 : index)")
             p {{iter.Title}}
-            time {{parseTimestamp(iter.Timestamp)}}
-            div(v-show-slide:300:example-easing="currentIndex === index" v-html="iter.Content")
+            //time {{parseTimestamp(iter.Timestamp)}}
+            time {{iter.Timestamp}}
+            div(class="news_content" v-show-slide:300:example-easing="currentIndex === index" v-html="iter.Content")
       section(class="news_counter_section")
         div(class="news_decoration_top")
         div(class="news_counter")
@@ -25,11 +26,22 @@
 </template>
 
 <script>
-import axios from 'axios'
+//  import axios from 'axios'
 export default {
   data: function () {
     return {
-      news: [],
+      news: [
+        {
+          Title: '官網正式上線',
+          Content: '官網正式上線',
+          Timestamp: '2021/2/10'
+        },
+        {
+          Title: '潮爽der!!',
+          Content: '撿到一百塊了!',
+          Timestamp: '2021/2/15'
+        }
+      ],
       currentIndex: -1,
       loader: null
     }
@@ -41,6 +53,7 @@ export default {
     this.timeCounter()
     this.loader = this.$loading.show()
     // get news from database
+    /*
     try {
       // fetch the articles from database
       const url = `https://us-central1-ncku-bikefestival-12th.cloudfunctions.net/getNewsArticles`
@@ -48,7 +61,7 @@ export default {
       this.news = result.data.sort((a, b) => b.Timestamp._seconds - a.Timestamp._seconds)
     } catch (error) {
       console.log(error)
-    }
+    } */
     this.loader.hide()
   },
   methods: {
@@ -104,7 +117,7 @@ export default {
       width: 100vw;
       margin: 0;
       padding: 0;
-      background: #F8F6E8;
+      background: rgb(255, 250, 225);
     }
     .news_background {
       display: none;
@@ -166,6 +179,10 @@ export default {
           margin: 4vw 5vw;
           padding: 0;
           box-sizing: border-box;
+
+          li.news_content {
+            padding: 1vh;
+          }
 
           li {
             width: 100%;
@@ -291,7 +308,7 @@ export default {
       z-index: 1;
       top: 0;
       right: -10vw;
-      background: #F8F6E8;
+      background: rgb(255, 250, 225);
       height: 100vh;
       width: 50vw;
       transform: skewX(5deg);
@@ -362,10 +379,10 @@ export default {
           li {
             width: 100%;
 
-            background-color: #DD4A43;
+            background-color: rgb(103, 192, 225);
 
             margin-top: 3vw;
-            padding: 1.5vh 2vw;
+            padding: 2vh 2vw;
             border-radius: 2vh;
             box-sizing: border-box;
 
@@ -373,6 +390,10 @@ export default {
             font-size: 2.5vh;
             color: white;
             text-align: left;
+
+            .news_content {
+              padding: 2vh 0vw 0vh 2vw;
+            }
 
             cursor: pointer;
             transition: filter .3s ease;
@@ -464,7 +485,7 @@ export default {
           grid-template-columns: 1.2fr 1fr;
           grid-template-rows: 1fr 1fr;
           grid-template-areas: "number dot";
-          background-image: url("../assets/countdown.svg");
+          background-image: url("../assets/14/logoText.svg");
           background-repeat: no-repeat;
           background-position: right bottom;
           background-size: 100% 100%;

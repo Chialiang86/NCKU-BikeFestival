@@ -258,7 +258,7 @@ export default {
       margin: 0;
       padding: 0;
 
-      background-color: #F8F6E8;
+      background-color: rgb(255, 250, 225);
 
     }
 
@@ -662,7 +662,7 @@ export default {
       z-index: 1;
       top: 0;
       left: -10vw;
-      background: #F8F6E8;
+      background: rgb(255, 250, 225);
       height: 100vh;
       width: 75vw;
       transform: skewX(-5deg);
@@ -678,7 +678,6 @@ export default {
         "article .";
       align-items: center;
       justify-items: center;
-
       width: 100vw;
       height: 100vh;
 
@@ -776,15 +775,16 @@ export default {
       justify-content: center;
       justify-items: center;
       align-items: center;
-
       overflow: hidden;
 
       .parent_type {
         display: inline-block;
-
         margin: 0;
         padding: 0;
         ul {
+          position: relative;
+          float: left;
+          left: 20%;
           list-style-type: none;
           margin: 0;
           padding: 0;

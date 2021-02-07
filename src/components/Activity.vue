@@ -58,7 +58,8 @@ export default {
           description: '與 CKbike 合作讓高中生藉單車節了解成大之美。',
           width: 1,
           height: 1
-        },
+        }
+        /*,
         {
           title: '青谷市集',
           time: '0900-1700',
@@ -114,7 +115,7 @@ export default {
           description: '寫下自己的期望與憧憬，帶著夢想往未來前進。',
           width: 1,
           height: 1
-        }
+        } */
       ]
     }
   }
@@ -145,7 +146,7 @@ export default {
       width: 100vw;
       margin: 0;
       padding: 0;
-      background: #F8F6E8;
+      background: rgb(255, 250, 225);
     }
     .activity_background {
       display: none;
@@ -304,14 +305,14 @@ export default {
       z-index: 1;
       top: 0;
       right: -10vw;
-      background: #F8F6E8;
+      background: rgb(255, 253, 227);
       height: 100vh;
-      width: 50vw;
+      width: 45vw;
       transform: skewX(5deg);
     }
     .activity_title {
       grid-area: title;
-      align-self: flex-end;
+      align-self: center;
       z-index: 20;
 
       width: 17vw;
@@ -324,7 +325,7 @@ export default {
     }
     .activity_layout {
       display: grid;
-      grid-template-columns: 1fr 1.5fr 1fr;
+      grid-template-columns: 8vw 2fr 1fr;
       grid-template-rows: 15vw 60vh 15vw;
       grid-template-areas: ". title select"
         ". list ."
@@ -341,9 +342,9 @@ export default {
       align-items: flex-start;
       flex-wrap: wrap;
       z-index: 20;
-      width: 80vw;
+      width: 50vw;
       .activity_waterfall_item {
-        background-color: #DD4A43;
+        background-color:rgb(103, 192, 225);
 
         min-width: 5vw;
         max-width: 60vw;

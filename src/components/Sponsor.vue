@@ -251,7 +251,7 @@ export default {
       align-content: center;
       align-items: center;
 
-      background-color: #F8F6E8;
+      background-color: rgb(255, 250, 225);
       width: 100%;
       min-height: 100vh;
       overflow-y: scroll;
@@ -265,7 +265,7 @@ export default {
       align-content: center;
       align-items: center;
 
-      background-color: #F8F6E8;
+      background-color: rgb(255, 250, 225);
       width: 100%;
       min-height: 100vh;
       overflow-y: scroll;
@@ -465,7 +465,7 @@ export default {
       width: 100vw;
       height: 100vh;
 
-      background-color: #F8F6E8;
+      background-color: rgb(255, 250, 225);
     }
 
     .sponsor_layout_2 {
@@ -535,7 +535,7 @@ export default {
       width: 100%;
       height: 100%;
 
-      background-color: #F8F6E8;
+      background-color: rgb(255, 250, 225);
 
       p {
         grid-area: title;

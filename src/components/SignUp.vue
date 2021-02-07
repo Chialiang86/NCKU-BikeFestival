@@ -145,7 +145,7 @@ export default {
       position: absolute;
       z-index: -1;
       top: -10vh;
-      background: #F8F6E8;
+      background: rgb(255, 250, 225);
       height: 25vh;
       width: 100vw;
       transform: skewY(-5deg);
@@ -154,7 +154,7 @@ export default {
       position: absolute;
       z-index: -1;
       top: 85vh;
-      background: #F8F6E8;
+      background: rgb(255, 250, 225);
       height: 25vh;
       width: 100vw;
       transform: skewY(-5deg);
@@ -330,7 +330,7 @@ export default {
       z-index: -1;
       top: 0;
       left: -10vw;
-      background: #F8F6E8;
+      background: rgb(255, 250, 225);
       height: 100vh;
       width: 25vw;
       transform: skewX(-5deg);
@@ -340,7 +340,7 @@ export default {
       z-index: -1;
       top: 0;
       left: 85vw;
-      background: #F8F6E8;
+      background: rgb(255, 250, 225);
       height: 100vh;
       width: 25vw;
       transform: skewX(-5deg);

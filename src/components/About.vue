@@ -32,7 +32,7 @@ export default {
       justify-items: flex-start;
       height: 100vh;
       width: 100vw;
-      background: #dad6b2;
+      background: rgb(255, 250, 225);
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -229,7 +229,7 @@ export default {
       justify-items: flex-start;
       height: 100vh;
       width: 100vw;
-      background: #dad6b2;
+      background: rgb(255, 250, 225);
       margin: 0;
       padding: 0;
       overflow: hidden;

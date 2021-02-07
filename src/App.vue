@@ -1,7 +1,7 @@
 <template lang="pug">
   div(id="app")
     video(src="./assets/14/start/startup.mp4" id="startup" autoplay muted)
-    //-div(id="logo")
+    div(id="logo")
       svg(viewBox="100 0 700 700")
         title logo
         path(class="cls-1" d="M609,165.86a14.27,14.27,0,1,1,14.27-14.27A14.29,14.29,0,0,1,609,165.86ZM609,145a6.55,6.55,0,1,0,6.55,6.55A6.55,6.55,0,0,0,609,145Z")
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-//  import anime from 'animejs'
+import anime from 'animejs'
 import Intro from './components/Intro'
 import TransitionPage from './components/TransitionPage'
 
@@ -93,7 +93,7 @@ export default {
   mounted: function () {
     // config click event
     document.addEventListener('click', this.clickEffect)
-    //  const self = this
+    const self = this
     const logo = this.$el.querySelector('#logo')
     const startup = this.$el.querySelector('#startup')
     if (this.$route.name !== 'Intro') {
@@ -113,7 +113,7 @@ export default {
         startup.addEventListener('transitionend', transEndEvent)
       }, 500)
     }
-    /*
+
     anime({
       targets: 'svg path, svg circle',
       strokeDashoffset: [anime.setDashoffset, 0],
@@ -141,7 +141,7 @@ export default {
           logo.addEventListener('transitionend', transEndEvent)
         }, 1500)
       }
-    })  */
+    })
   },
   methods: {
     clickEffect: function (e) {
@@ -211,134 +211,234 @@ export default {
     }
   }
 
-  .zoom-enter-active,
-  .zoom-leave-active {
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
-    animation-name: zoom;
-  }
-
-  .zoom-leave-active {
-    animation-direction: reverse;
-  }
-
-  @keyframes zoom {
-    from {
-      opacity: 0;
-      transform: scale3d(0.3, 0.3, 0.3);
+  /*
+    mobile layout css
+  */
+  @media only screen and (max-width: 551px) {
+    @font-face {
+    font-family: 'GenYoGothicTW-Bold';
+    src: url('./assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
+          url('./assets/fonts/GenYoGothicTW-Bold.ttf') format("truetype"),
+          url('./assets/fonts/GenYoGothicTW-Bold.eot') format("embedded-opentype");
+    }
+    @import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC');
+    *{
+      font-family: 'Noto Sans TC'!important;
     }
 
-    100% {
-      opacity: 1;
+    .zoom-enter-active,
+    .zoom-leave-active {
+      animation-duration: 0.5s;
+      animation-fill-mode: both;
+      animation-name: zoom;
+    }
+
+    .zoom-leave-active {
+      animation-direction: reverse;
+    }
+
+    @keyframes zoom {
+      from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      transform-origin: 0 0;
+      font-family: ‘cwTeXYen’, sans-serif;
+      overflow: hidden;
+    }
+
+    #app {
+      /*  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 60px;
+      overflow: hidden;
+      margin: 0;
+      padding: 0; */
+
+      // self add
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+    }
+
+    .clickEffect {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      box-sizing: border-box;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 1);
+      border-radius: 50%;
+      animation: clickEffect 0.4s ease-in-out;
+      transform-origin: center;
+      z-index: 99999;
+      will-change: opacity, transform, border-width;
+      pointer-events: none;
+    }
+
+    .cls-1, .cls-4 {
+      fill: #942323;
+    }
+    .cls-1, .cls-2, .cls-3, .cls-4 {
+      stroke-width: 1.5px;
+      stroke: #942323;
+      stroke-miterlimit: 10;
+      fill-opacity: 0;
+    }
+    .cls-2{
+      fill: #1e556d;
+    }
+    .cls-3{
+      fill: #133180;
+    }
+    .cls-4{
+      stroke-width: 0.5px;
+    }
+
+    #logo {
+      position: fixed;
+      overflow: hidden;
+      width: 100%;
+      max-height: 100vh;
+      z-index: 9999;
+      background-color: #d9d4b3;
+
+      transition: max-height .8s ease;
+
+      will-change: max-height;
+    }
+    #logo svg {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      margin: 0 auto;
+      transform: translate(-10px, 0);
+    }
+
+    .slide-up {
+      max-height: 0 !important;
+    }
+
+    .fill-logo {
+      animation: fill-text 3s ease-out;
+      animation-fill-mode: forwards;
+    }
+
+    body.rotation-90 {
+      transform: rotate(90deg) translateY(-100%);
+    }
+    body.rotation--90 {
+      transform: rotate(-90deg) translateX(-100%);
     }
   }
+  /*
+    computer layout css
+  */
+  @media only screen and (min-width: 552px) {
+    @font-face {
+    font-family: 'GenYoGothicTW-Bold';
+    src: url('./assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
+          url('./assets/fonts/GenYoGothicTW-Bold.ttf') format("truetype"),
+          url('./assets/fonts/GenYoGothicTW-Bold.eot') format("embedded-opentype");
+    }
+    @import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC');
+    *{
+      font-family: 'Noto Sans TC'!important;
+    }
+    .zoom-enter-active,
+    .zoom-leave-active {
+      animation-duration: 0.5s;
+      animation-fill-mode: both;
+      animation-name: zoom;
+    }
 
-  body {
-    margin: 0;
-    padding: 0;
-    transform-origin: 0 0;
-    font-family: ‘cwTeXYen’, sans-serif;
-    overflow: hidden;
-  }
+    .zoom-leave-active {
+      animation-direction: reverse;
+    }
 
-  #app {
-    /*  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-    overflow: hidden;
-    margin: 0;
-    padding: 0; */
+    @keyframes zoom {
+      from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+      }
 
-    // self add
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items:center;
-  }
+      100% {
+        opacity: 1;
+      }
+    }
 
-  #app video{
-    position: absolute;
-    z-index: 100;
-    width: 100%;
-    height: 100%;
-    top:0;
-    left:0;
-    object-fit: cover;
-  }
+    body {
+      margin: 0;
+      padding: 0;
+      transform-origin: 0 0;
+      font-family: ‘cwTeXYen’, sans-serif;
+      overflow: hidden;
+    }
 
-  .clickEffect {
-    position: fixed;
-    width: 200px;
-    height: 200px;
-    box-sizing: border-box;
-    border-style: solid;
-    border-color: rgba(255, 255, 255, 1);
-    border-radius: 50%;
-    animation: clickEffect 0.4s ease-in-out;
-    transform-origin: center;
-    z-index: 99999;
-    will-change: opacity, transform, border-width;
-    pointer-events: none;
-  }
+    #app {
+      /*  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 60px;
+      overflow: hidden;
+      margin: 0;
+      padding: 0; */
 
-  .cls-1, .cls-4 {
-    fill: #942323;
-  }
-  .cls-1, .cls-2, .cls-3, .cls-4 {
-    stroke-width: 1.5px;
-    stroke: #942323;
-    stroke-miterlimit: 10;
-    fill-opacity: 0;
-  }
-  .cls-2{
-    fill: #1e556d;
-  }
-  .cls-3{
-    fill: #133180;
-  }
-  .cls-4{
-    stroke-width: 0.5px;
-  }
+      // self add
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+    }
 
-  #logo {
-    position: fixed;
-    overflow: hidden;
-    width: 100%;
-    max-height: 100vh;
-    z-index: 9999;
-    background-color: #d9d4b3;
+    #app video{
+      position: absolute;
+      z-index: 100;
+      width: 100%;
+      height: 100%;
+      top:0;
+      left:0;
+      object-fit: cover;
+    }
 
-    transition: max-height .8s ease;
+    .clickEffect {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      box-sizing: border-box;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 1);
+      border-radius: 50%;
+      animation: clickEffect 0.4s ease-in-out;
+      transform-origin: center;
+      z-index: 99999;
+      will-change: opacity, transform, border-width;
+      pointer-events: none;
+    }
 
-    will-change: max-height;
-  }
-  #logo svg {
-    width: 100vw;
-    height: 100vh;
-    display: block;
-    margin: 0 auto;
-    transform: translate(-10px, 0);
-  }
-
-  .slide-up {
-    max-height: 0 !important;
-  }
-
-  .fill-logo {
-    animation: fill-text 3s ease-out;
-    animation-fill-mode: forwards;
-  }
-
-  body.rotation-90 {
-    transform: rotate(90deg) translateY(-100%);
-  }
-  body.rotation--90 {
-    transform: rotate(-90deg) translateX(-100%);
+    .slide-up {
+      max-height: 0 !important;
+    }
   }
 </style>

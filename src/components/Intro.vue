@@ -1,6 +1,10 @@
 <template lang="pug">
   div(class="intro_page")
     div(class="intro_background")
+      div(class="intro_background_dot_1")
+      div(class="intro_background_dot_2")
+      div(class="intro_background_dot_3")
+      div(class="intro_background_dot_4")
     p(class="intro_title")
     div(class="intro_activity_counter")
       section(class="intro_activity_number_section")
@@ -11,18 +15,26 @@
         //div(class="intro_countdown_number")
           span(id="intro_number_1")
           span(id="intro_number_2")
-        //div(class="intro_countdown_dot")
-          span(id="intro_dot_1")
-          span(id="intro_dot_2")
-          span(id="intro_dot_3")
+        div(class="intro_countdown_dot")
+          //span(id="intro_dot_1")
+          //span(id="intro_dot_2")
+          //span(id="intro_dot_3")
       section(class="intro_wheel_section")
       section(class="intro_logo_section")
       //div(class="intro_dot")
       //div(class="intro_dot2")
       div(class="intro_menu")
         ul
-          router-link(tag="li" v-bind:to="'/' + urlText[index]" v-for="(text, index) of menuText" v-bind:key="text" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_${index + 1}.svg`) + ')'}")
+          //router-link(tag="li" v-bind:to="'/' + urlText[index]" v-for="(text, index) of menuText" v-bind:key="text" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_${index + 1}.svg`) + ')'}")
             p {{text}}
+          router-link(tag="li" v-bind:to="'/news'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_1.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/parent'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_2.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/activity'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_3.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/department'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_4.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/about'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_5.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/sponsor'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_6.svg`) + ')'}")
+          a(href="https://lihi1.com/Poozk" target="_blank")
+            li(tag="li" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_7.svg`) + ')'}")
 </template>
 
 <script>
@@ -148,7 +160,7 @@ export default {
       top: -5vh;
       background: rgb(227, 243, 241);
       //background-image: url("../assets/logo.svg");
-      background-image: url("../assets/14/intro/background.svg");
+      background-image: url("../assets/14/background.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -210,7 +222,7 @@ export default {
       height: 50vw;
 
       //  background-image: url("../assets/logo.svg");
-      background-image: url("../assets/14/intro/logoText.svg");
+      background-image: url("../assets/14/logoText.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -313,14 +325,62 @@ export default {
     .intro_background {
       position: absolute;
       z-index: -1;
-      background: #F8F6E8;
-      background-image: url("../assets/14/intro/background.svg");
+      background: rgb(255, 250, 225);
+      background-image: url("../assets/14/background.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
       background-size: cover;
       height: 100vh;
       width: 100vw;
+    }
+
+    .intro_background_dot_1 {
+      position: absolute;
+      background-image: url("../assets/14/intro/dot1.svg");
+      background-repeat: no-repeat;
+      background-position: center top 25%;
+      background-size: 80% 80%;
+      left: 28%;
+      top: -10%;
+      height: 20vw;
+      width: 20vw;
+    }
+
+    .intro_background_dot_2 {
+      position: absolute;
+      background-image: url("../assets/14/intro/dot2.svg");
+      background-repeat: no-repeat;
+      background-position: center top 25%;
+      background-size: 80% 80%;
+      left: -8%;
+      top: -5%;
+      height: 50vw;
+      width: 50vw;
+    }
+
+    .intro_background_dot_3 {
+      position: absolute;
+      background-image: url("../assets/14/intro/dot3.svg");
+      background-repeat: no-repeat;
+      background-position: center top 25%;
+      background-size: 80% 80%;
+      left: 0%;
+      bottom: -14%;
+      height: 25vw;
+      width: 25vw;
+    }
+
+    .intro_background_dot_4 {
+      position: absolute;
+      background-image: url("../assets/14/intro/dot4.svg");
+      background-repeat: no-repeat;
+      background-position: center top 25%;
+      background-size: 80% 80%;
+      left: 32%;
+      bottom: -20%;
+      height: 30vw;
+      width: 30vw;
     }
 
     .intro_dot {
@@ -353,6 +413,7 @@ export default {
       grid-gap: 1vw;
       align-items: center;
       justify-items: center;
+      justify-content: center;
       width: 100vw;
       height: 100vh;
     }
@@ -360,17 +421,17 @@ export default {
     .intro_counter_section {
       //  border: solid 1px;
       grid-area: time;
-      justify-self: flex-end;
+      justify-self: center;
       align-self: center;
 
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      grid-template-areas: "empty empty" "dot dot";
+      //  grid-template-columns: 1fr 1fr;
+      grid-template-rows: 3fr 1fr;
+      grid-template-areas: "empty" "dot";
       //background-image: url("../assets/countdown.svg");
-      background-image: url("../assets/14/intro/logoText.svg");
+      background-image: url("../assets/14/logoText.svg");
       background-repeat: no-repeat;
-      background-position: left 25% top 30%;
+      background-position: center top 25%;
       background-size: 63% 63%;
       width: 45vw;
       height: 45vw;
@@ -396,16 +457,20 @@ export default {
 
         grid-area: dot;
         display: flex;
-        justify-items: flex-end;
-        justify-content: flex-end;
-        align-items: flex-end;
+        justify-items: center;
+        justify-content: center;
+        align-items: center;
+        background-image: url("../assets/14/logo.svg");
+        background-repeat: no-repeat;
+        background-size: 36% 36%;
+        background-position: center 0%;
 
         span {
           width: 1.5vw;
           height: 1.5vw;
           margin: 0.8vw;
           margin-bottom: 10vw;
-          background-image: url("../assets/dot.svg");
+          background-image: url("../assets/14/logo.svg");
           background-repeat: no-repeat;
           background-size: 100% 100%;
           background-position: 30% 0%;
@@ -440,7 +505,7 @@ export default {
           justify-content: center;
           width: 11vw;
           height: 11vw;
-          margin: 0 2vw;
+          margin: 0 1vw;
           box-sizing: border-box;
 
           background-repeat: no-repeat;
@@ -469,7 +534,7 @@ export default {
           }
           p {
             font-size: 1.2vw;
-            color: #DD4A43;
+            color: rgb(116, 240, 240);
             font-weight: 500;
           }
         }
