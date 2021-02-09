@@ -2,6 +2,11 @@
   div(class="news_page")
     div(class="news_background")
     div(class="news_title")
+    div(class="news_logo")
+    dive(class="news_flower_top")
+    dive(class="news_flower_down")
+    div(class="news_back")
+      router-link(tag="button" to="/" class="news_exit_button")
     div(class="news_layout")
       section(class="news_list_section")
         ul(id="list")
@@ -21,8 +26,6 @@
             span(id="news_dot_2")
             span(id="news_dot_3")
         div(class="news_decoration_bottom")
-      section(class="news_back")
-        router-link(tag="button" to="/" class="news_exit_button")
 </template>
 
 <script>
@@ -34,11 +37,6 @@ export default {
         {
           Title: '官網正式上線',
           Content: '官網正式上線',
-          Timestamp: '2021/2/10'
-        },
-        {
-          Title: '潮爽der!!',
-          Content: '撿到一百塊了!',
           Timestamp: '2021/2/15'
         }
       ],
@@ -117,7 +115,7 @@ export default {
       width: 100vw;
       margin: 0;
       padding: 0;
-      background: rgb(255, 250, 225);
+      background: rgb(255, 246, 232);
     }
     .news_background {
       display: none;
@@ -126,11 +124,11 @@ export default {
       position: absolute;
       z-index: 20;
       left: 18vw;
-      top: 6vh;
+      top: 8vh;
 
-      width: 64vw;
+      width: 60vw;
       height: 30vw;
-      background-image: url("../assets/news/news_title.svg");
+      background-image: url("../assets/14/news/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
@@ -160,7 +158,7 @@ export default {
         -webkit-overflow-scrolling: touch;
 
         &::-webkit-scrollbar {
-          width: 10px;
+          width: 6px;
           border-radius: 5px;
         }
         &::-webkit-scrollbar-track {
@@ -187,7 +185,7 @@ export default {
           li {
             width: 100%;
 
-            background-color: #DD4A43;
+            background-color: rgb(103, 192, 225);
 
             margin: 0;
             padding: 2vh 4vw;
@@ -245,37 +243,24 @@ export default {
     }
 
     .news_back {
-      grid-area: select;
-
-      display: flex;
-      align-items: center;
-      justify-items: flex-end;
-      justify-content: flex-end;
-
-      width: 100vw;
-      height: 100%;
-
+      position: absolute;
+      z-index: 2;
+      right: 2vw;
+      top: 3vh;
       .news_exit_button {
-        grid-area: exit;
-        align-self: flex-start;
-
-        width: 15vw;
-        height: 15vw;
+        width: 10vw;
+        height: 10vw;
         background-color: transparent;
         background-image: url("../assets/exit.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
 
-        margin: 7vw 7vw;
-
+        margin: 3.5vw 4.2vw;
         outline: none;
         border: none;
-
-        cursor: pointer;
-
         transition: filter .3s ease;
-
+        cursor: pointer;
         filter: brightness(130%);
 
         &:hover {
@@ -308,7 +293,7 @@ export default {
       z-index: 1;
       top: 0;
       right: -10vw;
-      background: rgb(255, 250, 225);
+      background: rgb(255, 246, 232);
       height: 100vh;
       width: 50vw;
       transform: skewX(5deg);
@@ -317,14 +302,50 @@ export default {
       position: absolute;
       z-index: 20;
       left: 10vw;
-      top: 8vh;
+      top: 6vh;
 
       width: 17vw;
       height: 8vw;
-      background-image: url("../assets/news/news_title.svg");
+      background-image: url("../assets/14/news/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
+    }
+    .news_logo {
+      position: absolute;
+      background-image: url('../assets/14/pageLogo.svg');
+      background-repeat: no-repeat;
+      background-position: center bottom 40%;
+      background-size: 50% 50%;
+      z-index: 2;
+      right: 0vw;
+      top: 0vw;
+      width: 40vw;
+      height: 100vh;
+    }
+    .news_flower_top {
+      position: absolute;
+      background-image: url('../assets/14/flower.svg');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: cover;
+      z-index: 2;
+      right: 0vw;
+      top: -5vh;
+      width: 41vw;
+      height: 40vh;
+    }
+    .news_flower_down {
+      position: absolute;
+      background-image: url('../assets/14/flower.svg');
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: cover;
+      z-index: 2;
+      right: 0vw;
+      bottom: -5vh;
+      width: 41vw;
+      height: 40vh;
     }
 
     .news_layout {
@@ -343,10 +364,9 @@ export default {
 
       .news_list_section {
         grid-area: list;
+        display: flex;
         justify-self: center;
         align-self: flex-start;
-
-        display: flex;
         justify-content: center;
 
         width: 90%;
@@ -372,7 +392,7 @@ export default {
         ul {
           list-style-type: none;
 
-          padding: 0 3vw 0 8vw;
+          padding: 0 8vw 0 5vw;
 
           width: 100%;
 
@@ -381,7 +401,7 @@ export default {
 
             background-color: rgb(103, 192, 225);
 
-            margin-top: 3vw;
+            // margin-top: 3vw;
             padding: 2vh 2vw;
             border-radius: 2vh;
             box-sizing: border-box;
@@ -485,10 +505,6 @@ export default {
           grid-template-columns: 1.2fr 1fr;
           grid-template-rows: 1fr 1fr;
           grid-template-areas: "number dot";
-          background-image: url("../assets/14/logoText.svg");
-          background-repeat: no-repeat;
-          background-position: right bottom;
-          background-size: 100% 100%;
 
           width: 20vw;
           height: 20vw;
@@ -530,22 +546,11 @@ export default {
     }
 
     .news_back {
-      grid-area: select;
-
-      display: flex;
-      align-items: center;
-      justify-items: flex-end;
-      justify-content: flex-end;
-
-      width: 100%;
-      height: 100%;
-
-      z-index: 5;
-
+      position: absolute;
+      z-index: 2;
+      right: 2vw;
+      top: 3vh;
       .news_exit_button {
-        grid-area: exit;
-        align-self: flex-start;
-
         width: 6vw;
         height: 6vw;
         background-color: transparent;
@@ -555,14 +560,10 @@ export default {
         background-position: 50% 50%;
 
         margin: 3.5vw 4.2vw;
-
         outline: none;
         border: none;
-
-        cursor: pointer;
-
         transition: filter .3s ease;
-
+        cursor: pointer;
         filter: brightness(130%);
 
         &:hover {

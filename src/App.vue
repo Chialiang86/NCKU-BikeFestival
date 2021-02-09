@@ -1,7 +1,8 @@
 <template lang="pug">
   div(id="app")
-    video(src="./assets/14/start/startup.mp4" id="startup" autoplay muted)
-    div(id="logo")
+    video(v-if="pc" src="./assets/14/start/startupComputer.mp4" id="startup_computer" autoplay muted)
+    video(v-else src="./assets/14/start/startupMobile.mp4" id="startup_mobile" autoplay muted)
+    //div(id="logo")
       svg(viewBox="100 0 700 700")
         title logo
         path(class="cls-1" d="M609,165.86a14.27,14.27,0,1,1,14.27-14.27A14.29,14.29,0,0,1,609,165.86ZM609,145a6.55,6.55,0,1,0,6.55,6.55A6.55,6.55,0,0,0,609,145Z")
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-import anime from 'animejs'
+// import anime from 'animejs'
 import Intro from './components/Intro'
 import TransitionPage from './components/TransitionPage'
 
@@ -63,6 +64,7 @@ export default {
   },
   data: function () {
     return {
+      pc: this.isPC(),
       transitionName: DEFAULT_TRANSITION,
       transitionMode: DEFAULT_TRANSITION_MODE,
       transitionEnterActiveClass: ''
@@ -93,16 +95,22 @@ export default {
   mounted: function () {
     // config click event
     document.addEventListener('click', this.clickEffect)
-    const self = this
-    const logo = this.$el.querySelector('#logo')
-    const startup = this.$el.querySelector('#startup')
+    // const self = this
+    // const logo = this.$el.querySelector('#logo')
+    var startup
+    if (this.pc) {
+      startup = this.$el.querySelector('#startup_computer')
+      startup.addEventListener('ended', myHandler, false)
+    } else {
+      startup = this.$el.querySelector('#startup_mobile')
+      startup.addEventListener('ended', myHandler, false)
+    }
     if (this.$route.name !== 'Intro') {
-      logo.parentNode.removeChild(logo)
-      return
+      // logo.parentNode.removeChild(logo)
+      startup.parentNode.removeChild(startup)
+      // return
     }
 
-    // add logo line animation
-    startup.addEventListener('ended', myHandler, false)
     function myHandler (e) {
       setTimeout(function () {
         startup.classList.add('slide-up')
@@ -113,7 +121,9 @@ export default {
         startup.addEventListener('transitionend', transEndEvent)
       }, 500)
     }
+    // add logo line animation
 
+    /*
     anime({
       targets: 'svg path, svg circle',
       strokeDashoffset: [anime.setDashoffset, 0],
@@ -141,9 +151,21 @@ export default {
           logo.addEventListener('transitionend', transEndEvent)
         }, 1500)
       }
-    })
+    }) */
   },
   methods: {
+    isPC: function () {
+      var userAgentInfo = navigator.userAgent
+      var Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
+      var flag = true
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false
+          break
+        }
+      }
+      return flag
+    },
     clickEffect: function (e) {
       const d = document.createElement('div')
       d.className = 'clickEffect'
@@ -275,6 +297,27 @@ export default {
       display: flex;
       justify-content: center;
       align-items:center;
+    }
+
+    #startup_mobile{
+      position: absolute;
+      z-index: 100;
+      width: 100%;
+      height: 100%;
+      top:0;
+      left:0;
+      object-fit: cover;
+    }
+
+    #test{
+      position: absolute;
+      z-index: 100;
+      width: 100%;
+      height: 100%;
+      top:0;
+      left:0;
+      object-fit: cover;
+      z-index: 20;
     }
 
     .clickEffect {
@@ -412,7 +455,18 @@ export default {
       align-items:center;
     }
 
-    #app video{
+    #test{
+      position: absolute;
+      z-index: 100;
+      width: 100%;
+      height: 100%;
+      top:0;
+      left:0;
+      object-fit: cover;
+      z-index: 20;
+    }
+
+    #startup_computer{
       position: absolute;
       z-index: 100;
       width: 100%;

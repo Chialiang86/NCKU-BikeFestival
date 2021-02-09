@@ -1,7 +1,8 @@
 <template lang="pug">
   div(class="dept_page")
     p(class="dept_title")
-    router-link(tag="button" to="/" class="dept_return_button")
+    div(class="dept_back")
+      router-link(tag="button" to="/" class="dept_exit_button")
     div(class="dept_decoration_top")
     div(class="dept_decoration_bottom")
       g
@@ -26,7 +27,7 @@
 export default {
   data: function () {
     return {
-      classes: ['規劃與設計學院', '社會科學院', '不分學院', '工學院', '理學院', '文學院', '醫學院', '管理學院', '電機資訊學院', '生物科學與科技學院'],
+      classes: ['規劃與設計學院', '社會科科學院', '不分學院', '工學院', '理學院', '文學院', '醫學院', '管理學院', '電機資訊學院', '生物科學與科技學院'],
       classKeys: ['design', 'social', 'undeclear', 'engineer-1', 'science', 'humanity', 'medicine', 'management', 'computer', 'biological'],
       colleges: {
         design: ['建築', '都計', '工設'],
@@ -372,7 +373,7 @@ export default {
       position: relative;
       height: 100vh;
       width: 100vw;
-      background: rgb(255, 250, 225);
+      background: rgb(255, 246, 232);
       margin: 0;
       padding: 0;
     }
@@ -399,32 +400,33 @@ export default {
       display: none;
     }
 
-    .dept_return_button {
+    .dept_back {
       position: absolute;
-      right: 7vw;
-      top: 7vw;
+      z-index: 2;
+      right: 2vw;
+      top: 3vh;
+      .dept_exit_button {
+        width: 10vw;
+        height: 10vw;
+        background-color: transparent;
+        background-image: url("../assets/exit.svg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: 50% 50%;
 
-      width: 15vw;
-      height: 15vw;
-      background-color: transparent;
-      background-image: url("../assets/exit.svg");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: 50% 50%;
-
-      outline: none;
-      border: none;
-      filter: brightness(120%);
-
-      cursor: pointer;
-
-      transition: filter .3s ease;
-
-      &:hover {
+        margin: 3.5vw 4.2vw;
+        outline: none;
+        border: none;
+        transition: filter .3s ease;
+        cursor: pointer;
         filter: brightness(130%);
-      }
-      &:active {
-        filter: brightness(80%);
+
+        &:hover {
+          filter: brightness(150%);
+        }
+        &:active {
+          filter: brightness(80%);
+        }
       }
     }
 
@@ -458,7 +460,7 @@ export default {
         background-image: url("../assets/dept/large_chain.svg");
         opacity:0.8;
         background-repeat: no-repeat;
-        background-size: 100% 100%;
+        background-size: 90% 90%;
         background-position: 50% 50%;
 
         pointer-events: none;
@@ -478,7 +480,7 @@ export default {
 
     .dept_college {
       position: absolute;
-      z-index:5;
+      z-index: 10;
       left: 0vw;
       top: 47vh;
       box-sizing: border-box;
@@ -486,21 +488,21 @@ export default {
       will-change: opacity, transform;
       transform: scale(2);
       p {
+        z-index: 10;
         position: absolute;
         left: 0;
         top: 0;
-        max-width: 13vw;
+        max-width: 20vw;
         width: 7.5vw;
-        height: auto;
+        // height: auto;
         text-align: center;
         vertical-align: bottom;
         background-color: #eeefef;
         color: black;
-        padding: 5px;
-        font-size: 2.5vw;
+        padding: 1px;
+        font-size: 1.5vw;
         font-weight: 500;
         line-height: 2.5vw;
-        cursor: pointer;
       }
       p:hover {
         z-index: 999;
@@ -890,10 +892,10 @@ export default {
     .dept_list_section {
       z-index:10;
       position: absolute;
-      left: 40vw;
+      left: 15vw;
       top: 18vh;
 
-      max-width: 25vh;
+      max-width: 30vh;
 
       ul {
         list-style-type: none;
@@ -910,13 +912,13 @@ export default {
         }
 
         li[data-key="design"]  {
-          transform: translateX(34px) skewX(-5deg);
+          transform: translateX(20px) skewX(-5deg);
         }
         li[data-key="social"]  {
-          transform: translateX(56px) skewX(-5deg);
+          transform: translateX(52px) skewX(-5deg);
         }
         li[data-key="undeclear"]  {
-          transform: translateX(72px) skewX(-5deg);
+          transform: translateX(76px) skewX(-5deg);
         }
         li[data-key="engineer-1"]  {
           transform: translateX(93px) skewX(-5deg);
@@ -931,23 +933,23 @@ export default {
           transform: translateX(100px) skewX(-5deg);
         }
         li[data-key="medicine"]  {
-          transform: translateX(90px) skewX(-5deg);
+          transform: translateX(98px) skewX(-5deg);
         }
         li[data-key="management"]  {
-          transform: translateX(70px) skewX(-5deg);
+          transform: translateX(88px) skewX(-5deg);
         }
         li[data-key="computer"]  {
-          transform: translateX(50px) skewX(-5deg);
+          transform: translateX(72px) skewX(-5deg);
         }
         li[data-key="biological"]  {
-          transform: translateX(26px) skewX(-5deg);
+          transform: translateX(46px) skewX(-5deg);
         }
       }
 
       .dept_class_item {
         margin: 3vh;
         z-index:10;
-        font-size: 2.6vh;
+        font-size: 2.4vh;
 
         p {
           width: 100%;
@@ -967,7 +969,7 @@ export default {
             border-radius: 10px;
             background-color: #DD4A43;
             padding: 10px;
-            font-size: 3vh;
+            font-size: 2.6vh;
             font-weight: 500;
             }
         &:hover {
@@ -975,7 +977,7 @@ export default {
           border-radius: 10px;
           background-color: #DD4A43;
           padding: 10px;
-          font-size: 3vh;
+          font-size: 2.6vh;
           font-weight: 500;
         }
       }
@@ -1006,7 +1008,7 @@ export default {
       justify-items: flex-start;
       height: 100vh;
       width: 100vw;
-      background: rgb(255, 250, 225);
+      background: rgb(255, 246, 232);
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -1017,7 +1019,7 @@ export default {
       left: 8vw;
       top: 5vh;
       display: inline-block;
-      background: url("../assets/dept/title.svg");
+      background: url("../assets/14/dept/title.svg");
       background-repeat: no-repeat;
       border-radius: 0px;
       text-align: center;
@@ -1060,32 +1062,33 @@ export default {
       background-size: contain;
     }
 
-    .dept_return_button {
+    .dept_back {
       position: absolute;
-      right: 4.2vw;
-      top: 3.7vw;
+      z-index: 2;
+      right: 2vw;
+      top: 3vh;
+      .dept_exit_button {
+        width: 6vw;
+        height: 6vw;
+        background-color: transparent;
+        background-image: url("../assets/exit.svg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: 50% 50%;
 
-      width: 6vw;
-      height: 6vw;
-      background-color: transparent;
-      background-image: url("../assets/exit.svg");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: 50% 50%;
-
-      outline: none;
-      border: none;
-      filter: brightness(120%);
-
-      cursor: pointer;
-
-      transition: filter .3s ease;
-
-      &:hover {
+        margin: 3.5vw 4.2vw;
+        outline: none;
+        border: none;
+        transition: filter .3s ease;
+        cursor: pointer;
         filter: brightness(130%);
-      }
-      &:active {
-        filter: brightness(80%);
+
+        &:hover {
+          filter: brightness(150%);
+        }
+        &:active {
+          filter: brightness(80%);
+        }
       }
     }
 

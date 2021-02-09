@@ -1,7 +1,8 @@
 <template lang="pug">
   div(class="sponsor_page")
-    p(class="sponsor_title")
-    router-link(v-show="mode === 0" tag="button" to="/" class="sponsor_exit_button")
+    div(class="sponsor_title")
+    div(class="sponsor_back")
+      router-link(v-show="mode === 0" tag="button" to="/" class="sponsor_exit_button")
     button(v-show="mode === 1" class="sponsor_return_button" v-on:click="mode = 0; currentIndex = -1;")
     div(class="sponsor_layout_1" v-show="mode === 0")
       section(class="sponsor_list")
@@ -159,57 +160,58 @@ export default {
       font-family: 'Noto Sans TC'!important;
     }
     .sponsor_page {
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      height: auto;
       width: 100vw;
       margin: 0;
       padding: 0;
-      background: white;
-      overflow-y: scroll;
+      background: rgb(255, 246, 232);
     }
 
     .sponsor_title {
       position: absolute;
       z-index: 20;
-      left: 10vw;
-      top: 4vh;
-      display: inline-block;
-      text-align: center;
-      color: #942323;
-      font-size: 8vw;
-      font-weight: 500;
-      letter-spacing: 1px;
-      line-height: 8vw;
-    }
+      left: 18vw;
+      top: 8vh;
 
-    .sponsor_exit_button {
-      position: absolute;
-      right: 7vw;
-      top: 7vw;
-
-      width: 15vw;
-      height: 15vw;
-      background-color: transparent;
-      background-image: url("../assets/exit.svg");
+      width: 60vw;
+      height: 30vw;
+      background-image: url("../assets/14/sponsor/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
+    }
 
-      outline: none;
-      border: none;
-      filter: brightness(120%);
+    .sponsor_back {
+      position: absolute;
+      z-index: 2;
+      right: 2vw;
+      top: 3vh;
+      .sponsor_exit_button {
+        width: 10vw;
+        height: 10vw;
+        background-color: transparent;
+        background-image: url("../assets/exit.svg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: 50% 50%;
 
-      cursor: pointer;
-
-      transition: filter .3s ease;
-
-      &:hover {
+        margin: 3.5vw 4.2vw;
+        outline: none;
+        border: none;
+        transition: filter .3s ease;
+        cursor: pointer;
         filter: brightness(130%);
-      }
-      &:active {
-        filter: brightness(80%);
+
+        &:hover {
+          filter: brightness(150%);
+        }
+        &:active {
+          filter: brightness(80%);
+        }
       }
     }
 
@@ -289,7 +291,7 @@ export default {
         background-position: 50% 50%;
         background-size: contain;
         background-repeat: no-repeat;
-
+        text-align: center;
         transition: .2s transform ease-in-out;
         cursor: pointer;
         &:hover {
@@ -382,44 +384,44 @@ export default {
     .sponsor_title {
       position: absolute;
       z-index: 20;
-      right: 2vw;
-      bottom: 2vh;
-      display: inline-block;
-      text-align: center;
-      background-image: url("../assets/sponsor/logo.svg");
+      left: 10vw;
+      top: 6vh;
+
+      width: 17vw;
+      height: 8vw;
+      background-image: url("../assets/14/sponsor/title.svg");
       background-repeat: no-repeat;
-      width: 40vw;
-      height: 25vh;
       background-size: 100% 100%;
       background-position: 50% 50%;
     }
 
-    .sponsor_exit_button {
+    .sponsor_back {
       position: absolute;
-      right: 4.2vw;
-      top: 3.7vw;
+      z-index: 2;
+      right: 2vw;
+      top: 3vh;
+      .sponsor_exit_button {
+        width: 6vw;
+        height: 6vw;
+        background-color: transparent;
+        background-image: url("../assets/exit.svg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: 50% 50%;
 
-      width: 6vw;
-      height: 6vw;
-      background-color: transparent;
-      background-image: url("../assets/exit.svg");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: 50% 50%;
-
-      outline: none;
-      border: none;
-      filter: brightness(120%);
-
-      cursor: pointer;
-
-      transition: filter .3s ease;
-
-      &:hover {
+        margin: 3.5vw 4.2vw;
+        outline: none;
+        border: none;
+        transition: filter .3s ease;
+        cursor: pointer;
         filter: brightness(130%);
-      }
-      &:active {
-        filter: brightness(80%);
+
+        &:hover {
+          filter: brightness(150%);
+        }
+        &:active {
+          filter: brightness(80%);
+        }
       }
     }
 
@@ -509,8 +511,8 @@ export default {
             position: absolute;
             content: attr(data-name);
             color: white;
+            text-align: center;
             margin-top: 3.5vw;
-            margin-left: -3.5vw;
             width: 7vw;
             z-index: 21;
           }

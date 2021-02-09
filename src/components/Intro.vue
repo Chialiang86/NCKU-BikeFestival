@@ -28,13 +28,14 @@
           //router-link(tag="li" v-bind:to="'/' + urlText[index]" v-for="(text, index) of menuText" v-bind:key="text" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_${index + 1}.svg`) + ')'}")
             p {{text}}
           router-link(tag="li" v-bind:to="'/news'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_1.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/parent'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_2.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/activity'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_3.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/department'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_4.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/about'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_5.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/activity'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_2.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/department'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_3.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/online'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_4.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/parent'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_5.svg`) + ')'}")
           router-link(tag="li" v-bind:to="'/sponsor'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_6.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/online'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_7.svg`) + ')'}")
           a(href="https://lihi1.com/Poozk" target="_blank")
-            li(tag="li" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_7.svg`) + ')'}")
+            li(tag="li" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_8.svg`) + ')'}")
 </template>
 
 <script>
@@ -42,8 +43,8 @@ export default {
   name: 'IntroPage',
   data: function () {
     return {
-      menuText: ['', '', '', '', '', '', ''],
-      urlText: ['news', 'parent', 'activity', 'department', 'sign-up', 'sponsor', 'about'],
+      //  menuText: ['', '', '', '', '', '', ''],
+      //  urlText: ['news', 'parent', 'activity', 'department', 'sign-up', 'sponsor', 'about'],
       numberDom1: null,
       numberDom2: null,
       numberDom3: null,
@@ -61,6 +62,7 @@ export default {
   computed: {
   },
   methods: {
+    /*
     timeCounter: function () {
       const timeStr1 = '2021/2/27 00:00'
       const timeStr2 = '2021/2/27 00:00'
@@ -83,7 +85,7 @@ export default {
         number = require(`../assets/number_${Math.floor(day % 10)}.svg`)
         this.numberDom4.style.setProperty('background-image', `url(${number})`)
       }
-    },
+    },  */
     checkAvailable: function (index) {
       if (index === 2 || index === 3) {
         alert('敬請期待')
@@ -141,37 +143,65 @@ export default {
       font-family: 'Noto Sans TC'!important;
     }
 
-    .intro_page {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      width: 100vw;
-      margin: 0;
-      padding: 0;
-      background: #f7f2e5;
-      overflow: hidden;
-    }
-
     .intro_background {
       position: absolute;
-      top: 0;
-      top: -5vh;
-      background: rgb(227, 243, 241);
-      //background-image: url("../assets/logo.svg");
-      background-image: url("../assets/14/background.svg");
+      z-index: -1;
+      background-image: url("../assets/14/intro/mobile/background.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
-      background-repeat: no-repeat;
       background-size: cover;
-      //  background-size: 100% 100%;
-      background-position: 50% 50%;
-      height: 62vh;
+      height: 100vh;
       width: 100vw;
-      transform: skewY(-5deg);
-      z-index: 1;
+      overflow: hidden;
+    }
+
+    .intro_background_dot_1 {
+      position: absolute;
+      background-image: url("../assets/14/intro/mobile/dot1.svg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 90% 90%;
+      left: -13%;
+      top: -24%;
+      height: 90vh;
+      width: 90vw;
+    }
+
+    .intro_background_dot_2 {
+      position: absolute;
+      background-image: url("../assets/14/intro/mobile/dot2.svg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 90% 90%;
+      right: -8%;
+      top: 25%;
+      height: 45vw;
+      width: 45vw;
+    }
+
+    .intro_background_dot_3 {
+      position: absolute;
+      background-image: url("../assets/14/intro/mobile/dot3.svg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 95% 95%;
+      left: -12%;
+      top: 32%;
+      height: 60vw;
+      width: 60vw;
+    }
+
+    .intro_background_dot_4 {
+      position: absolute;
+      background-image: url("../assets/14/intro/mobile/dot4.svg");
+      background-repeat: no-repeat;
+      background-position: right top;
+      background-size: 80% 80%;
+      right: 0%;
+      top: 0%;
+      height: 40vw;
+      width: 40vw;
     }
 
     .intro_title {
@@ -198,11 +228,9 @@ export default {
     .intro_layout {
       display: grid;
       grid-template-columns: 100vw;
-      grid-template-rows: 10vh 1.8fr 2fr;
-      grid-template-areas: "empty"
-        "logo"
-        "menu";
-      grid-gap: 10vw;
+      grid-template-rows: 1fr 1.2fr;
+      grid-template-areas: "logo" "menu";
+      grid-gap: 1vw;
       align-items: center;
       justify-items: center;
       width: 100vw;
@@ -218,17 +246,18 @@ export default {
       grid-area: logo;
       justify-self: center;
       align-self: center;
-      width: 50vw;
-      height: 50vw;
+      width: 80vw;
+      height: 80vw;
 
       //  background-image: url("../assets/logo.svg");
-      background-image: url("../assets/14/logoText.svg");
+      background-image: url("../assets/14/intro/mobile/logo.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
       background-size: cover;
       background-repeat: no-repeat;
-      background-size: 100% 100%;
+      background-position: center bottom 20%;
+      background-size: 70% 70%;
       z-index: 50;
     }
 
@@ -238,13 +267,17 @@ export default {
       display: flex;
       width: 100%;
       height: 100%;
+      background-image: url("../assets/14/intro/mobile/background_down.svg");
+      background-size: 120% 120%;
+      background-repeat: no-repeat;
+      background-position: center top 80%;
       justify-content: center;
       justify-items: center;
       align-items: center;
 
       z-index: 0;
 
-      padding: 8vw;
+      padding: 15vh 8vw 8vh 10vw;
       box-sizing: border-box;
 
       ul {
@@ -258,19 +291,18 @@ export default {
         list-style-type: none;
         width: 100%;
         height: 100%;
+        padding: 0 10vw 0 10vw;
         li {
-          justify-self: center;
-          align-self: flex-end;
-
           display: inline-block;
           width: 22vw;
           height: 22vw;
           margin: 2vw 0;
+          // padding: 0 0.5vw 0 0.5vw;
           box-sizing: border-box;
 
           background-repeat: no-repeat;
-          background-position: 50% 0%;
-          background-size: 70% 70%;
+          background-position: center bottom;
+          background-size: 90% 90%;
 
           border: 0px solid #942323;
           border-radius: 1vw;
@@ -325,8 +357,7 @@ export default {
     .intro_background {
       position: absolute;
       z-index: -1;
-      background: rgb(255, 250, 225);
-      background-image: url("../assets/14/background.svg");
+      background-image: url("../assets/14/intro/computer/background.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -337,7 +368,7 @@ export default {
 
     .intro_background_dot_1 {
       position: absolute;
-      background-image: url("../assets/14/intro/dot1.svg");
+      background-image: url("../assets/14/intro/computer/dot1.svg");
       background-repeat: no-repeat;
       background-position: center top 25%;
       background-size: 80% 80%;
@@ -349,19 +380,19 @@ export default {
 
     .intro_background_dot_2 {
       position: absolute;
-      background-image: url("../assets/14/intro/dot2.svg");
+      background-image: url("../assets/14/intro/computer/dot2.svg");
       background-repeat: no-repeat;
-      background-position: center top 25%;
+      background-position: center center;
       background-size: 80% 80%;
       left: -8%;
-      top: -5%;
+      top: -20%;
       height: 50vw;
       width: 50vw;
     }
 
     .intro_background_dot_3 {
       position: absolute;
-      background-image: url("../assets/14/intro/dot3.svg");
+      background-image: url("../assets/14/intro/computer/dot3.svg");
       background-repeat: no-repeat;
       background-position: center top 25%;
       background-size: 80% 80%;
@@ -373,7 +404,7 @@ export default {
 
     .intro_background_dot_4 {
       position: absolute;
-      background-image: url("../assets/14/intro/dot4.svg");
+      background-image: url("../assets/14/intro/computer/dot4.svg");
       background-repeat: no-repeat;
       background-position: center top 25%;
       background-size: 80% 80%;
@@ -429,7 +460,7 @@ export default {
       grid-template-rows: 3fr 1fr;
       grid-template-areas: "empty" "dot";
       //background-image: url("../assets/countdown.svg");
-      background-image: url("../assets/14/logoText.svg");
+      background-image: url("../assets/14/intro/computer/logo.svg");
       background-repeat: no-repeat;
       background-position: center top 25%;
       background-size: 63% 63%;
@@ -460,7 +491,7 @@ export default {
         justify-items: center;
         justify-content: center;
         align-items: center;
-        background-image: url("../assets/14/logo.svg");
+        background-image: url("../assets/14/intro/computer/logoTiny.svg");
         background-repeat: no-repeat;
         background-size: 36% 36%;
         background-position: center 0%;
@@ -470,7 +501,7 @@ export default {
           height: 1.5vw;
           margin: 0.8vw;
           margin-bottom: 10vw;
-          background-image: url("../assets/14/logo.svg");
+          background-image: url("../assets/14/intro/computer/logoTiny.svg");
           background-repeat: no-repeat;
           background-size: 100% 100%;
           background-position: 30% 0%;
@@ -503,8 +534,8 @@ export default {
           display: inline-block;
           align-self: center;
           justify-content: center;
-          width: 11vw;
-          height: 11vw;
+          width: 10vw;
+          height: 10vw;
           margin: 0 1vw;
           box-sizing: border-box;
 

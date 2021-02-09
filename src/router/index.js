@@ -8,6 +8,7 @@ import Activity from '@/components/Activity'
 import SignUp from '@/components/SignUp'
 import About from '@/components/About'
 import Sponsor from '@/components/Sponsor'
+import OnlineSource from '@/components/OnlineSource'
 
 Vue.use(Router)
 
@@ -56,6 +57,11 @@ export default new Router({
       path: '/sponsor',
       name: 'Sponsor',
       component: Sponsor
+    },
+    {
+      path: '/online',
+      name: 'OnlineSource',
+      component: OnlineSource
     }
   ]
 })

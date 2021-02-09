@@ -258,7 +258,7 @@ export default {
       margin: 0;
       padding: 0;
 
-      background-color: rgb(255, 250, 225);
+      background-color: rgb(255, 246, 232);
 
     }
 
@@ -284,11 +284,11 @@ export default {
       position: absolute;
       z-index: 20;
       left: 18vw;
-      top: 6vh;
+      top: 8vh;
 
-      width:  64vw;
+      width: 60vw;
       height: 30vw;
-      background-image: url("../assets/parent/parent_title.svg");
+      background-image: url("../assets/14/parent/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
@@ -662,7 +662,7 @@ export default {
       z-index: 1;
       top: 0;
       left: -10vw;
-      background: rgb(255, 250, 225);
+      background: rgb(255, 246, 232);
       height: 100vh;
       width: 75vw;
       transform: skewX(-5deg);
@@ -687,11 +687,11 @@ export default {
       position: absolute;
       z-index: 20;
       left: 10vw;
-      top: 8vh;
+      top: 6vh;
 
       width: 17vw;
       height: 8vw;
-      background-image: url("../assets/parent/parent_title.svg");
+      background-image: url("../assets/14/parent/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
