@@ -8,7 +8,7 @@
     div(class="activity_back")
       router-link(tag="button" to="/" class="activity_exit_button")
     div(class="activity_layout")
-      div(class="activity_title")
+      //  div(class="activity_title")
       div(class="activity_waterfall")
         section(v-for="(iter, index) of activities" v-bind:key="iter.title" class="activity_waterfall_item" v-on:click="currentIndex = currentIndex == -1 ? index : (currentIndex == index ? -1 : index)")
           time {{iter.time}}
@@ -156,17 +156,16 @@ export default {
       display: none;
     }
     .activity_title {
-      grid-area: select;
+      position: absolute;
       z-index: 20;
-      left: 18vw;
-      top: 8vh;
+      top: 3vh;
 
-      width: 60vw;
-      height: 30vw;
+      width: 45vw;
+      height: 20vw;
       background-image: url("../assets/14/activity/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      background-position: 50% 50%;
+      background-position: center top 10%;
     }
     .activity_layout {
       display: grid;
@@ -242,7 +241,7 @@ export default {
         width: 10vw;
         height: 10vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -252,7 +251,6 @@ export default {
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
-        filter: brightness(130%);
 
         &:hover {
           filter: brightness(150%);
@@ -303,12 +301,12 @@ export default {
     .activity_title {
       position: absolute;
       z-index: 20;
-      left: 10vw;
+      left: 4vw;
       top: 6vh;
 
       width: 17vw;
       height: 8vw;
-      background-image: url("../assets/14/news/title.svg");
+      background-image: url("../assets/14/activity/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
@@ -422,7 +420,7 @@ export default {
         width: 6vw;
         height: 6vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -432,7 +430,6 @@ export default {
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
-        filter: brightness(130%);
 
         &:hover {
           filter: brightness(150%);

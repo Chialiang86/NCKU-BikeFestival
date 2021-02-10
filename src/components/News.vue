@@ -123,20 +123,19 @@ export default {
     .news_title {
       position: absolute;
       z-index: 20;
-      left: 18vw;
-      top: 8vh;
+      top: 3vh;
 
-      width: 60vw;
-      height: 30vw;
+      width: 45vw;
+      height: 20vw;
       background-image: url("../assets/14/news/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      background-position: 50% 50%;
+      background-position: center top 10%;
     }
 
     .news_layout {
       display: grid;
-      grid-template-rows: 1.2fr 3fr .5fr;
+      grid-template-rows: 0.8fr 3fr .5fr;
       grid-template-areas: "select"
         "list"
         "list";
@@ -251,7 +250,7 @@ export default {
         width: 10vw;
         height: 10vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -261,7 +260,6 @@ export default {
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
-        filter: brightness(130%);
 
         &:hover {
           filter: brightness(150%);
@@ -301,7 +299,7 @@ export default {
     .news_title {
       position: absolute;
       z-index: 20;
-      left: 10vw;
+      left: 4vw;
       top: 6vh;
 
       width: 17vw;
@@ -351,7 +349,7 @@ export default {
     .news_layout {
       display: grid;
       grid-template-columns: 1.5fr 1fr;
-      grid-template-rows: 20vh 60vh 20vh;
+      grid-template-rows: 18vh 58vh 20vh;
       grid-template-areas: "empty select"
         "list time"
         ". .";
@@ -550,11 +548,12 @@ export default {
       z-index: 2;
       right: 2vw;
       top: 3vh;
+      z-index: 10;
       .news_exit_button {
         width: 6vw;
         height: 6vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -564,7 +563,6 @@ export default {
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
-        filter: brightness(130%);
 
         &:hover {
           filter: brightness(150%);

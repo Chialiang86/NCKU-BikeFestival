@@ -54,7 +54,6 @@ export default {
       z-index: 20;
       left: 18vw;
       top: 8vh;
-
       width: 60vw;
       height: 30vw;
       background-image: url("../assets/14/news/title.svg");
@@ -75,14 +74,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
-
         margin: 3.5vw 4.2vw;
         outline: none;
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
         filter: brightness(130%);
-
         &:hover {
           filter: brightness(150%);
         }
@@ -109,7 +106,6 @@ export default {
       padding: 0;
       overflow: hidden;
     }
-
     .onlinesrc_background {
       position: absolute;
       z-index: 1;
@@ -120,13 +116,11 @@ export default {
       width: 50vw;
       transform: skewX(5deg);
     }
-
     .onlinesrc_title {
       position: absolute;
       z-index: 20;
       left: 10vw;
       top: 6vh;
-
       width: 17vw;
       height: 8vw;
       background-image: url("../assets/14/news/title.svg");
@@ -134,7 +128,6 @@ export default {
       background-size: 100% 100%;
       background-position: 50% 50%;
     }
-
     .onlinesrc_logo {
       position: absolute;
       background-image: url('../assets/14/pageLogo.svg');
@@ -147,7 +140,6 @@ export default {
       width: 40vw;
       height: 100vh;
     }
-
     .onlinesrc_flower_top {
       position: absolute;
       background-image: url('../assets/14/flower.svg');
@@ -160,7 +152,6 @@ export default {
       width: 41vw;
       height: 40vh;
     }
-
     .onlinesrc_flower_down {
       position: absolute;
       background-image: url('../assets/14/flower.svg');
@@ -173,7 +164,6 @@ export default {
       width: 41vw;
       height: 40vh;
     }
-
     .onlinesrc_layout {
       display: grid;
       // grid-template-rows: 1fr 4fr;
@@ -182,13 +172,11 @@ export default {
       width: 100vw;
       height: 100vh;
     }
-
     .onlinesrc_title {
       position: absolute;
       z-index: 20;
       left: 10vw;
       top: 8vh;
-
       width: 17vw;
       height: 8vw;
       background-image: url("../assets/14/online/title.svg");
@@ -196,7 +184,6 @@ export default {
       background-size: 100% 100%;
       background-position: 50% 50%;
     }
-
     .onlinesrc_back {
       position: absolute;
       z-index: 2;
@@ -210,14 +197,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
-
         margin: 3.5vw 4.2vw;
         outline: none;
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
         filter: brightness(130%);
-
         &:hover {
           filter: brightness(150%);
         }

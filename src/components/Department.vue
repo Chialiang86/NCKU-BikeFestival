@@ -409,7 +409,7 @@ export default {
         width: 10vw;
         height: 10vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -419,7 +419,6 @@ export default {
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
-        filter: brightness(130%);
 
         &:hover {
           filter: brightness(150%);
@@ -1071,7 +1070,7 @@ export default {
         width: 6vw;
         height: 6vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -1081,7 +1080,6 @@ export default {
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
-        filter: brightness(130%);
 
         &:hover {
           filter: brightness(150%);

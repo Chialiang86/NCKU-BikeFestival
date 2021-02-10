@@ -283,15 +283,14 @@ export default {
     .parent_title {
       position: absolute;
       z-index: 20;
-      left: 18vw;
-      top: 8vh;
+      top: 3vh;
 
-      width: 60vw;
-      height: 30vw;
+      width: 45vw;
+      height: 20vw;
       background-image: url("../assets/14/parent/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      background-position: 50% 50%;
+      background-position: center top 10%;
     }
 
     .parent_article_section {
@@ -322,7 +321,7 @@ export default {
 
         font-size: 1.5em;
         text-align: left;
-        color: #DD4A43;
+        color: rgb(103, 192, 225);
         overflow-y: scroll;
         overflow-x: hidden;
         &::-webkit-scrollbar {
@@ -351,7 +350,7 @@ export default {
       .parent_return_list_button {
         width: 90%;
         height: 12vw;
-        background-color: #DD4A43;
+        background-color: rgb(103, 192, 225);
 
         margin: 5vw;
 
@@ -406,7 +405,7 @@ export default {
             height: 15vw;
             margin: 3vw;
             background-image: none !important;
-            background-color: #DD4A43;
+            background-color: rgb(103, 192, 225);
             background-repeat: no-repeat;
             background-size: 100% 100%;
             background-position: 50% 50%;
@@ -458,7 +457,7 @@ export default {
 
             box-sizing: border-box;
 
-            background-color: #DD4A43;
+            background-color: rgb(103, 192, 225);
 
             outline: none;
             border: none;
@@ -510,12 +509,12 @@ export default {
               padding: 0 2vw;
 
               font-size: 6vw;
-              color: #DD4A43;
+              color: rgb(103, 192, 225);
               text-align: left;
 
               cursor: pointer;
 
-              border-left: 0px solid #DD4A43;
+              border-left: 0px solid rgb(103, 192, 225);
 
               transition: filter .3s ease, border-left-width .2s ease;
               transform-origin: left;
@@ -555,7 +554,7 @@ export default {
         .parent_return_type_button {
           width: 90%;
           height: 12vw;
-          background-color: #DD4A43;
+          background-color: rgb(103, 192, 225);
 
           margin: 5vw;
 
@@ -607,7 +606,7 @@ export default {
         width: 15vw;
         height: 15vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -615,7 +614,6 @@ export default {
 
         outline: none;
         border: none;
-        filter: brightness(120%);
 
         cursor: pointer;
 
@@ -686,7 +684,7 @@ export default {
     .parent_title {
       position: absolute;
       z-index: 20;
-      left: 10vw;
+      left: 4vw;
       top: 6vh;
 
       width: 17vw;
@@ -718,7 +716,7 @@ export default {
         font-size: 1.2vw;
         line-height: 130%;
         text-align: left;
-        color: #DD4A43;
+        color: rgb(103, 192, 225);
         overflow-y: scroll;
         overflow-x: hidden;
         &::-webkit-scrollbar {
@@ -739,7 +737,7 @@ export default {
         display: none;
         background-color: #e3dfc1;
         border-radius: 5px;
-        color: #DD4A43;
+        color: rgb(103, 192, 225);
         font-size: 1.5em;
         line-height: 1.2em;
         top: 26%;
@@ -830,7 +828,7 @@ export default {
             width: 100%;
             height: 2.5vw;
 
-            background-color: #DD4A43;
+            background-color: rgb(103, 192, 225);
 
             outline: none;
             border: none;
@@ -879,12 +877,12 @@ export default {
               padding-left: 12px;
 
               font-size: 1.5vw;
-              color: #DD4A43;
+              color: rgb(103, 192, 225);
               text-align: left;
 
               cursor: pointer;
 
-              border-left: 0px solid #DD4A43;
+              border-left: 0px solid rgb(103, 192, 225);
 
               transition: filter .3s ease, border-left-width .2s ease;
               transform-origin: left;
@@ -981,7 +979,7 @@ export default {
         width: 6vw;
         height: 6vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -1003,7 +1001,7 @@ export default {
     }
 
     .activeArticle {
-      border-left: .4vw solid #DD4A43 !important;
+      border-left: .4vw solid rgb(103, 192, 225) !important;
     }
   }
 

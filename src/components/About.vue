@@ -196,14 +196,13 @@ export default {
       width: 7.5vw;
       height: 7.5vw;
       background-color: transparent;
-      background-image: url("../assets/exit.svg");
+      background-image: url("../assets/14/home.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
 
       outline: none;
       border: none;
-      filter: brightness(120%);
 
       cursor: pointer;
 
@@ -388,14 +387,13 @@ export default {
       width: 2.5vw;
       height: 2.5vw;
       background-color: transparent;
-      background-image: url("../assets/exit.svg");
+      background-image: url("../assets/14/home.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
 
       outline: none;
       border: none;
-      filter: brightness(120%);
 
       cursor: pointer;
 

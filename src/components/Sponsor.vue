@@ -113,17 +113,6 @@ export default {
 <p><img src="https://imgur.com/z73X0Vd.jpg") style="border:2px white solid;padding:5px;text-align:center; height:35vh;"></p>
 <p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">官網</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="color: #0563c1;"><u><a href="https://www.hsinfei.com/"><span style="font-family: GenYoGothicTW-Bold, serif;">https://www.hsinfei.com/</span></a></u></span></p>
 <p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">地址</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="color: #1d2129;"><span style="font-family: GenYoGothicTW-Bold;"><span style="font-size: medium;">台南市中西區民生路一段167號3F</span></p>`
-        },
-        {
-          name: '海派甜心',
-          link: 'https://www.hsinfei.com/',
-          content: `<p align="center">
-<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">新飛在菲律賓遊學領域，不只是菲律賓遊學代辦，而是自詡為學員的全方位海外英語學習協助顧問，從一開始的諮詢、到中間的代辦過程、及出發後的在地照顧，皆一應俱全。且這中間過程新飛不會向學員收取代辦費，因為新飛做為菲律賓語言學校在台灣的代理，是由學校會給予新飛合理的合作費用。</span></span></span></p>
-<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">最後，希望能夠藉由分享新飛國際的經驗，讓您也能一同體會這份感動，了解到學英文其實是可以很快樂、很有效率的。然後藉由這段過程，提升台灣競爭力，增加國際觀，成為遨遊世界通行無阻的菁英！</span></span></span></p>
-<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">Hsinfei Always Touches Your Heart!</span></span></span></p>
-<p><img src="https://imgur.com/z73X0Vd.jpg") style="border:2px white solid;padding:5px;text-align:center; height:35vh;"></p>
-<p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">官網</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="color: #0563c1;"><u><a href="https://www.hsinfei.com/" target="_blank"><span style="font-family: GenYoGothicTW-Bold, serif;">https://www.hsinfei.com/</span></a></u></span></p>
-<p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">地址</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="color: #1d2129;"><span style="font-family: GenYoGothicTW-Bold;"><span style="font-size: medium;">台南市中西區民生路一段167號3F</span></p>`
         }
       ]
     }
@@ -163,9 +152,9 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      height: auto;
+      // position: relative;
       width: 100vw;
+      height: 100vh;
       margin: 0;
       padding: 0;
       background: rgb(255, 246, 232);
@@ -173,16 +162,18 @@ export default {
 
     .sponsor_title {
       position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 20;
-      left: 18vw;
-      top: 8vh;
+      top: 3vh;
 
-      width: 60vw;
-      height: 30vw;
+      width: 45vw;
+      height: 20vw;
       background-image: url("../assets/14/sponsor/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      background-position: 50% 50%;
+      background-position: center top 10%;
     }
 
     .sponsor_back {
@@ -194,7 +185,7 @@ export default {
         width: 10vw;
         height: 10vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -204,7 +195,6 @@ export default {
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
-        filter: brightness(130%);
 
         &:hover {
           filter: brightness(150%);
@@ -246,30 +236,30 @@ export default {
 
     .sponsor_layout_1 {
       display: grid;
-      grid-template-rows: 13vh 1fr;
+      grid-template-rows: 1fr 3fr;
       grid-template-areas: "top"
         "bottom";
       justify-content: center;
-      align-content: center;
-      align-items: center;
+      align-content: bottom;
+      align-items: bottom;
 
-      background-color: rgb(255, 250, 225);
+      background-color: rgb(255, 246, 232);
       width: 100%;
-      min-height: 100vh;
+      min-height: 50vh;
       overflow-y: scroll;
     }
 
     .sponsor_layout_2 {
       display: grid;
-      grid-template-rows: 1fr 1.5fr;
+      grid-template-rows: 1fr 3fr;
       grid-template-areas: "top bottom";
       justify-content: center;
       align-content: center;
-      align-items: center;
+      align-items: flex-start;
 
-      background-color: rgb(255, 250, 225);
+      background-color: rgb(255, 246, 232);
       width: 100%;
-      min-height: 100vh;
+      height: 100%;
       overflow-y: scroll;
     }
 
@@ -339,13 +329,15 @@ export default {
 
       p {
         grid-area: ncku;
-        color: #942323;
-        font-size: 3.6vw;
+        line-height: 20px;
+        color: rgb(103, 192, 225);
+        font-size: 1.8vh;
       }
 
       article {
         text-align: left;
         grid-area: content;
+        line-height:3vh;
 
         width: 90%;
         height: 70vh;
@@ -384,7 +376,7 @@ export default {
     .sponsor_title {
       position: absolute;
       z-index: 20;
-      left: 10vw;
+      left: 4vw;
       top: 6vh;
 
       width: 17vw;
@@ -404,7 +396,7 @@ export default {
         width: 6vw;
         height: 6vw;
         background-color: transparent;
-        background-image: url("../assets/exit.svg");
+        background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -414,7 +406,6 @@ export default {
         border: none;
         transition: filter .3s ease;
         cursor: pointer;
-        filter: brightness(130%);
 
         &:hover {
           filter: brightness(150%);
@@ -467,7 +458,7 @@ export default {
       width: 100vw;
       height: 100vh;
 
-      background-color: rgb(255, 250, 225);
+      background-color: rgb(255, 246, 232);
     }
 
     .sponsor_layout_2 {
@@ -499,20 +490,24 @@ export default {
         &:hover {
           transform: scale(1.1);
           &:before {
-            position: absolute;
+            position:absolute;
             display: block;
+            text-align: center;
             content: '';
+            // text-align: top -20%;
             width: 7vw;
             height: 7vw;
             background-color: rgba(0, 0, 0, 0.66);
             z-index: 20;
           }
           &:after {
-            position: absolute;
+            position:absolute;
             content: attr(data-name);
             color: white;
             text-align: center;
-            margin-top: 3.5vw;
+            // text-align: top -20%;
+            margin-top: 2vh;
+            margin-left: -3.5vw;
             width: 7vw;
             z-index: 21;
           }
@@ -537,11 +532,11 @@ export default {
       width: 100%;
       height: 100%;
 
-      background-color: rgb(255, 250, 225);
+      background-color: rgb(255, 246, 232);
 
       p {
         grid-area: title;
-        color: #942323;
+        color: rgb(103, 192, 225);
         font-size: 3.6vw;
       }
 
@@ -595,7 +590,7 @@ export default {
 
       p {
         grid-area: ncku;
-        color: #942323;
+        color: rgb(103, 192, 225);
         font-size: 3.6vw;
       }
 

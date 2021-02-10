@@ -228,7 +228,7 @@ export default {
     .intro_layout {
       display: grid;
       grid-template-columns: 100vw;
-      grid-template-rows: 1fr 1.2fr;
+      grid-template-rows: 1fr 1.4fr;
       grid-template-areas: "logo" "menu";
       grid-gap: 1vw;
       align-items: center;
@@ -268,16 +268,16 @@ export default {
       width: 100%;
       height: 100%;
       background-image: url("../assets/14/intro/mobile/background_down.svg");
-      background-size: 120% 120%;
+      background-size: 128% 128%;
       background-repeat: no-repeat;
-      background-position: center top 80%;
+      background-position: center top 95%;
       justify-content: center;
       justify-items: center;
-      align-items: center;
+      align-items: flex-start;
 
       z-index: 0;
 
-      padding: 15vh 8vw 8vh 10vw;
+      padding: 8vh 8vw 20vh 10vw;
       box-sizing: border-box;
 
       ul {

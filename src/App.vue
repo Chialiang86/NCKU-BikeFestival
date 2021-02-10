@@ -1,8 +1,8 @@
 <template lang="pug">
   div(id="app")
-    video(v-if="pc" src="./assets/14/start/startupComputer.mp4" id="startup_computer" autoplay muted)
-    video(v-else src="./assets/14/start/startupMobile.mp4" id="startup_mobile" autoplay muted)
-    //div(id="logo")
+    //- video(v-if="pc" src="./assets/14/start/startupComputer.gif" id="startup_computer" loop)
+    //- video(v-else src="./assets/14/start/startupMobile.gif" id="startup_mobile" loop)
+    div(id="logo")
       svg(viewBox="100 0 700 700")
         title logo
         path(class="cls-1" d="M609,165.86a14.27,14.27,0,1,1,14.27-14.27A14.29,14.29,0,0,1,609,165.86ZM609,145a6.55,6.55,0,1,0,6.55,6.55A6.55,6.55,0,0,0,609,145Z")
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-// import anime from 'animejs'
+import anime from 'animejs'
 import Intro from './components/Intro'
 import TransitionPage from './components/TransitionPage'
 
@@ -95,35 +95,34 @@ export default {
   mounted: function () {
     // config click event
     document.addEventListener('click', this.clickEffect)
-    // const self = this
-    // const logo = this.$el.querySelector('#logo')
-    var startup
-    if (this.pc) {
-      startup = this.$el.querySelector('#startup_computer')
-      startup.addEventListener('ended', myHandler, false)
-    } else {
-      startup = this.$el.querySelector('#startup_mobile')
-      startup.addEventListener('ended', myHandler, false)
-    }
+    const self = this
+    const logo = this.$el.querySelector('#logo')
+    // var startup
+    // if (this.pc) {
+    //   startup = this.$el.querySelector('#startup_computer')
+    //   startup.addEventListener('ended', myHandler, false)
+    // } else {
+    //   startup = this.$el.querySelector('#startup_mobile')
+    //   startup.addEventListener('ended', myHandler, false)
+    // }
     if (this.$route.name !== 'Intro') {
-      // logo.parentNode.removeChild(logo)
-      startup.parentNode.removeChild(startup)
-      // return
+      logo.parentNode.removeChild(logo)
+      // startup.parentNode.removeChild(startup)
+      return
     }
 
-    function myHandler (e) {
-      setTimeout(function () {
-        startup.classList.add('slide-up')
-        const transEndEvent = function () {
-          startup.removeEventListener('transitionend', transEndEvent)
-          startup.parentNode.removeChild(startup)
-        }
-        startup.addEventListener('transitionend', transEndEvent)
-      }, 500)
-    }
+    // function myHandler (e) {
+    //   setTimeout(function () {
+    //     startup.classList.add('slide-up')
+    //     const transEndEvent = function () {
+    //       startup.removeEventListener('transitionend', transEndEvent)
+    //       startup.parentNode.removeChild(startup)
+    //     }
+    //     startup.addEventListener('transitionend', transEndEvent)
+    //   }, 500)
+    // }
     // add logo line animation
 
-    /*
     anime({
       targets: 'svg path, svg circle',
       strokeDashoffset: [anime.setDashoffset, 0],
@@ -151,7 +150,7 @@ export default {
           logo.addEventListener('transitionend', transEndEvent)
         }, 1500)
       }
-    }) */
+    })
   },
   methods: {
     isPC: function () {
@@ -279,7 +278,7 @@ export default {
     }
 
     #app {
-      /*  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
@@ -287,7 +286,7 @@ export default {
       margin-top: 60px;
       overflow: hidden;
       margin: 0;
-      padding: 0; */
+      padding: 0;
 
       // self add
       width: 100%;
@@ -435,7 +434,7 @@ export default {
     }
 
     #app {
-      /*  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
@@ -443,7 +442,7 @@ export default {
       margin-top: 60px;
       overflow: hidden;
       margin: 0;
-      padding: 0; */
+      padding: 0;
 
       // self add
       width: 100%;
@@ -474,6 +473,56 @@ export default {
       top:0;
       left:0;
       object-fit: cover;
+    }
+    .cls-1, .cls-4 {
+      fill: #942323;
+    }
+    .cls-1, .cls-2, .cls-3, .cls-4 {
+      stroke-width: 1.5px;
+      stroke: #942323;
+      stroke-miterlimit: 10;
+      fill-opacity: 0;
+    }
+    .cls-2{
+      fill: #1e556d;
+    }
+    .cls-3{
+      fill: #133180;
+    }
+    .cls-4{
+      stroke-width: 0.5px;
+    }
+
+    #logo {
+      position: fixed;
+      overflow: hidden;
+      width: 100%;
+      max-height: 100vh;
+      z-index: 9999;
+      background-color: #d9d4b3;
+
+      transition: max-height .8s ease;
+
+      will-change: max-height;
+    }
+    #logo {
+      position: fixed;
+      overflow: hidden;
+      width: 100%;
+      max-height: 100vh;
+      z-index: 9999;
+      background-color: #d9d4b3;
+
+      transition: max-height .8s ease;
+
+      will-change: max-height;
+    }
+    #logo svg {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      margin: 0 auto;
+      transform: translate(-10px, 0);
     }
 
     .clickEffect {
