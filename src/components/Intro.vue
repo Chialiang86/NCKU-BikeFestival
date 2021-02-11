@@ -33,8 +33,8 @@
           router-link(tag="li" v-bind:to="'/online'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_4.svg`) + ')'}")
           router-link(tag="li" v-bind:to="'/parent'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_5.svg`) + ')'}")
           router-link(tag="li" v-bind:to="'/sponsor'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_6.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/online'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_7.svg`) + ')'}")
-          a(href="https://lihi1.com/Poozk" target="_blank")
+          router-link(tag="li" v-bind:to="'/live'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_7.svg`) + ')'}")
+          a(href="https://reurl.cc/pmZKrx" target="_blank")
             li(tag="li" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_8.svg`) + ')'}")
 </template>
 
@@ -296,7 +296,7 @@ export default {
           display: inline-block;
           width: 22vw;
           height: 22vw;
-          margin: 2vw 0;
+          margin: 2vw rgb(103, 192, 225);
           // padding: 0 0.5vw 0 0.5vw;
           box-sizing: border-box;
 
@@ -304,7 +304,7 @@ export default {
           background-position: center bottom;
           background-size: 90% 90%;
 
-          border: 0px solid #942323;
+          border: 0px solid rgb(103, 192, 225);
           border-radius: 1vw;
           box-sizing: content-box;
 
@@ -548,7 +548,7 @@ export default {
             background-size: 75% 75%;
           }
 
-          border: 0px solid rgb(38, 115, 187);
+          border: 0px solid rgb(103, 192, 225);
           border-radius: 0px;
           box-sizing: content-box;
 

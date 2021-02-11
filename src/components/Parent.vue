@@ -269,7 +269,7 @@ export default {
     .parent_layout {
       display: grid;
       grid-template-columns: 100vw;
-      grid-template-rows: 45vw 1fr;
+      grid-template-rows: 32vw 1fr;
       grid-template-areas: "select"
         "main";
       align-items: center;
@@ -382,7 +382,7 @@ export default {
       display: flex;
       justify-content: center;
       justify-items: center;
-      align-items: center;
+      align-items: flex-start;
 
       overflow: hidden;
 
@@ -603,8 +603,8 @@ export default {
       .parent_exit_button {
         grid-area: exit;
 
-        width: 15vw;
-        height: 15vw;
+        width: 10vw;
+        height: 10vw;
         background-color: transparent;
         background-image: url("../assets/14/home.svg");
         background-repeat: no-repeat;

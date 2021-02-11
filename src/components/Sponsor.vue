@@ -1,6 +1,6 @@
 <template lang="pug">
   div(class="sponsor_page")
-    div(class="sponsor_title")
+    //div(class="sponsor_title")
     div(class="sponsor_back")
       router-link(v-show="mode === 0" tag="button" to="/" class="sponsor_exit_button")
     button(v-show="mode === 1" class="sponsor_return_button" v-on:click="mode = 0; currentIndex = -1;")
@@ -113,6 +113,17 @@ export default {
 <p><img src="https://imgur.com/z73X0Vd.jpg") style="border:2px white solid;padding:5px;text-align:center; height:35vh;"></p>
 <p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">官網</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="color: #0563c1;"><u><a href="https://www.hsinfei.com/"><span style="font-family: GenYoGothicTW-Bold, serif;">https://www.hsinfei.com/</span></a></u></span></p>
 <p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">地址</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="color: #1d2129;"><span style="font-family: GenYoGothicTW-Bold;"><span style="font-size: medium;">台南市中西區民生路一段167號3F</span></p>`
+        },
+        {
+          name: '川益科技股份有限公司',
+          link: 'https://www.kingslide.com/',
+          content: `<p align="center">
+<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;"> 於2006年成立在高雄科學園區內的川益科技，以創造消費需求而創立， 結合ID設計元素及專業研發人才研究與開發頂尖的先進製程技術與材料應用並投入電子零組件與消費性電子產品產業， 運用多種嶄新技術研發製造出精度高、觸感佳、質感優的金屬配件，成功引領3C產品朝向多樣化與個性化的方向發展。</span></span></span></p>
+<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">卓越的研發技術與優良品質使King Slide品牌不僅在雲端產業與高階廚具產業獲得業界翹楚之指定品牌，在邁入消費性電子產品的領域發展之際， King Slide功能性機構產品已朝向全方位應用端發展，現已成為各高科技大廠及各行業翹楚指名的長期合作伙伴。</span></span></span></p>
+<p><a name="_GoBack"></a> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">Hsinfei Always Touches Your Heart!</span></span></span></p>
+<p><img src="https://i.imgur.com/0tBwKXD.png") style="border:2px white solid;padding:5px;text-align:center; height:35vh;"></p>
+<p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">官網</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="color: #0563c1;"><u><a href="https://www.hsinfei.com/"><span style="font-family: GenYoGothicTW-Bold, serif;">https://www.kingslide.com/</span></a></u></span></p>
+<p><span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="font-family: GenYoGothicTW-Bold;">地址</span></span></span><span style="font-family: GenYoGothicTW-Bold, serif;">:</span> <span style="font-family: GenYoGothicTW-Bold;"><span lang="zh-TW"><span style="color: #1d2129;"><span style="font-family: GenYoGothicTW-Bold;"><span style="font-size: medium;">台灣高雄市路竹區路科九路6號</span></p>`
         }
       ]
     }
@@ -483,6 +494,7 @@ export default {
         height: 7vw;
         background-position: 50% 50%;
         background-size: contain;
+        background-color : white;
         background-repeat: no-repeat;
 
         transition: .2s transform ease-in-out;
@@ -537,16 +549,16 @@ export default {
       p {
         grid-area: title;
         color: rgb(103, 192, 225);
-        font-size: 3.6vw;
+        font-size: 3vw;
       }
 
       label {
         grid-area: icon;
-
         width: 15vw;
         height: 15vw;
         background-position: 50% 50%;
         background-size: contain;
+        background-color : white;
         background-repeat: no-repeat;
         cursor: pointer;
 
@@ -595,10 +607,12 @@ export default {
       }
 
       article {
+        padding: 6vh 3vw 0 0;
         text-align: left;
+        line-height: 3.6vh;
         grid-area: content;
 
-        width: 90%;
+        width: 80%;
       }
     }
   }

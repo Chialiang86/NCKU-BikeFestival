@@ -9,6 +9,7 @@ import SignUp from '@/components/SignUp'
 import About from '@/components/About'
 import Sponsor from '@/components/Sponsor'
 import OnlineSource from '@/components/OnlineSource'
+import Live from '@/components/Live'
 
 Vue.use(Router)
 
@@ -62,6 +63,11 @@ export default new Router({
       path: '/online',
       name: 'OnlineSource',
       component: OnlineSource
+    },
+    {
+      path: '/live',
+      name: 'Live',
+      component: Live
     }
   ]
 })
