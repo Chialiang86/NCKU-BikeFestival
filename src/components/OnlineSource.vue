@@ -1,6 +1,18 @@
 <template lang="pug">
   div(class="onlinesrc_page")
-    div(class="onlinesrc_title")
+    //- div(class="onlinesrc_title")
+    div(class="onlinesrc_top_bar" v-if="pc")
+      div(class="onlinesrc_top_bar_layout")
+        router-link(tag="label" class="onlinesrc_exit_button" to="/")
+        div(class="onlinesrc_top_bar_item")
+          router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
+            div(id="bottom" v-if="index===3")
+    div(class="onlinesrc_top_bar_mobile")
+      div(class="onlinesrc_mobile_title")
+      router-link(tag="div" class="onlinesrc_mobile_exit_button" to="/")
+      div(class="onlinesrc_mobile_list" @click="list = !list")
+    div(class="onlinesrc_mobile_list_area" v-show="list")
+      router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
     div(class="onlinesrc_flower_top")
     div(class="onlinesrc_flower_down")
     div(class="onlinesrc_layout")
@@ -10,7 +22,7 @@
         label(class="onlinesrc_item_name") 備審攻略
         div(class="onlinesrc_item_background")
           div(class="onlinesrc_item_content" id="strategy")
-            label(class="onlinesrc_item_content_list" v-for="(iter, index) of contenta" v-bind:key="iter.text" v-bind:data-name="iter.name" v-bind:style="{'background-image': 'url(' + `${iter.img}` + ')'}" v-on:click="openTab(index)")
+            label(class="onlinesrc_item_content_list" v-for="(iter, index) of strategyList" v-bind:key="iter.text" v-bind:data-name="iter.name" v-bind:style="{'background-image': 'url(' + `${iter.img}` + ')'}" v-on:click="openTab(index)")
               label(class="onlinesrc_item_content_text")
                 p {{iter.text}}
       section(class="onlinesrc_layout_interview")
@@ -33,15 +45,22 @@
               label(class="onlinesrc_item_content_text")
                 p {{iter.text}}
       //section(class="onlinesrc_layout_empty")
-    div(class="onlinesrc_back")
-      router-link(tag="button" to="/" class="onlinesrc_exit_button")
+    //- div(class="onlinesrc_back")
+    //-   router-link(tag="button" to="/" class="onlinesrc_exit_button")
 </template>
 
 <script>
-//  import axios from 'axios'
+//  import srcJson from '../assets/14/online/src.json'
+// import axios from 'axios'
 export default {
   data: function () {
     return {
+      menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區', '我要報名'],
+      urlText: ['news', 'activity', 'department', 'onlinesrc', 'parent', 'sponsor', 'live', 'sign-up'],
+      list: false,
+      pc: this.isPC(),
+      srcList: ['strategyList'],
+      strategyList: [],
       contenta: [
         {
           text: '老高嘴砲喔',
@@ -83,8 +102,10 @@ export default {
     }
   },
   mounted: async function () {
-    // const list = this.$el.querySelector()
-    // list.classList.add('onlinesrc_item_content_text')
+    fetch('../assets/14/online/src.json')
+      .then(res => res.json)
+      .then(data => { this.strategyList = data })
+      .then(err => { console.log(err.message) })
   },
   methods: {
     openTab: function (index) {
@@ -92,13 +113,25 @@ export default {
     },
     scroll: function (dir, idName) {
       var scrollPos = document.getElementById(idName)
-      const dis = 70
+      const dis = this.pc ? 26 : 70
       if (dir === -1) {
         scrollPos.scrollLeft = (scrollPos.scrollLeft - this.vw(dis) < 0) ? 0 : scrollPos.scrollLeft - this.vw(dis)
       }
       if (dir === 1) {
         scrollPos.scrollLeft = (scrollPos.scrollLeft + this.vw(dis) > scrollPos.scrollWidth) ? scrollPos.scrollWidth : scrollPos.scrollLeft + this.vw(dis)
       }
+    },
+    isPC: function () {
+      var userAgentInfo = navigator.userAgent
+      var Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
+      var flag = true
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false
+          break
+        }
+      }
+      return flag
     },
     vw: function (v) {
       var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
@@ -129,6 +162,97 @@ export default {
       background: white;
       overflow: hidden;
     }
+    .onlinesrc_top_bar_mobile {
+      position: absolute;
+      display: grid;
+      grid-template-columns: 20vw 1fr 20vw;
+      grid-template-areas: "exit title list";
+      justify-content: center;
+      justify-items: center;
+      z-index: 10;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(254,241,217);
+      width: 100vw;
+      height: 8vh;
+      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      &:hover {
+        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+      }
+      .onlinesrc_mobile_exit_button {
+        grid-area: exit;
+        width: 6vh;
+        height: 6vh;
+        background-image: url('../assets/14/exit.svg');
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        background-position: center center;
+        border-radius: 2vw;
+        background-color: transparent;
+        margin: 1vh;
+        &:hover {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+      .onlinesrc_mobile_title {
+        grid-area: title;
+        width: 60vw;
+        background-image: url('../assets/14/logoText.svg');
+        background-repeat: no-repeat;
+        background-size: 80% 80%;
+        background-position: center center;
+      }
+      .onlinesrc_mobile_list {
+        grid-area: list;
+        width: 6vh;
+        height: 6vh;
+        background-image: url('../assets/14/list.svg');
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        background-position: center center;
+        border-radius: 2vw;
+        background-color: transparent;
+        margin: 1vh;
+        &:hover {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+    }
+    .onlinesrc_mobile_list_area {
+      position: absolute;
+      display: grid;
+      grid-template-rows: repeat(8, 7vh);
+      z-index: 20;
+      width: 40vw;
+      height: 56vh;
+      right: 0%;
+      top: 8%;
+      background-color: rgba(100, 100, 100, 0.9);
+      label {
+        border: 0.1vh solid black;
+        color:rgb(255, 246, 232);
+        line-height: 6vh;
+        font-size: 2.4vh;
+        &:hover {
+          background-color: rgb(155, 155, 155);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+    }
     .onlinesrc_background {
       position: absolute;
       z-index: 1;
@@ -142,9 +266,8 @@ export default {
     .onlinesrc_title {
       position: absolute;
       z-index: 20;
-      top: 3vh;
-
-      width: 45vw;
+      top: 8vh;
+      width: 40vw;
       height: 20vw;
       background-image: url("../assets/14/live/title.svg");
       background-repeat: no-repeat;
@@ -191,10 +314,11 @@ export default {
     .onlinesrc_layout {
       position: absolute;
       z-index: 3;
-      top: 20vh;
+      top: 15vh;
       width: 100vw;
       height: 70vh;
       overflow-y: scroll;
+      scroll-behavior: smooth;
     }
 
     .onlinesrc_layout_strategy {
@@ -311,9 +435,9 @@ export default {
               z-index: 22;
               p {
                 padding: 2vh;
-                color: rgb(55, 55, 55);
+                color: white;
                 line-height: 4vh;
-                font-size: 4vh;
+                font-size: 3vh;
               }
               &:hover {
                 filter: brightness(150%);
@@ -450,9 +574,9 @@ export default {
               z-index: 22;
               p {
                 padding: 2vh;
-                color: rgb(55, 55, 55);
+                color: white;
                 line-height: 4vh;
-                font-size: 4vh;
+                font-size: 3vh;
               }
               &:hover {
                 filter: brightness(150%);
@@ -582,9 +706,9 @@ export default {
               z-index: 22;
               p {
                 padding: 2vh;
-                color: rgb(55, 55, 55);
+                color: white;
                 line-height: 4vh;
-                font-size: 4vh;
+                font-size: 3vh;
               }
               &:hover {
                 filter: brightness(150%);
@@ -660,18 +784,99 @@ export default {
       width: 50vw;
       transform: skewX(5deg);
     }
-    .onlinesrc_title {
-      position: absolute;
-      z-index: 20;
-      left: 4vw;
-      top: 6vh;
+    // .onlinesrc_title {
+    //   position: absolute;
+    //   z-index: 20;
+    //   left: 4vw;
+    //   top: 6vh;
 
-      width: 17vw;
-      height: 8vw;
-      background-image: url("../assets/14/online/title.svg");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: 50% 50%;
+    //   width: 17vw;
+    //   height: 8vw;
+    //   background-image: url("../assets/14/online/title.svg");
+    //   background-repeat: no-repeat;
+    //   background-size: 100% 100%;
+    //   background-position: 50% 50%;
+    // }
+    .onlinesrc_top_bar {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(254,241,217);
+      width: 100vw;
+      height: 8vh;
+      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      &:hover {
+        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+      }
+      .onlinesrc_top_bar_layout {
+        display: grid;
+        grid-template-columns: 12vw 82vw 6vw;
+        grid-template-areas: "home items .";
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+        align-content: center;
+        .onlinesrc_exit_button {
+          grid-area: home;
+          width: 12vw;
+          height: 8vh;
+          background-color: transparent;
+          background-image: url("../assets/14/logoHome.svg");
+          background-repeat: no-repeat;
+          background-size: 80% 80%;
+          background-position: 50% 50%;
+          background-color: rgb(103, 192, 225);
+          transition: filter .3s ease;
+          cursor: pointer;
+          &:hover {
+            filter: brightness(150%);
+          }
+          &:active {
+            filter: brightness(80%);
+          }
+        }
+        .onlinesrc_top_bar_item {
+          grid-area: items;
+          display: grid;
+          grid-template-columns: repeat(8, 10vw);
+          justify-content: center;
+          label {
+            display: grid;
+            grid-template-rows: 15fr 1fr;
+            grid-template-areas: "." "bottom";
+            width: 9vw;
+            height: 7vh;
+            line-height: 6vh;
+            font-size: 2.5vh;
+            background-color: transparent;
+            color: rgb(103, 192, 225);
+            letter-spacing: 0.2vw;
+            #bottom {
+              grid-area: "bottom";
+              background-color: rgb(103, 192, 225);
+            }
+            &:hover {
+              filter: brightness(150%);
+              background-color: rgba(55, 55, 55, 0.3);
+            }
+            &:active {
+              filter: brightness(80%);
+            }
+          }
+        }
+        .onlinesrc_sign_up_button {
+          grid-area: sign-up;
+          width: 8vw;
+          height: 6vh;
+          line-height: 5vh;
+          font-size: 3vh;
+          background-color: white;
+          border: 1px solid rgba(100, 100, 100, 0.3)
+        }
+      }
     }
     .onlinesrc_logo {
       position: absolute;
@@ -713,7 +918,7 @@ export default {
     .onlinesrc_layout {
       position: absolute;
       z-index: 3;
-      top: 20vh;
+      top: 15vh;
       width: 100vw;
       height: 80vh;
       overflow-y: scroll;
@@ -725,7 +930,7 @@ export default {
       grid-template-areas: "name" "content";
       width: 100vw;
       height: 75vh;
-      margin: 0 0 2.5vw 0;
+      margin: 0 0 5vw 0;
       .onlinesrc_layout_strategy_larrow {
         position: absolute;
         width: 5vw;
@@ -789,6 +994,7 @@ export default {
         justify-content: center;
         align-items: center;
         background: rgb(241,207,217);
+        // background:radial-gradient(ellipse at center,rgb(241,207,217),rgb(241,187,197));
         width: 100%;
         .onlinesrc_item_content {
           width: 78vw;
@@ -833,9 +1039,9 @@ export default {
               z-index: 22;
               p {
                 padding: 2vh;
-                color: rgb(55, 55, 55);
+                color: white;
                 line-height: 4vh;
-                font-size: 4vh;
+                font-size: 3vh;
               }
               &:hover {
                 filter: brightness(150%);
@@ -928,6 +1134,7 @@ export default {
         justify-content: center;
         align-items: center;
         background: rgb(254,241,217);
+        // background:radial-gradient(ellipse at center,rgb(254,241,217),rgb(230, 197, 136));
         width: 100%;
         .onlinesrc_item_content {
           width: 78vw;
@@ -972,9 +1179,9 @@ export default {
               z-index: 22;
               p {
                 padding: 2vh;
-                color: rgb(55, 55, 55);
+                color: white;
                 line-height: 4vh;
-                font-size: 4vh;
+                font-size: 3vh;
               }
               &:hover {
                 filter: brightness(150%);
@@ -1104,9 +1311,9 @@ export default {
               z-index: 22;
               p {
                 padding: 2vh;
-                color: rgb(55, 55, 55);
+                color: white;
                 line-height: 4vh;
-                font-size: 4vh;
+                font-size: 3vh;
               }
               &:hover {
                 filter: brightness(150%);
@@ -1127,35 +1334,13 @@ export default {
       height: 5vh;
     }
 
-    .onlinesrc_back {
-      position: absolute;
-      z-index: 2;
-      right: 0vw;
-      top: 0vh;
-      z-index: 10;
-      .onlinesrc_exit_button {
-        width: 6vw;
-        height: 6vw;
-        background-color: transparent;
-        background-image: url("../assets/14/home.svg");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: 50% 50%;
-
-        margin: 3.5vw 4.2vw;
-        outline: none;
-        border: none;
-        transition: filter .3s ease;
-        cursor: pointer;
-
-        &:hover {
-          filter: brightness(150%);
-        }
-        &:active {
-          filter: brightness(80%);
-        }
-      }
-    }
+    // .onlinesrc_back {
+    //   position: absolute;
+    //   z-index: 2;
+    //   right: 0vw;
+    //   top: 0vh;
+    //   z-index: 10;
+    // }
 
   }
 </style>
