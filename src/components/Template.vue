@@ -1284,13 +1284,12 @@ export default {
         }
       }
     }
-    .onlinesrc_layout_empty_up {
+    .onlinesrc_layout {
+      position: absolute;
+      z-index: 3;
+      top: 8vh;
       width: 100vw;
-      height: 10vh;
-    }
-    .onlinesrc_layout_empty_down {
-      width: 100vw;
-      height: 10vh;
+      height: 92vh;
     }
   }
 </style>

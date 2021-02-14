@@ -1,0 +1,53 @@
+
+{
+    "edu": {
+        "title": "教育論壇",
+        "list": [
+            {
+                "name": "- 文字1",
+                "link": "https://www.youtube.com/embed/5qap5aO4i9A",
+                "content": "內容喔2"
+            },
+            {
+                "name": "- 文字2",
+                "link": "https://www.youtube.com/embed/5qap5aO4i9A",
+                "content": "內容喔2"
+            },
+            {
+                "name": "- 文字3",
+                "link": "https://www.youtube.com/embed/5qap5aO4i9A",
+                "content": "內容喔3"
+            },
+            {
+                "name": "- 文字4",
+                "link": "https://www.youtube.com/embed/5qap5aO4i9A",
+                "content": "內容喔4"
+            }
+        ]
+    },
+    "lec": {
+        "title": "演講",
+        "list": [
+            {
+                "name": "- 文字1",
+                "link": "https://www.youtube.com/embed/5qap5aO4i9A",
+                "content": "內容喔2"
+            },
+            {
+                "name": "- 文字2",
+                "link": "https://www.youtube.com/embed/5qap5aO4i9A",
+                "content": "內容喔2"
+            },
+            {
+                "name": "- 文字3",
+                "link": "https://www.youtube.com/embed/5qap5aO4i9A",
+                "content": "內容喔3"
+            },
+            {
+                "name": "- 文字4",
+                "link": "https://www.youtube.com/embed/5qap5aO4i9A",
+                "content": "內容喔4"
+            }
+        ]
+    }
+}
