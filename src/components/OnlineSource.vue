@@ -6,12 +6,14 @@
         div(class="onlinesrc_top_bar_item")
           router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
             div(id="bottom" v-if="index===3")
+          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
     div(class="onlinesrc_top_bar_mobile")
       div(class="onlinesrc_mobile_title" @click="list = false")
       router-link(tag="div" class="onlinesrc_mobile_exit_button" to="/")
       div(class="onlinesrc_mobile_list" @click="list = !list")
     div(class="onlinesrc_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
+      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
     div(class="onlinesrc_flower_top")
     div(class="onlinesrc_flower_down")
     div(class="onlinesrc_layout" @click="list = false")
@@ -52,8 +54,8 @@ import srcJson from '../assets/14/online/onlinesrc.json'
 export default {
   data: function () {
     return {
-      menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區', '我要報名'],
-      urlText: ['news', 'activity', 'department', 'online', 'parent', 'sponsor', 'live', 'sign-up'],
+      menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
+      urlText: ['news', 'activity', 'department', 'online', 'parent', 'sponsor', 'live'],
       list: false,
       pc: this.isPC(),
       srcList: srcJson,
@@ -195,7 +197,7 @@ export default {
       top: 8%;
       background-color: rgba(100, 100, 100, 0.9);
       label {
-        border: 0.1vh solid black;
+        border: 0.1vh solid rgb(50, 50, 50);
         color:rgb(255, 246, 232);
         line-height: 6vh;
         font-size: 2.4vh;

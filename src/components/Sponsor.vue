@@ -1,8 +1,20 @@
 <template lang="pug">
   div(class="sponsor_page")
     //div(class="sponsor_title")
-    div(class="sponsor_back")
-      router-link(v-show="mode === 0" tag="button" to="/" class="sponsor_exit_button")
+    div(class="live_top_bar_pc")
+      div(class="live_top_bar_layout" @click="scroll()")
+        router-link(tag="label" class="live_exit_button" to="/")
+        div(class="live_top_bar_item")
+          router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
+            div(id="bottom" v-if="index===5")
+          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+    div(class="live_top_bar_mobile")
+      div(class="live_mobile_title" @click="list = false")
+      router-link(tag="div" class="live_mobile_exit_button" to="/")
+      div(class="live_mobile_list" @click="list = !list")
+    div(class="live_mobile_list_area" v-show="list")
+      router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
+      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
     button(v-show="mode === 1" class="sponsor_return_button" v-on:click="mode = 0; currentIndex = -1;")
     div(class="sponsor_layout_1" v-show="mode === 0")
       section(class="sponsor_list")
@@ -10,7 +22,7 @@
     div(class="sponsor_layout_2" v-if="mode === 1")
       section(class="sponsor_info")
         p {{sponsor[currentIndex].name}}
-        label(v-bind:style="{'background-image': 'url(' + `/static/sponsor_${currentIndex + 1}.jpg` + ')'}" v-on:click="openTab(currentIndex)")
+        label(v-bind:style="{'background-image': 'url(' + `/static/sponsor_${currentIndex + 1}.jpg` + ')'}" v-on:click="openSponsorTab(currentIndex)")
       section(class="sponsor_content")
         article(v-html="sponsor[currentIndex].content")
 
@@ -20,6 +32,10 @@
 export default {
   data: function () {
     return {
+      menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
+      urlText: ['news', 'activity', 'department', 'online', 'parent', 'sponsor', 'live'],
+      list: false,
+      pc: this.isPC(),
       currentIndex: -1,
       mode: 0,
       sponsor: [
@@ -128,8 +144,27 @@ export default {
       ]
     }
   },
+  mounted: function () {
+    this.pc = this.isPC()
+    this.setBarHeight()
+  },
   methods: {
-    openTab: function (index) {
+    openTab: function (url) {
+      window.open(url, '_blank')
+    },
+    isPC: function () {
+      var userAgentInfo = navigator.userAgent
+      var Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
+      var flag = true
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false
+          break
+        }
+      }
+      return flag
+    },
+    openSponsorTab: function (index) {
       window.open(this.sponsor[index].link)
     }
   }
@@ -170,6 +205,97 @@ export default {
       padding: 0;
       background: rgb(255, 246, 232);
     }
+    .live_top_bar_mobile {
+      position: absolute;
+      display: grid;
+      grid-template-columns: 20vw 1fr 20vw;
+      grid-template-areas: "exit title list";
+      justify-content: center;
+      justify-items: center;
+      z-index: 10;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(254,241,217);
+      width: 100vw;
+      height: 8vh;
+      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      &:hover {
+        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+      }
+      .live_mobile_exit_button {
+        grid-area: exit;
+        width: 6vh;
+        height: 6vh;
+        background-image: url('../assets/14/exit.svg');
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        background-position: center center;
+        border-radius: 2vw;
+        background-color: transparent;
+        margin: 1vh;
+        &:hover {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+      .live_mobile_title {
+        grid-area: title;
+        width: 60vw;
+        background-image: url('../assets/14/sponsor/title.svg');
+        background-repeat: no-repeat;
+        background-size: 75% 75%;
+        background-position: center center;
+      }
+      .live_mobile_list {
+        grid-area: list;
+        width: 6vh;
+        height: 6vh;
+        background-image: url('../assets/14/list.svg');
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        background-position: center center;
+        border-radius: 2vw;
+        background-color: transparent;
+        margin: 1vh;
+        &:hover {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+    }
+    .live_mobile_list_area {
+      position: absolute;
+      display: grid;
+      grid-template-rows: repeat(8, 7vh);
+      z-index: 20;
+      width: 40vw;
+      height: 56vh;
+      right: 0%;
+      top: 8%;
+      background-color: rgba(100, 100, 100, 0.9);
+      label {
+        color:rgb(255, 246, 232);
+        line-height: 6vh;
+        font-size: 2.4vh;
+        border: 1px solid rgb(50, 50, 50);
+        &:hover {
+          background-color: rgb(155, 155, 155);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+    }
 
     .sponsor_title {
       position: absolute;
@@ -185,35 +311,6 @@ export default {
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: center top 10%;
-    }
-
-    .sponsor_back {
-      position: absolute;
-      z-index: 2;
-      right: 2vw;
-      top: 3vh;
-      .sponsor_exit_button {
-        width: 10vw;
-        height: 10vw;
-        background-color: transparent;
-        background-image: url("../assets/14/home.svg");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: 50% 50%;
-
-        margin: 3.5vw 4.2vw;
-        outline: none;
-        border: none;
-        transition: filter .3s ease;
-        cursor: pointer;
-
-        &:hover {
-          filter: brightness(150%);
-        }
-        &:active {
-          filter: brightness(80%);
-        }
-      }
     }
 
     .sponsor_return_button {
@@ -269,8 +366,9 @@ export default {
       align-items: flex-start;
 
       background-color: rgb(255, 246, 232);
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 92vh;
+      top: 8%;
       overflow-y: scroll;
     }
 
@@ -383,6 +481,88 @@ export default {
       background: white;
       overflow: hidden;
     }
+    .live_top_bar_pc {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(254,241,217);
+      width: 100vw;
+      height: 8vh;
+      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      &:hover {
+        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+      }
+      .live_top_bar_layout {
+        display: grid;
+        grid-template-columns: 12vw 82vw 6vw;
+        grid-template-areas: "home items .";
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+        align-content: center;
+        .live_exit_button {
+          grid-area: home;
+          width: 12vw;
+          height: 8vh;
+          background-color: transparent;
+          background-image: url("../assets/14/logoHome.svg");
+          background-repeat: no-repeat;
+          background-size: 80% 80%;
+          background-position: 50% 50%;
+          background-color: rgb(103, 192, 225);
+          transition: filter .3s ease;
+          cursor: pointer;
+          &:hover {
+            filter: brightness(150%);
+          }
+          &:active {
+            filter: brightness(80%);
+          }
+        }
+        .live_top_bar_item {
+          grid-area: items;
+          display: grid;
+          grid-template-columns: repeat(8, 10vw);
+          justify-content: center;
+          label {
+            display: grid;
+            grid-template-rows: 5fr 1fr;
+            grid-template-areas: "." "bottom";
+            width: 9vw;
+            height: 6vh;
+            line-height: 5.6vh;
+            font-size: 2.5vh;
+            font-weight: 700;
+            background-color: transparent;
+            color: rgb(103, 192, 225);
+            letter-spacing: 0.2vw;
+            #bottom {
+              grid-area: "bottom";
+              background-color: white;
+            }
+            &:hover {
+              filter: brightness(150%);
+              background-color: rgba(55, 55, 55, 0.3);
+            }
+            &:active {
+              filter: brightness(80%);
+            }
+          }
+        }
+        .live_sign_up_button {
+          grid-area: sign-up;
+          width: 8vw;
+          height: 6vh;
+          line-height: 5vh;
+          font-size: 3vh;
+          background-color: white;
+          border: 1px solid rgba(100, 100, 100, 0.3)
+        }
+      }
+    }
 
     .sponsor_title {
       position: absolute;
@@ -398,39 +578,11 @@ export default {
       background-position: 50% 50%;
     }
 
-    .sponsor_back {
-      position: absolute;
-      z-index: 2;
-      right: 2vw;
-      top: 3vh;
-      .sponsor_exit_button {
-        width: 6vw;
-        height: 6vw;
-        background-color: transparent;
-        background-image: url("../assets/14/home.svg");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: 50% 50%;
-
-        margin: 3.5vw 4.2vw;
-        outline: none;
-        border: none;
-        transition: filter .3s ease;
-        cursor: pointer;
-
-        &:hover {
-          filter: brightness(150%);
-        }
-        &:active {
-          filter: brightness(80%);
-        }
-      }
-    }
-
     .sponsor_return_button {
       position: absolute;
-      right: 2vw;
-      top: 2vw;
+      z-index: 1;
+      left: 2vw;
+      top: 7vw;
 
       width: 3vw;
       height: 3vw;
@@ -474,10 +626,12 @@ export default {
 
     .sponsor_layout_2 {
       display: grid;
+      position: absolute;
       grid-template-columns: 1fr 1.5fr;
       grid-template-areas: "left right";
       width: 100vw;
-      height: 100vh;
+      height: 92vh;
+      top: 8%;
     }
 
     .sponsor_list {

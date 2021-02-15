@@ -12,39 +12,7 @@
       div(class="onlinesrc_mobile_list" @click="list = !list")
     div(class="onlinesrc_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-    div(class="onlinesrc_flower_top")
-    div(class="onlinesrc_flower_down")
-    div(class="onlinesrc_layout" @click="list = false")
-      section(class="onlinesrc_layout_empty_up")
-      section(class="onlinesrc_layout_strategy")
-        label(class="onlinesrc_item_name") 備審攻略
-        div(class="onlinesrc_item_background")
-          div(class="onlinesrc_layout_strategy_larrow" @click="scroll(-1, 'strategy')")
-          div(class="onlinesrc_layout_strategy_rarrow" @click="scroll(1, 'strategy')")
-          div(class="onlinesrc_item_content" id="strategy")
-            label(class="onlinesrc_item_content_list" v-for="iter in srcList['strategyList']" v-bind:key="iter.text" v-bind:data-name="iter.text" v-bind:style="{'background-image': 'url(' + `${iter.img}` + ')'}" @click="openTab(iter.link)")
-              label(class="onlinesrc_item_content_text")
-                p {{iter.text}}
-      section(class="onlinesrc_layout_interview")
-        label(class="onlinesrc_item_name") 模擬面試
-          p 經驗與技巧分享
-        div(class="onlinesrc_item_background")
-          div(class="onlinesrc_layout_interview_larrow" @click="scroll(-1, 'interview')")
-          div(class="onlinesrc_layout_interview_rarrow" @click="scroll(1, 'interview')")
-          div(class="onlinesrc_item_content" id="interview")
-            label(class="onlinesrc_item_content_list" v-for="iter in srcList['interviewList']" v-bind:key="iter.text" v-bind:data-name="iter.name" v-bind:style="{'background-image': 'url(' + `${iter.img}` + ')'}" @click="openTab(iter.link)")
-              label(class="onlinesrc_item_content_text")
-                p {{iter.text}}
-      section(class="onlinesrc_layout_share")
-        label(class="onlinesrc_item_name") 成大生活分享
-        div(class="onlinesrc_item_background")
-          div(class="onlinesrc_layout_share_larrow" @click="scroll(-1, 'share')")
-          div(class="onlinesrc_layout_share_rarrow" @click="scroll(1, 'share')")
-          div(class="onlinesrc_item_content" id="share")
-            label(class="onlinesrc_item_content_list" v-for="iter in srcList['shareList']" v-bind:key="iter.text" v-bind:data-name="iter.text" v-bind:style="{'background-image': 'url(' + `${iter.img}` + ')'}" @click="openTab(iter.link)")
-              label(class="onlinesrc_item_content_text")
-                p {{iter.text}}
-      section(class="onlinesrc_layout_empty_down")
+    
 </template>
 
 <script>

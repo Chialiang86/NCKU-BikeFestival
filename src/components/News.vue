@@ -1,13 +1,24 @@
 <template lang="pug">
   div(class="news_page")
+    div(class="news_top_bar_pc")
+      div(class="news_top_bar_layout" @click="scroll()")
+        router-link(tag="label" class="news_exit_button" to="/")
+        div(class="news_top_bar_item")
+          router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
+            div(id="bottom" v-if="index===0")
+          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+    div(class="news_top_bar_mobile")
+      div(class="news_mobile_title" @click="list = false")
+      router-link(tag="div" class="news_mobile_exit_button" to="/")
+      div(class="news_mobile_list" @click="list = !list")
+    div(class="news_mobile_list_area" v-show="list")
+      router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
+      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
     div(class="news_background")
-    div(class="news_title")
     div(class="news_logo")
-    dive(class="news_flower_top")
-    dive(class="news_flower_down")
-    div(class="news_back")
-      router-link(tag="button" to="/" class="news_exit_button")
-    div(class="news_layout")
+    dive(class="news_flower_top" @click="list = false")
+    dive(class="news_flower_down" @click="list = false")
+    div(class="news_layout" @click="list = false")
       section(class="news_list_section")
         ul(id="list")
           li(v-for="(iter, index) of news" v-bind:key="iter.Title" v-on:click="currentIndex = currentIndex == -1 ? index : (currentIndex == index ? -1 : index)")
@@ -15,7 +26,7 @@
             //time {{parseTimestamp(iter.Timestamp)}}
             time {{iter.Timestamp}}
             div(class="news_content" v-show-slide:300:example-easing="currentIndex === index" v-html="iter.Content")
-      section(class="news_counter_section")
+      //section(class="news_counter_section")
         div(class="news_decoration_top")
         div(class="news_counter")
           div(class="news_countdown_number")
@@ -33,6 +44,10 @@
 export default {
   data: function () {
     return {
+      menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
+      urlText: ['news', 'activity', 'department', 'online', 'parent', 'sponsor', 'live'],
+      list: false,
+      pc: this.isPC(),
       news: [
         {
           Title: '官網正式上線',
@@ -45,6 +60,8 @@ export default {
     }
   },
   mounted: async function () {
+    this.pc = this.isPC()
+    this.setBarHeight()
     setInterval(this.timeCounter, 1000)
     this.numberDom1 = document.querySelector('#news_number_1')
     this.numberDom2 = document.querySelector('#news_number_2')
@@ -63,6 +80,21 @@ export default {
     this.loader.hide()
   },
   methods: {
+    openTab: function (url) {
+      window.open(url, '_blank')
+    },
+    isPC: function () {
+      var userAgentInfo = navigator.userAgent
+      var Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
+      var flag = true
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false
+          break
+        }
+      }
+      return flag
+    },
     timeCounter: function () {
       const timeStr = '2019/1/26 00:00'
       const startDate = new Date()
@@ -120,17 +152,96 @@ export default {
     .news_background {
       display: none;
     }
-    .news_title {
+    .news_top_bar_mobile {
       position: absolute;
+      display: grid;
+      grid-template-columns: 20vw 1fr 20vw;
+      grid-template-areas: "exit title list";
+      justify-content: center;
+      justify-items: center;
+      z-index: 10;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(254,241,217);
+      width: 100vw;
+      height: 8vh;
+      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      &:hover {
+        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+      }
+      .news_mobile_exit_button {
+        grid-area: exit;
+        width: 6vh;
+        height: 6vh;
+        background-image: url('../assets/14/exit.svg');
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        background-position: center center;
+        border-radius: 2vw;
+        background-color: transparent;
+        margin: 1vh;
+        &:hover {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+      .news_mobile_title {
+        grid-area: title;
+        width: 60vw;
+        background-image: url('../assets/14/news/title.svg');
+        background-repeat: no-repeat;
+        background-size: 75% 75%;
+        background-position: center center;
+      }
+      .news_mobile_list {
+        grid-area: list;
+        width: 6vh;
+        height: 6vh;
+        background-image: url('../assets/14/list.svg');
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        background-position: center center;
+        border-radius: 2vw;
+        background-color: transparent;
+        margin: 1vh;
+        &:hover {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+    }
+    .news_mobile_list_area {
+      position: absolute;
+      display: grid;
+      grid-template-rows: repeat(8, 7vh);
       z-index: 20;
-      top: 3vh;
-
-      width: 45vw;
-      height: 20vw;
-      background-image: url("../assets/14/news/title.svg");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: center top 10%;
+      width: 40vw;
+      height: 56vh;
+      right: 0%;
+      top: 8%;
+      background-color: rgba(100, 100, 100, 0.9);
+      label {
+        color:rgb(255, 246, 232);
+        line-height: 6vh;
+        font-size: 2.4vh;
+        border: 1px solid rgb(50, 50, 50);
+        &:hover {
+          background-color: rgb(155, 155, 155);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
     }
 
     .news_layout {
@@ -240,35 +351,6 @@ export default {
         display: none;
       }
     }
-
-    .news_back {
-      position: absolute;
-      z-index: 2;
-      right: 2vw;
-      top: 3vh;
-      .news_exit_button {
-        width: 10vw;
-        height: 10vw;
-        background-color: transparent;
-        background-image: url("../assets/14/home.svg");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: 50% 50%;
-
-        margin: 3.5vw 4.2vw;
-        outline: none;
-        border: none;
-        transition: filter .3s ease;
-        cursor: pointer;
-
-        &:hover {
-          filter: brightness(150%);
-        }
-        &:active {
-          filter: brightness(80%);
-        }
-      }
-    }
   }
   /*
     computer layout css
@@ -286,6 +368,88 @@ export default {
       background: white;
       overflow: hidden;
     }
+    .news_top_bar_pc {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(254,241,217);
+      width: 100vw;
+      height: 8vh;
+      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      &:hover {
+        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+      }
+      .news_top_bar_layout {
+        display: grid;
+        grid-template-columns: 12vw 82vw 6vw;
+        grid-template-areas: "home items .";
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+        align-content: center;
+        .news_exit_button {
+          grid-area: home;
+          width: 12vw;
+          height: 8vh;
+          background-color: transparent;
+          background-image: url("../assets/14/logoHome.svg");
+          background-repeat: no-repeat;
+          background-size: 80% 80%;
+          background-position: 50% 50%;
+          background-color: rgb(103, 192, 225);
+          transition: filter .3s ease;
+          cursor: pointer;
+          &:hover {
+            filter: brightness(150%);
+          }
+          &:active {
+            filter: brightness(80%);
+          }
+        }
+        .news_top_bar_item {
+          grid-area: items;
+          display: grid;
+          grid-template-columns: repeat(8, 10vw);
+          justify-content: center;
+          label {
+            display: grid;
+            grid-template-rows: 5fr 1fr;
+            grid-template-areas: "." "bottom";
+            width: 9vw;
+            height: 6vh;
+            line-height: 5.6vh;
+            font-size: 2.5vh;
+            font-weight: 700;
+            background-color: transparent;
+            color: rgb(103, 192, 225);
+            letter-spacing: 0.2vw;
+            #bottom {
+              grid-area: "bottom";
+              background-color: white;
+            }
+            &:hover {
+              filter: brightness(150%);
+              background-color: rgba(55, 55, 55, 0.3);
+            }
+            &:active {
+              filter: brightness(80%);
+            }
+          }
+        }
+        .news_sign_up_button {
+          grid-area: sign-up;
+          width: 8vw;
+          height: 6vh;
+          line-height: 5vh;
+          font-size: 3vh;
+          background-color: white;
+          border: 1px solid rgba(100, 100, 100, 0.3)
+        }
+      }
+    }
     .news_background {
       position: absolute;
       z-index: 1;
@@ -295,19 +459,6 @@ export default {
       height: 100vh;
       width: 50vw;
       transform: skewX(5deg);
-    }
-    .news_title {
-      position: absolute;
-      z-index: 20;
-      left: 4vw;
-      top: 6vh;
-
-      width: 17vw;
-      height: 8vw;
-      background-image: url("../assets/14/news/title.svg");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: 50% 50%;
     }
     .news_logo {
       position: absolute;
@@ -542,36 +693,5 @@ export default {
         }
       }
     }
-
-    .news_back {
-      position: absolute;
-      z-index: 2;
-      right: 2vw;
-      top: 3vh;
-      z-index: 10;
-      .news_exit_button {
-        width: 6vw;
-        height: 6vw;
-        background-color: transparent;
-        background-image: url("../assets/14/home.svg");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: 50% 50%;
-
-        margin: 3.5vw 4.2vw;
-        outline: none;
-        border: none;
-        transition: filter .3s ease;
-        cursor: pointer;
-
-        &:hover {
-          filter: brightness(150%);
-        }
-        &:active {
-          filter: brightness(80%);
-        }
-      }
-    }
-
   }
 </style>

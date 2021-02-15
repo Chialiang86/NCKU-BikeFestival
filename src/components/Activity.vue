@@ -1,21 +1,29 @@
 <template lang="pug">
   div(class="activity_page")
+    div(class="activity_top_bar_pc")
+      div(class="activity_top_bar_layout" @click="scroll()")
+        router-link(tag="label" class="activity_exit_button" to="/")
+        div(class="activity_top_bar_item")
+          router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
+            div(id="bottom" v-if="index===1")
+          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+    div(class="activity_top_bar_mobile")
+      div(class="activity_mobile_title" @click="list = false")
+      router-link(tag="div" class="activity_mobile_exit_button" to="/")
+      div(class="activity_mobile_list" @click="list = !list")
+    div(class="activity_mobile_list_area" v-show="list")
+      router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
+      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
     div(class="activity_background")
-    div(class="activity_title")
-    div(class="activity_logo")
-    div(class="activity_flower_top")
-    div(class="activity_flower_down")
-    div(class="activity_back")
-      router-link(tag="button" to="/" class="activity_exit_button")
-    div(class="activity_layout")
-      //  div(class="activity_title")
-      div(class="activity_waterfall")
-        section(v-for="(iter, index) of activities" v-bind:key="iter.title" class="activity_waterfall_item" v-on:click="currentIndex = currentIndex == -1 ? index : (currentIndex == index ? -1 : index)")
-          time {{iter.time}}
-          h1 {{iter.title}}
-          section(v-show-slide:300:example-easing="currentIndex === index")
-            label 地點：《{{iter.place}}》
-            p {{iter.description}}
+    div(class="activity_flower_top" @click="list = false")
+    div(class="activity_flower_down" @click="list = false")
+    div(class="activity_layout" @click="list = false")
+      div(class="activity_layout_titles")
+        label(v-for="(item, index) in titleText" v-bind:data-key="'title_'+ `${index+1}`" @click="selectPage(index + 1)") {{titleText[index]}}
+      div(class="activity_layout_page_1" v-if="currentIndex===1")
+      div(class="activity_layout_page_2" v-if="currentIndex===2")
+      div(class="activity_layout_page_3" v-if="currentIndex===3")
+      div(class="activity_layout_page_4" v-if="currentIndex===4")
 </template>
 
 <script>
@@ -27,100 +35,51 @@ export default {
     Waterfall,
     WaterfallSlot
   },
+  mounted: function () {
+    this.pc = this.isPC()
+  },
   data: function () {
     return {
       currentIndex: -1,
-      activities: [
-        {
-          title: '科系博覽會',
-          time: '0900-1700',
-          place: '雲平大道',
-          description: '45科系攤位向高中生展示各系特色。',
-          width: 1,
-          height: 0.5
-        },
-        {
-          title: '開幕式',
-          time: '0900-1000',
-          place: '雲平大道',
-          description: '邀請校內長官為單車節揭開序幕。',
-          width: 1,
-          height: 1
-        },
-        {
-          title: '主舞台表演',
-          time: '1000-1700',
-          place: '雲平大道',
-          description: '邀請高中大學各社團展演，增添單車節活力。',
-          width: 1,
-          height: 1
-        },
-        {
-          title: '單車遊成大',
-          time: '0900-1600',
-          place: '全成大',
-          description: '與 CKbike 合作讓高中生藉單車節了解成大之美。',
-          width: 1,
-          height: 1
+      menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
+      urlText: ['news', 'activity', 'department', 'online', 'parent', 'sponsor', 'live'],
+      titleText: ['主題活動介紹', '活動日程', '活動地圖', '認識成大單車節'],
+      list: false,
+      pc: this.isPC()
+    }
+  },
+  methods: {
+    selectPage: function (index) {
+      if (this.currentIndex === index) {
+        this.currentIndex = 0
+      } else {
+        this.currentIndex = index
+        var titleList = document.querySelectorAll('[data-key]')
+        for (var i = 0; i < titleList.length; i++) {
+          if (i === index - 1) {
+            titleList[i].setAttribute('style', `
+              background-color: rgb(44,185,244);`)
+          } else {
+            titleList[i].setAttribute('style', `
+              background-color: rgb(117,210,243);`)
+          }
         }
-        /*,
-        {
-          title: '青谷市集',
-          time: '0900-1700',
-          place: '一活前廣',
-          description: '邀請校內校外各種團隊，提供學生對未來的各種可能。',
-          width: 1,
-          height: 1
-        },
-        {
-          title: '學術特色展',
-          time: '0900-1630',
-          place: '一活一樓',
-          description: '比較易混淆科系間的異同，讓高中生能更清楚自己所好並選擇所愛。',
-          width: 1,
-          height: 2
-        },
-        {
-          title: '模擬面試',
-          time: '0950-1620',
-          place: '唯農大樓',
-          description: '大學入學必備關卡之一，提供高中生一個機會得到經驗。',
-          width: 1,
-          height: 1
-        },
-        {
-          title: '備審資料全攻略',
-          time: '1000-1600',
-          place: '交管系館教室',
-          description: '大學入學必備關卡之一，讓高中生學習製作好的備審。',
-          width: 1,
-          height: 1
-        },
-        {
-          title: '教育工作坊',
-          time: '1030-1610',
-          place: '國二講',
-          description: '以時下教育議題為主，專業講者引導為輔，從不同層面思考現今因教育而起的問題。',
-          width: 1,
-          height: 2
-        },
-        {
-          title: '大學生閃電秀',
-          time: '1000-1635',
-          place: '工資系館教室',
-          description: '建立高中生和大學生的橋樑，打破隔閡破解迷思。',
-          width: 1,
-          height: 1
-        },
-        {
-          title: '祈福牆',
-          time: '0900-1700',
-          place: '一活前草皮',
-          description: '寫下自己的期望與憧憬，帶著夢想往未來前進。',
-          width: 1,
-          height: 1
-        } */
-      ]
+      }
+    },
+    openTab: function (url) {
+      window.open(url, '_blank')
+    },
+    isPC: function () {
+      var userAgentInfo = navigator.userAgent
+      var Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
+      var flag = true
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false
+          break
+        }
+      }
+      return flag
     }
   }
 }
@@ -152,20 +111,99 @@ export default {
       padding: 0;
       background: rgb(255, 246, 232);
     }
+    .activity_top_bar_mobile {
+      position: absolute;
+      display: grid;
+      grid-template-columns: 20vw 1fr 20vw;
+      grid-template-areas: "exit title list";
+      justify-content: center;
+      justify-items: center;
+      z-index: 10;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(254,241,217);
+      width: 100vw;
+      height: 8vh;
+      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      &:hover {
+        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+      }
+      .activity_mobile_exit_button {
+        grid-area: exit;
+        width: 6vh;
+        height: 6vh;
+        background-image: url('../assets/14/exit.svg');
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        background-position: center center;
+        border-radius: 2vw;
+        background-color: transparent;
+        margin: 1vh;
+        &:hover {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+      .activity_mobile_title {
+        grid-area: title;
+        width: 60vw;
+        background-image: url('../assets/14/activity/title.svg');
+        background-repeat: no-repeat;
+        background-size: 75% 75%;
+        background-position: center center;
+      }
+      .activity_mobile_list {
+        grid-area: list;
+        width: 6vh;
+        height: 6vh;
+        background-image: url('../assets/14/list.svg');
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        background-position: center center;
+        border-radius: 2vw;
+        background-color: transparent;
+        margin: 1vh;
+        &:hover {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+    }
+    .activity_mobile_list_area {
+      position: absolute;
+      display: grid;
+      grid-template-rows: repeat(8, 7vh);
+      z-index: 100;
+      width: 40vw;
+      height: 56vh;
+      right: 0%;
+      top: 8%;
+      background-color: rgba(100, 100, 100, 0.9);
+      label {
+        color:rgb(255, 246, 232);
+        line-height: 6vh;
+        font-size: 2.4vh;
+        border: 1px solid rgb(50, 50, 50);
+        &:hover {
+          background-color: rgb(155, 155, 155);
+          filter: brightness(150%);
+        }
+        &:active {
+          background-color: rgba(155, 155, 155, 0.8);
+          filter: brightness(60%);
+        }
+      }
+    }
     .activity_background {
       display: none;
-    }
-    .activity_title {
-      position: absolute;
-      z-index: 20;
-      top: 3vh;
-
-      width: 45vw;
-      height: 20vw;
-      background-image: url("../assets/14/activity/title.svg");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: center top 10%;
     }
     .activity_layout {
       display: grid;
@@ -180,87 +218,6 @@ export default {
       width: 100vw;
       min-height: 100vh;
     }
-    .activity_waterfall {
-      grid-area: list;
-      z-index: 20;
-      width: 100vw;
-      height: 75vh;
-      padding: 0 10vw;
-      padding-bottom: 5vh;
-      box-sizing: border-box;
-      overflow-y: scroll;
-      .activity_waterfall_item {
-        background-color: rgb(103, 192, 225);
-
-        width: 100%;
-
-        margin: 1vh 0;
-        padding: 1.5vh 2vw;
-        box-sizing: border-box;
-        border-radius: 2vh;
-        box-sizing: border-box;
-
-        line-height: 2.5vh;
-        font-size: 2.5vh;
-        color: white;
-        text-align: left;
-
-        cursor: pointer;
-        transition: filter .3s ease;
-        overflow-y: hidden;
-
-        &:hover {
-          filter: brightness(120%);
-        }
-        &:active {
-          filter: brightness(80%);
-        }
-        h1 {
-          display: inline-block;
-          margin: 0;
-          margin-bottom: .5vw;
-        }
-        time {
-          margin-right: 1vw;
-        }
-        p {
-          min-width: 10.8vw;
-          max-width: 100vw;
-        }
-        section > * {
-          margin: .5vw 0;
-        }
-      }
-    }
-    .activity_back {
-      position: absolute;
-      z-index: 2;
-      right: 2vw;
-      top: 3vh;
-      .activity_exit_button {
-        width: 10vw;
-        height: 10vw;
-        background-color: transparent;
-        background-image: url("../assets/14/home.svg");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: 50% 50%;
-
-        margin: 3.5vw 4.2vw;
-        outline: none;
-        border: none;
-        transition: filter .3s ease;
-        cursor: pointer;
-
-        &:hover {
-          filter: brightness(150%);
-        }
-        &:active {
-          filter: brightness(80%);
-        }
-      }
-    }
-
   }
   /*
     computer layout css
@@ -288,6 +245,88 @@ export default {
       background: white;
       overflow: hidden;
     }
+    .activity_top_bar_pc {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+      top: 0%;
+      left: 0%;
+      background-color: rgb(254,241,217);
+      width: 100vw;
+      height: 8vh;
+      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      &:hover {
+        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+      }
+      .activity_top_bar_layout {
+        display: grid;
+        grid-template-columns: 12vw 82vw 6vw;
+        grid-template-areas: "home items .";
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+        align-content: center;
+        .activity_exit_button {
+          grid-area: home;
+          width: 12vw;
+          height: 8vh;
+          background-color: transparent;
+          background-image: url("../assets/14/logoHome.svg");
+          background-repeat: no-repeat;
+          background-size: 80% 80%;
+          background-position: 50% 50%;
+          background-color: rgb(103, 192, 225);
+          transition: filter .3s ease;
+          cursor: pointer;
+          &:hover {
+            filter: brightness(150%);
+          }
+          &:active {
+            filter: brightness(80%);
+          }
+        }
+        .activity_top_bar_item {
+          grid-area: items;
+          display: grid;
+          grid-template-columns: repeat(8, 10vw);
+          justify-content: center;
+          label {
+            display: grid;
+            grid-template-rows: 5fr 1fr;
+            grid-template-areas: "." "bottom";
+            width: 9vw;
+            height: 6vh;
+            line-height: 5.6vh;
+            font-size: 2.5vh;
+            font-weight: 700;
+            background-color: transparent;
+            color: rgb(103, 192, 225);
+            letter-spacing: 0.2vw;
+            #bottom {
+              grid-area: "bottom";
+              background-color: white;
+            }
+            &:hover {
+              filter: brightness(150%);
+              background-color: rgba(55, 55, 55, 0.3);
+            }
+            &:active {
+              filter: brightness(80%);
+            }
+          }
+        }
+        .activity_sign_up_button {
+          grid-area: sign-up;
+          width: 8vw;
+          height: 6vh;
+          line-height: 5vh;
+          font-size: 3vh;
+          background-color: white;
+          border: 1px solid rgba(100, 100, 100, 0.3)
+        }
+      }
+    }
     .activity_background {
       position: absolute;
       z-index: 1;
@@ -298,31 +337,6 @@ export default {
       width: 50vw;
       transform: skewX(5deg);
     }
-    .activity_title {
-      position: absolute;
-      z-index: 20;
-      left: 4vw;
-      top: 6vh;
-
-      width: 17vw;
-      height: 8vw;
-      background-image: url("../assets/14/activity/title.svg");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      background-position: 50% 50%;
-    }
-    .activity_logo {
-      position: absolute;
-      background-image: url('../assets/14/pageLogo.svg');
-      background-repeat: no-repeat;
-      background-position: center bottom 40%;
-      background-size: 50% 50%;
-      z-index: 2;
-      right: 0vw;
-      top: 0vw;
-      width: 40vw;
-      height: 100vh;
-    }
     .activity_flower_top {
       position: absolute;
       background-image: url('../assets/14/flower.svg');
@@ -331,7 +345,7 @@ export default {
       background-size: cover;
       z-index: 2;
       right: 0vw;
-      top: -5vh;
+      top: 5vh;
       width: 41vw;
       height: 40vh;
     }
@@ -348,97 +362,53 @@ export default {
       height: 40vh;
     }
     .activity_layout {
-      display: grid;
-      grid-template-columns: 8vw 2fr 1fr;
-      grid-template-rows: 15vw 60vh 15vw;
-      grid-template-areas: ". title select"
-        ". list ."
-        ". . .";
-      width: 100%;
-      height: 100%;
-    }
-    .activity_waterfall {
-      grid-area: list;
-      display: flex;
-      justify-content: flex-start;
-      justify-items: flex-start;
-      align-content: flex-start;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      z-index: 20;
-      width: 50vw;
-      .activity_waterfall_item {
-        background-color:rgb(103, 192, 225);
-
-        min-width: 5vw;
-        max-width: 60vw;
-        min-height: 3vw;
-
-        margin: 1vh;
-        padding: 1.5vh 2vw;
-        border-radius: 2vh;
-        box-sizing: border-box;
-
-        line-height: 2.5vh;
-        font-size: 2.5vh;
-        color: white;
-        text-align: left;
-
-        cursor: pointer;
-        transition: filter .3s ease;
-        overflow-y: hidden;
-
-        &:hover {
-          filter: brightness(120%);
-        }
-        &:active {
-          filter: brightness(80%);
-        }
-        h1 {
-          display: inline-block;
-          margin: 0;
-          margin-bottom: .5vw;
-        }
-        time {
-          margin-right: 1vw;
-        }
-        p {
-          min-width: 10.8vw;
-          max-width: 100vw;
-        }
-        section > * {
-          margin: .5vw 0;
-        }
-      }
-    }
-    .activity_back {
       position: absolute;
+      display: grid;
+      grid-template-columns: 58vw 32vw;
+      grid-template-areas: "page title";
+      justify-content: center;
+      align-items: center;
+      // border: 1px solid black;
+      top: 10vh;
+      width: 90vw;
+      height: 85vh;
       z-index: 2;
-      right: 2vw;
-      top: 3vh;
-      .activity_exit_button {
-        width: 6vw;
-        height: 6vw;
-        background-color: transparent;
-        background-image: url("../assets/14/home.svg");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: 50% 50%;
-
-        margin: 3.5vw 4.2vw;
-        outline: none;
-        border: none;
-        transition: filter .3s ease;
-        cursor: pointer;
-
+    }
+    .activity_layout_titles {
+      grid-area: title;
+      // border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      margin: 1vw;
+      padding: 5vh 0 0 0;
+      label {
+        width: 25vw;
+        height: 8vh;
+        border-radius: 2vh;
+        margin: 2vh 0;
+        line-height: 7vh;
+        font-size: 3vh;
+        letter-spacing: 0.2vw;
+        font-weight: bold;
+        color: white;
+        background-color: rgb(117,210,243);
+        box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
         &:hover {
-          filter: brightness(150%);
-        }
-        &:active {
-          filter: brightness(80%);
+          background-color: rgb(44,185,244);
+          box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
         }
       }
+      label[data-key="title_2"] {
+        transform: translateX(1vw);
+      }
+      label[data-key="title_3"] {
+        transform: translateX(2vw);
+      }
+      label[data-key="title_4"] {
+        transform: translateX(3vw);
+      }
     }
-
   }
 </style>
