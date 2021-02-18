@@ -20,7 +20,7 @@
       div(class="title_block" v-for="(title, index) in titleText")
         label(class="title_mobile" v-bind:data-key="'title_'+ `${index+1}`" @click="topicStretch(index);") {{title}}
         div(class="title_topic_mobile" v-bind:data-topic="'topic_'+ `${index+1}`")
-          label(v-for="(topic, i) in topicText[index]" @click="selectPage(index); selectPageTopic(index, i); titleBlock = false;") - &nbsp {{topic}}
+          label(v-for="(topic, i) in topicText[index]" @click="selectPageTopic(index, i); titleBlock = false;") - &nbsp {{topic}}
     div(class="activity_layout" @click="list = false; titleBlock = false;")
       div(class="activity_layout_titles" v-if="pc")
         label(v-for="(item, index) in titleText" v-bind:data-key="'title_'+ `${index+1}`" @click="selectPage(index)") {{titleText[index]}}
@@ -73,15 +73,12 @@ export default {
   },
   mounted: function () {
     for (var i = 0; i < this.introduceSrc.length; i++) {
-      var arr = []
+      var arr = new Array([])
       for (var j = 0; j < this.introduceSrc[i].lists.length; j++) {
         arr.push(false)
       }
       this.layout1FlagArr.push(arr)
     }
-    // for (var ele in document.querySelectorAll('[data-topic]')) {
-    //   ele.setAttribute('style', 'height: 0;')
-    // }
     this.pc = this.isPC()
     this.selectPage(0)
   },
@@ -108,36 +105,15 @@ export default {
       layout2Index: 0,
       layout3Index: 0,
       layout4Index: 0,
-      pc: this.isPC()
+      pc: false
     }
   },
+  computed: {
+  },
   methods: {
-    topicStretch: function (index) {
-      var topics = document.querySelectorAll('[data-topic]')
-      if (topics[index].offsetHeight === 0) {
-        topics[index].setAttribute('style', 'height: auto;')
-      } else {
-        topics[index].setAttribute('style', 'height: 0;')
-      }
-    },
-    blockStretch: function (index) {
-      var block = document.querySelectorAll('[data-block]')
-      if (this.layout1FlagArr[this.layout1Index][index]) {
-        this.layout1FlagArr[this.layout1Index][index] = false
-        block[index].setAttribute('style', 'height: 33vh; transition: filter .9s ease;')
-        if (this.pc) {
-          block[index].setAttribute('style', 'height: 33vh; transition: filter .9s ease;')
-        } else {
-          block[index].setAttribute('style', 'height: 22vh; transition: filter .9s ease;')
-        }
-      } else {
-        this.layout1FlagArr[this.layout1Index][index] = true
-        block[index].setAttribute('style', 'height: auto; transition: filter .9s ease;')
-      }
-    },
     selectPage: function (index) {
       this.reset(index)
-      if (this.pc) {
+      if (true) {
         if (this.currentIndex === index) {
           this.currentIndex = -1
         } else {
@@ -158,10 +134,9 @@ export default {
     reset: function (index) {
       if (index === 0) {
         this.selectPageTopic(0, 0)
-        alert(this.introduceSrc[0].lists.length)
-        for (var i = 0; i < this.introduceSrc.length; i++) {
-          for (var j = 0; j < this.introduceSrc[i].lists.length; j++) {
-            this.layout1FlagAr[i][j] = false
+        for (var i = 0; i < this.layout1FlagArr.length; i++) {
+          for (var j = 0; j < this.layout1FlagArr[i].length; j++) {
+            this.layout1FlagArr[i][j] = false
           }
         }
       }
@@ -187,6 +162,29 @@ export default {
               background-color: rgb(196, 196, 196);`)
           }
         }
+      }
+    },
+    topicStretch: function (index) {
+      var topics = document.querySelectorAll('[data-topic]')
+      if (topics[index].offsetHeight === 0) {
+        topics[index].setAttribute('style', 'height: auto;')
+      } else {
+        topics[index].setAttribute('style', 'height: 0;')
+      }
+    },
+    blockStretch: function (index) {
+      var block = document.querySelectorAll('[data-block]')
+      if (this.layout1FlagArr[this.layout1Index][index]) {
+        this.layout1FlagArr[this.layout1Index][index] = false
+        block[index].setAttribute('style', 'height: 33vh; transition: filter .9s ease;')
+        if (this.pc) {
+          block[index].setAttribute('style', 'height: 33vh; transition: filter .9s ease;')
+        } else {
+          block[index].setAttribute('style', 'height: 22vh; transition: filter .9s ease;')
+        }
+      } else {
+        this.layout1FlagArr[this.layout1Index][index] = true
+        block[index].setAttribute('style', 'height: auto; transition: filter .9s ease;')
       }
     },
     openTab: function (url) {
