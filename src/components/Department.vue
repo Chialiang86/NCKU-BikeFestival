@@ -400,8 +400,8 @@ export default {
 /* 8 components rotate */
 
 @keyframes rotate-11 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-79deg) translateX(36vw) rotate(79deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(38vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-88deg) translateX(38vw) rotate(88deg); }
 }
 @keyframes rotate-33 {
   0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
@@ -434,13 +434,13 @@ export default {
   100% { opacity: 1; transform: rotate(57deg) translateX(36vw) rotate(-57deg); }
 }
 @keyframes rotate-169 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(79deg) translateX(36vw) rotate(-79deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(38vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(88deg) translateX(38vw) rotate(-88deg); }
 }
 
 @keyframes rotate-11-disappear {
-  0% { opacity: 1; transform: rotate(-79deg) translateX(36vw) rotate(79deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-88deg) translateX(38vw) rotate(88deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(38vw) rotate(-90deg); }
 }
 @keyframes rotate-33-disappear {
   0% { opacity: 1; transform: rotate(-57deg) translateX(36vw) rotate(57deg); }
@@ -467,8 +467,8 @@ export default {
   100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-169-disappear {
-  0% { opacity: 1; transform: rotate(79deg) translateX(36vw) rotate(-79deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(88deg) translateX(38vw) rotate(-88deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(38vw) rotate(-90deg); }
 }
 
   /*
@@ -619,16 +619,16 @@ export default {
         display: none;
       }
 
-      .dept_chain_large_mobile {
+      .dept_chain_large {
         z-index:1;
         position: absolute;
-        left: 0;
-        top: 0;
+        left: -58vh;
+        top: -10vh;
 
-        width: 100vh;
-        height: 100vh;
+        width: 120vh;
+        height: 120vh;
 
-        background-image: url("../assets/dept/large_chain_mobile.svg");
+        background-image: url("../assets/dept/large_chain.svg");
         opacity:0.8;
         background-repeat: no-repeat;
         background-size: 100% 100%;
@@ -664,17 +664,17 @@ export default {
         left: 0;
         top: 0;
         max-width: 30vw;
-        width: 19vw;
-        height: auto;
+        width: 20vw;
+        height: 2.6vh;
         text-align: center;
         vertical-align: bottom;
-        background-color: #eeefef;
+        background-color: rgb(79, 224, 224);
         margin: 2vh 0 0 20vw;
-        color: rgb(103, 192, 225);
+        color: white;
         border-radius: 5px;
         padding: 2px;
-        font-size: 12px;
-        line-height: 16px;
+        font-size: 1.8vh;
+        line-height: 2.4vh;
       }
       p:hover {
         z-index: 999;

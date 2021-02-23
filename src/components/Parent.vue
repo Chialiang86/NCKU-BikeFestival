@@ -8,20 +8,24 @@
             div(id="bottom" v-if="index===4")
           label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
     div(class="parent_top_bar_mobile")
-      div(class="parent_mobile_title" @click="list = false")
+      div(class="parent_mobile_title" @click="list = false; titleBlock = false;")
       router-link(tag="div" class="parent_mobile_exit_button" to="/")
       div(class="parent_mobile_list" @click="list = !list")
     div(class="parent_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
       label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
     div(class="parent_background")
-    dive(class="parent_flower_top" @click="list = false")
-    dive(class="parent_flower_down" @click="list = false")
+    div(class="parent_flower_top" @click="list = false")
+    div(class="parent_flower_down" @click="list = false")
+    div(class="parent_title_block" v-if="!pc && titleBlock")
+      label(v-for="(title, index) in titleText" @click="selectTitle(index); titleBlock = false;") {{title}}
     div(class="parent_layout" @click="list = false")
       div(class="parent_layout_titles" v-if="pc" @click="titleBlock = false;")
         label(v-for="(item, index) in titleText" v-bind:data-key="'title_'+ `${index+1}`" @click="selectTitle(index); titleBlock = false;") {{titleText[index]}}
-      div(class="parent_layout_titles_mobile")
-      dic(class="parent_layout_page" v-if="pc")
+      div(class="parent_layout_titles_mobile" v-else)
+        div(class="current_title" @click="titleBlock = !titleBlock") {{titleText[currentIndex]}}
+          div(class="current_title_arrow")
+      dic(class="parent_layout_page" @click="titleBlock = false")
         div(class="page_block" v-for="(topics, index) in tempItem" v-bind:data-block="'block_'+`${index}`" @click="blockStretch(index)")
           article(class="page_article")
             p(class="article_title") {{topics.title}}
@@ -46,6 +50,7 @@ export default {
       urlText: ['news', 'activity', 'department', 'online', 'parent', 'sponsor', 'live'],
       titleText: ['考試策略', '課綱新制', '院系博覽', '經驗分享', '心態調適', '考前準備', '親子關係', '孩子健康', '未來趨勢', '國際聚焦'],
       list: false,
+      titleBlock: false,
       pc: this.isPC(),
       tempItem: srcJson.item[0],
       stretchArr: [],
@@ -80,7 +85,7 @@ export default {
         if (this.pc) {
           block[index].setAttribute('style', 'height: 80px; transition: height .9s ease;')
         } else {
-          block[index].setAttribute('style', 'height: 25vw; transition: height .9s ease;')
+          block[index].setAttribute('style', 'height: 10vh; transition: height .9s ease;')
         }
       } else {
         this.stretchArr[this.currentIndex][index] = true
@@ -251,111 +256,154 @@ export default {
       }
     }
 
+    .parent_title_block {
+      position: absolute;
+      left: 32vw;
+      top: 16.5vh;
+      width: calc(36vw + 1px);
+      height: auto;
+      z-index: 100;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      label {
+        padding: 1.2vh 3vw;
+        width: 36vw;
+        border: 1px solid rgb(236, 214, 174);
+        background-color: rgb(74,194,239);
+        color: white;
+        height: 2.6vh;
+        line-height: 2.6vh;
+        font-size: 2vh;
+        font-weight: bold;
+        letter-spacing: 3px;
+        text-align: center;
+      }
+    }
+
     .parent_layout {
       display: grid;
-      grid-template-rows: 0.8fr 3fr .5fr;
-      grid-template-areas: "select"
-        "list"
-        "list";
+      grid-template-rows: 8vh 10vh 1fr;
+      grid-template-areas: "." "title" "content";
       justify-content: center;
       justify-items: center;
-      align-items: center;
+      align-items: flex-start;
 
       width: 100vw;
       height: 100vh;
+    }
 
-      .parent_list_section {
-        grid-area: list;
-        justify-self: center;
-        align-self: flex-start;
+    .parent_layout_titles_mobile {
+      grid-area: title;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      z-index: 10;
+      .current_title {
+        background-color: rgb(74,194,239);
+        color: white;
+        margin: 2.5vh 0 0 0;
+        padding: 1.2vh 3vw;
+        border-radius: 10px;
+        width: 36vw;
+        line-height: 2.5vh;
+        font-size: 2.5vh;
+        font-weight: bold;
+        letter-spacing: 3px;
+        text-align: left;
+        box-shadow: 1px 1px 2px 1px rgba(51, 51, 51, 0.5);
+        z-index: 20;
 
-        width: 100%;
-        height: 100%;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-
-        &::-webkit-scrollbar {
-          width: 6px;
+        display: grid;
+        grid-template-columns: 1fr 5vw;
+        grid-template-areas: ". arr";
+        justify-content: center;
+        align-items: flex-end;
+        &:hover {
+          box-shadow: 0 0 3px 2px rgba(51, 51, 51, 0.5);
+        }
+        &:active {
+          box-shadow: 0 0 2px 1px rgba(51, 51, 51, 0.5);
+        }
+        .current_title_arrow {
+          grid-area: arr;
+          width: 4vw;
+          height: 4vw;
+          transform: rotate(90deg);
+          background-image: url('../assets/14/arrow.svg');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center bottom;
           border-radius: 5px;
-        }
-        &::-webkit-scrollbar-track {
-          background: #f1f1f1;
-        }
-        &::-webkit-scrollbar-thumb {
-          background: #888;
-          border-radius: 5px;
-        }
-        &::-webkit-scrollbar-thumb:hover {
-          background: #555;
-        }
-        ul {
-          list-style-type: none;
-
-          margin: 4vw 5vw;
-          padding: 0;
-          box-sizing: border-box;
-
-          li.parent_content {
-            padding: 1vh;
-          }
-
-          li {
-            width: 100%;
-
-            background-color: rgb(103, 192, 225);
-
-            margin: 0;
-            padding: 2vh 4vw;
-            border-radius: 2vh;
-            box-sizing: border-box;
-
-            line-height: 2.5vh;
-            font-size: 2.5vh;
-            color: white;
-            text-align: left;
-
-            cursor: pointer;
-            transition: filter .3s ease;
-
-            &:hover {
-              filter: brightness(120%);
-            }
-            &:active {
-              filter: brightness(80%);
-            }
-            time {
-              float: right;
-              font-size: 2vh;
-            }
-            p {
-              display: inline-block;
-              margin: 0;
-            }
-
-            div {
-              background-color: transparent;
-
-              line-height: 2vh;
-              text-align: left;
-              font-size: 2vh;
-              color: white;
-
-              transform-origin: top;
-              transition: transform .3s ease;
-              /deep/ p {
-                line-height: 200%;
-                font-size: 2vh;
-              }
-            }
-
-          }
-          li+li {
-            margin-top: 4vw;
-          }
         }
       }
-      .parent_counter_section {
-        display: none;
+    }
+
+    .parent_layout_page {
+      grid-area: content;
+      width: 100%;
+      height: 65vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      .page_block {
+        height: 10vh;
+        width: 94vw;
+        margin: 0 2vw 1vh 2vw;
+        background-color: rgb(45,184,245);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        &:hover {
+          box-shadow: 0.5vw 0.5vh 5px 1px rgba(51, 51, 51, 0.5);
+          filter: brightness(110%);
+        }
+        &:active {
+          filter: brightness(50%);
+          background-color: rgb(45,184,245);
+        }
+        .page_article {
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          overflow: hidden;
+          .article_title {
+            height: 6vh;
+            padding: 2vh 3vw;
+            text-align: left;
+            line-height: 6vh;
+            color: white;
+            font-size: 2.6vh;
+            letter-spacing: 3px;
+          }
+          div {
+            margin: 1vh 0 0 2vw;
+            padding: 3vh 1vw;
+            width: 88vw;
+            background-color: rgba(255,255,255,0.7);
+            .article_content {
+              padding: 0 2vw;
+              text-align: left;
+              line-height: 3vh;
+              font-size: 2vh;
+              color: rgb(100, 100, 100);
+            }
+          }
+          .article_slide {
+            margin: 0.5vh 0 0 1vw;
+            padding: 0.5vh 1vw;
+            width: 90vw;
+          }
+        }
       }
     }
   }
@@ -518,7 +566,7 @@ export default {
       label {
         width: 13vw;
         height: 7vh;
-        border-radius: 2vh;
+        border-radius: 10px;
         margin: 2vh 0;
         line-height: 6.5vh;
         font-size: 3vh;
@@ -562,20 +610,32 @@ export default {
     }
     .parent_layout_page {
       grid-area: page;
-      width: 52vw;
+      width: 51vw;
       height: 80vh;
       overflow-x: hidden;
       overflow-y: scroll;
+      &::-webkit-scrollbar {
+        width: 0.6vw;
+        border-radius: 0.5vw;
+      }
+      &::-webkit-scrollbar-track {
+        background: rgba(100, 100, 100, 0.3);
+        border-radius: 0.5vw;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgb(103, 192, 225);
+        border-radius: 0.5vw;
+      }
       .page_block{
-        width: 48vw;
-        max-width: 48vw;
+        width: 46vw;
+        max-width: 46vw;
         height: 80px;
-        background-color: rgb(118,211,243);
-        border-radius: 2vw;
+        background-color: rgb(45,184,245);
+        border-radius: 15px;
         border: 1vw solid transparent;
         margin: 3vh 1vw;
         box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
-        overflow-y: hidden;
+        overflow: hidden;
 
         display: flex;
         flex-direction: column;
@@ -601,14 +661,14 @@ export default {
             text-align: left;
             line-height: 50px;
             color: white;
-            font-size: 20px;
+            font-size: 3vh;
             font-weight: bold;
             letter-spacing: 3px;
           }
           div {
             margin: 1vh 0 5px 12px;
             padding: 3vh 2vw;
-            width: 40vw;
+            width: 38vw;
             background-color: rgba(255,255,255,0.6);
             .article_content {
               text-align: left;
@@ -619,7 +679,7 @@ export default {
           }
           .article_slide {
             padding: 5px 12px;
-            width: 96%;
+            width: 42vw;
           }
         }
       }

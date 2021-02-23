@@ -16,11 +16,11 @@
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
       label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
     button(v-show="mode === 1" class="sponsor_return_button" v-on:click="mode = 0; currentIndex = -1;")
-    div(class="sponsor_layout_1" v-show="mode === 0")
+    div(class="sponsor_layout_1" v-show="mode === 0" @click="list = false")
       section(class="sponsor_list")
         label(v-for="(iter, index) of sponsorLogo" v-bind:key="iter.name" v-bind:data-name="iter.name" v-bind:href="`${iter.link}`" target="_blank" v-bind:style="{'background-image': 'url(' + sponsorLogo[index].img + ')'}" v-on:click="currentIndex = index; mode = 1;")
         div(class="sponsor_list_empty")
-    div(class="sponsor_layout_2" v-if="mode === 1")
+    div(class="sponsor_layout_2" v-if="mode === 1" @click="list = false")
       section(class="sponsor_info")
         p {{sponsor[currentIndex].name}}
         label(v-bind:style="{'background-image': 'url(' + sponsorLogo[currentIndex].img + ')'}" v-on:click="openSponsorTab(currentIndex)")
@@ -49,7 +49,7 @@ export default {
       sponsorLogo: [
         {
           name: '馥貴春',
-          img: 'https://i.imgur.com/sJZNB1D.jpg'
+          img: 'https://i.imgur.com/a2u62ZH.jpg'
         },
         {
           name: '儕陞生化',
@@ -122,9 +122,11 @@ export default {
             `,
           info: `
             <p align="center">
+            <p style="color:rgb(42,186,243); letter-spacing: 2px; font-weight: bold; font-size: 2.5vh; line-height: 3.8vh;">馥貴春</p>
             <p>官網 : <a href="http://www.res.com.tw/"> http://www.res.com.tw/</a></p>
             <p>地址 : 台南市永康區永大五路151號</p>
-            <p>營業時間 : 10:00-21:00</p>`
+            <p>營業時間 : 10:00-21:00</p>
+            </p>`
         },
         {
           name: '儕陞生化',
@@ -155,6 +157,7 @@ export default {
             `,
           info: `
             <p align="center">
+            <p style="color:rgb(42,186,243); letter-spacing: 2px; font-weight: bold; font-size: 2.5vh; line-height: 3.8vh;">儕陞生化</p>
             <p>官網 : <a href="https://www.charsire.com.tw/"> https://www.charsire.com.tw/</a></p>
             <p>地址 : 744台南市新市區南科二路13號</p>
             </p>`
@@ -173,18 +176,58 @@ export default {
             </p>`,
           info: `
             <p align="center">
+            <p style="color:rgb(42,186,243); letter-spacing: 2px; font-weight: bold; font-size: 2.5vh; line-height: 3.8vh;">萬鼎工程</p>
             <p>官網 : <a href="http://www.rei.ctci.com/"> http://www.rei.ctci.com/</a></p>
             <p>地址 : 744台南市新市區南科二路13號</p>
             </p>`
         },
         {
           name: '哈努曼',
-          link: 'https://www.facebook.com/HANUMAN20181203/',
-          content: ``,
+          link: 'https://www.facebook.com/HANUMAN20181203/?ref=page_internal',
+          content: `
+            <p align="center">
+            <p style="padding: 5px 0; font-size: 15px; line-height: 22px; color: rgb(120, 120, 120); letter-spacing: 2px;">
+            &nbsp &nbsp &nbsp &nbsp 哈努曼泰茶裡，販售的不只是飲品，更有滿滿的大小故事等您來挖掘，泰奶風潮得掘起，能見度大展開，想喝泰奶不在是件難事，但您喝到的是泰奶，還是把香氣不到位，不甜合理化的台泰奶呢？
+            </p>
+            <p style="padding: 5px 0; font-size: 15px; line-height: 22px; color: rgb(120, 120, 120); letter-spacing: 2px;">
+            &nbsp &nbsp &nbsp &nbsp 一樣的茶葉但調理後的味道大大不同，就如一樣學習考試測驗，用心學習懂的精髓的成績當然好，有樣學樣、只懂皮毛的成績當然差強人意，哈努曼泰茶也就是單純的想把家鄉的味道，好好的留存，給各位好朋友們品嚐，不以最大的獲利率為出發點，而是以－最完整的家鄉味與故事來跟各位分享傳遞！
+            </p>
+            <p style="padding: 5px 0; font-size: 15px; line-height: 22px; color: rgb(120, 120, 120); letter-spacing: 2px;">
+            坊間泰奶能給您的，哈努曼絕對能給您的感受更多，就是要讓您深刻感受～🙏🙏🙏
+            </p>
+            <pre padding: 5px 0; font-size: 15px; line-height: 22px; color: rgb(120, 120, 120); letter-spacing: 2px;">
+            </pre>
+            <div style="background-image: url('https://i.imgur.com/035EwTG.png'); background-position: right 10% center; background-repeat: no-repeat; background-size: 50%;">
+            <pre style="padding: 5px 0; font-size: 15px; line-height: 22px; color: rgb(120, 120, 120); letter-spacing: 2px;">
+……………………………………………………………
+台南地區
+首間泰式飲品專賣店
+道地泰式手工茶飲
+純正泰國人經營
+隱身在小巷弄裡
+堅守著純正的味道
+打造純正泰國的氛圍感受
+一秒瞬間融身泰國
+🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭🇹🇭 
+台南喝泰式飲品
+首選當然就是哈努曼泰茶
+沒喝到哈努曼泰茶前
+別對泰式奶茶輕易妥協
+不跟隨熱鬧 只專精門道
+你終究要喝泰奶的
+那為什麼不一開始就來哈努曼泰？
+想喝杯泰奶不需要冒生命危險
+來趟哈努曼就能滿足您想喝泰奶的慾望
+……………………………………………………………
+            </pre>
+            </div>
+            </p>`,
           info: `
             <p align="center">
-            <p>粉絲專頁 : <a href="https://www.facebook.com/HANUMAN20181203/"> https://www.facebook.com/HANUMAN20181203/</a></p>
+            <p style="color:rgb(42,186,243); letter-spacing: 2px; font-weight: bold; font-size: 2.5vh; line-height: 3.8vh;">哈努曼</p>
+            <p>粉絲專頁 : <a href="https://www.facebook.com/HANUMAN20181203/?ref=page_internal"> https://www.facebook.com/HANUMAN20181203/?ref=page_internal</a></p>
             <p>地址 : 701 臺南市東區崇善二街12號</p>
+            <p>營業時間：10:00-21:30（每週二固定公休）</p>
             </p>`
         },
         {
@@ -207,6 +250,7 @@ export default {
             </p>`,
           info: `
             <p align="center">
+            <p style="color:rgb(42,186,243); letter-spacing: 2px; font-weight: bold; font-size: 2.5vh; line-height: 3.8vh;">成大會館</p>
             <p>官網 : <a href="http://www.zendasuites.com.tw/zh-tw"> http://www.zendasuites.com.tw/zh-tw</a></p>
             <p>地址 : 701台南市東區大學路2號</p>
             <p>電話 : 06 275 8999</p>
@@ -223,6 +267,7 @@ export default {
             </p>`,
           info: `
             <p align="center">
+            <p style="color:rgb(42,186,243); letter-spacing: 2px; font-weight: bold; font-size: 2.5vh; line-height: 3.8vh;">川益科技</p>
             <p>官網 : <a href="https://www.kingslide.com/"> https://www.kingslide.com/</a></p>
             <p>地址 : 82151台灣高雄市路竹區路科九路6號</p>
             <p>電話 : +886-7-976-1688</p>
@@ -537,7 +582,7 @@ export default {
       grid-area: bottom;
 
       display: grid;
-      grid-template-rows: 55vh 1fr 10vh;
+      grid-template-rows: 53vh 1fr 10vh;
       grid-template-areas: "content" "info" ".";
       justify-content: center;
       justify-items: center;
@@ -553,7 +598,7 @@ export default {
         line-height:3vh;
 
         width: 92vw;
-        height: 52vh;
+        height: 50vh;
         overflow-y: scroll;
         overflow-x: hidden;
       }

@@ -223,7 +223,7 @@ export default {
       if (this.layout1FlagArr[this.layout1Index][index]) {
         this.layout1FlagArr[this.layout1Index][index] = false
         if (this.pc) {
-          block[index].setAttribute('style', 'height: 180px; transition: height .9s ease;')
+          block[index].setAttribute('style', 'height: 28vh; transition: height .9s ease;')
         } else {
           block[index].setAttribute('style', 'height: 25vw; transition: height .9s ease;')
         }
@@ -1194,8 +1194,8 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      overflow-y: scroll;
-      overflow-x: hidden;
+      // overflow-y: scroll;
+      overflow: hidden;
       .top_bar1 {
         height: 8%;
         width: 100%;
@@ -1232,41 +1232,38 @@ export default {
         }
       }
       .content1 {
-        width: 96%;
+        width: 100%;
         height: 90%;
         overflow-y: scroll;
         overflow-x: hidden;
         transition: filter .8s ease;
         &::-webkit-scrollbar {
-          width: 0.3vw;
-          border-radius: 0.25vw;
+          width: 0.6vw;
+          border-radius: 0.5vw;
         }
         &::-webkit-scrollbar-track {
-          background: transparent;
-          border-radius: 0.25vw;
+          background: rgba(100, 100, 100, 0.3);
+          border-radius: 0.5vw;
         }
         &::-webkit-scrollbar-thumb {
           background: rgb(103, 192, 225);
-          border-radius: 0.25vw;
-        }
-        &::-webkit-scrollbar-thumb:hover {
-          filter: brightness(130%);
+          border-radius: 0.5vw;
         }
 
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         .block1 {
-          min-width: 400px;
-          height: 180px;
+          width: 52vw;
+          height: 28vh;
           background-color: rgb(45,184,245);
           border-radius: 2vw;
-          margin: 1vw 1vw 1vw 0;
+          margin: 1vw 1.5vw 1vw 0;
           box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
 
           display: grid;
           grid-template-columns: 3fr 4fr;
-          grid-template-rows: 46px 34px 1fr;
+          grid-template-rows: 7vh 4vh 1fr;
           grid-template-areas: "img title" "img time" "img introduce";
           &:hover {
             box-shadow: 0.5vw 0.5vh 5px 1px rgba(51, 51, 51, 0.5);
@@ -1279,9 +1276,9 @@ export default {
           .img1 {
             grid-area: img;
             border-radius: 0.6vw;
-            margin: 25px 0 25px 30px;
-            width: 17.6vw;
-            height: 9.9vw;
+            margin: 4vh 2vw;
+            width: 35.2vh;
+            height: 20vh;
             min-width: 160px;
             min-height: 90px;
             box-shadow: 0 0 3px 2px rgba(51, 51, 51, 0.5);
@@ -1289,12 +1286,12 @@ export default {
           .title1 {
             grid-area: title;
             text-align: left;
-            margin: 25px 0 0 3px;
+            padding: 3vh 0 0 0.2vw;
             width: 90%;
-            height: 20px;
+            height: 3vh;
             color: white;
-            line-height: 16px;
-            font-size: 15px;
+            line-height: 3vh;
+            font-size: 2.5vh;
             font-weight: bold;
             letter-spacing: 0.2vw;
           }
@@ -1304,13 +1301,12 @@ export default {
             label {
               min-height: 16px;
               border-radius: 1vw;
-              margin: 3px 0 0 0;
               background-color: rgb(255,241,191);
               padding: 0 10px;
               width: auto;
-              height: 25px;
-              line-height: 24px;
-              font-size: 13px;
+              height: 3vh;
+              line-height: 3vh;
+              font-size: 2vh;
               text-align: left;
               color: rgb(153,145,114);
               font-weight: bold;
@@ -1319,10 +1315,10 @@ export default {
           }
           .introduce1 {
             grid-area: introduce;
-            margin: 0 0 12px 0;
-            width: 92%;
+            margin: 0 0 3vh 0;
+            width: 97%;
             overflow-y: scroll;
-             &::-webkit-scrollbar {
+            &::-webkit-scrollbar {
               width: 0.2vw;
               border-radius: 0.25vw;
             }
@@ -1335,8 +1331,8 @@ export default {
               border-radius: 0.25vw;
             }
             p {
-              line-height: 20px;
-              font-size: 15px;
+              line-height: 3vh;
+              font-size: 2.2vh;
               color: white;
               letter-spacing: 2px;
               text-align: left;
@@ -1355,7 +1351,7 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      overflow-y: scroll;
+      overflow: hidden;
       z-index: 5;
       .top_bar2 {
         height: 5vh;
@@ -1390,12 +1386,30 @@ export default {
         }
       }
       .content2 {
-        width: 100%;
+        width: 96%;
         height: 93%;
         padding: 1vh 1vw;
         overflow-y: scroll;
+        &::-webkit-scrollbar {
+          width: 0.6vw;
+          border-radius: 0.5vw;
+        }
+        &::-webkit-scrollbar-track {
+          background: rgba(100, 100, 100, 0.3);
+          border-radius: 0.5vw;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: rgb(103, 192, 225);
+          border-radius: 0.5vw;
+        }
+        .img4 {
+          margin: 0 0 20px 0;
+          width: 48vw;
+          height: 27vw;
+          border-radius: 1vw;
+        }
         .block2 {
-          width: 90%;
+          width: 96%;
           height: auto;
           display: grid;
           grid-template-rows: 9vh 1fr;
@@ -1421,16 +1435,16 @@ export default {
               tr {
                 height: 100%;
                 th {
-                  height: 25px;
+                  height: 4vh;
                   padding: 3px;
                   text-align: center;
                   vertical-align: middle;
                   border: 1px solid rgb(75,196,245);
                   color: white;
                   font-weight: bold;
-                  font-size: 16px;
+                  font-size: 2.4vh;
                   letter-spacing: 2px;
-                  line-height: 16px;
+                  line-height: 2.5vh;
                 }
                 th:first-child {
                   border-top-left-radius: 2vw;
@@ -1445,33 +1459,15 @@ export default {
                 height: 100%;
                 td {
                   width: auto;
-                  height: 20px;
+                  height: 3vh;
                   padding: 5px 10px;
                   text-align: center;
                   vertical-align: middle;
                   border: 1px solid rgb(75,196,245);
                   color: rgb(102,102,102);
-                  line-height: 20px;
-                  font-size: 14px;
+                  line-height: 3vh;
+                  font-size: 2vh;
                 }
-                // td[data-td="td_1"] {
-                //   text-align: left;
-                //   min-width: 6vw;
-                //   max-width: 14vw;
-                // }
-                // td[data-td="td_2"] {
-                //   text-align: left;
-                //   min-width: 4vw;
-                //   max-width: 14vw;
-                // }
-                // td[data-td="td_3"] {
-                //   text-align: left;
-                //   max-width: 10vw;
-                // }
-                // td[data-td="td_4"] {
-                //   text-align: left;
-                //   min-width: 6vw;
-                // }
               }
               tr:last-child td:first-child {
                 border-bottom-left-radius: 2vw;
@@ -1570,7 +1566,7 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      overflow-y: scroll;
+      overflow: hidden;
       z-index: 5;
       .map_block {
         width: 75vh;
