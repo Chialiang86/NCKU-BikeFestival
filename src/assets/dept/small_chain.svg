@@ -3,21 +3,21 @@
     <style>
       .cls-1 {
         fill: none;
-        stroke: #1e3373;
+        stroke: #1eA3E5;
         stroke-miterlimit: 10;
         stroke-width: 4px;
       }
 
       .cls-2 {
-        fill: #b5b5b6;
+        fill: #10B0EF;
       }
 
       .cls-3 {
-        fill: #dd4a43;
+        fill: #1886D8;
       }
 
       .cls-4 {
-        fill: #f8f6e8;
+        fill: #18B6F8;
       }
     </style>
   </defs>

@@ -1,43 +1,58 @@
 {
     "strategyList": [
         {
-        "text": "老高特斯拉",
-        "link": "https://www.youtube.com/watch?v=5qap5aO4i9A",
-        "img": "https://i.imgur.com/Hu5Z3Yq.png"
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
         },
         {
-        "text": "背景音樂喔",
-        "link": "https://www.youtube.com/watch?v=3mBLjHxwwmo",
-        "img": "https://i.imgur.com/jklIThX.png"
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
         },
         {
-        "text": "背景音樂喔",
-        "link": "https://www.youtube.com/watch?v=3mBLjHxwwmo",
-        "img": "https://i.imgur.com/jklIThX.png"
-        }
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
+        },
+        {
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
+            },
+            {
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
+            },
+            {
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
+            }
     ],
     "interviewList": [
         {
-        "text": "老高嘴砲喔",
-        "link": "https://www.youtube.com/watch?v=5qap5aO4i9A",
-        "img": "https://i.imgur.com/Hu5Z3Yq.png"
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
         },
         {
-        "text": "背景音樂喔",
-        "link": "https://www.youtube.com/watch?v=3mBLjHxwwmo",
-        "img": "https://i.imgur.com/jklIThX.png"
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
         }
     ],
     "shareList": [
         {
-        "text": "背景音樂喔",
-        "link": "https://www.youtube.com/watch?v=3mBLjHxwwmo",
-        "img": "https://i.imgur.com/jklIThX.png"
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
         },
         {
-        "text": "背景音樂喔",
-        "link": "https://www.youtube.com/watch?v=3mBLjHxwwmo",
-        "img": "https://i.imgur.com/jklIThX.png"
+            "text": "敬請期待！",
+            "link": "",
+            "img": "../assets/14/lock.svg"
         }
     ]
 }

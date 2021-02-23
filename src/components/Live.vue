@@ -13,27 +13,36 @@
       div(class="live_mobile_list" @click="list = !list")
     div(class="live_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
-    div(class="live_dot1_pc")
-    div(class="live_dot2_pc")
-    div(class="live_dot3_pc")
+      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
+    div(class="live_dot1")
+    div(class="live_dot2")
+    div(class="live_dot3")
+    div(class="live_dot4")
     div(class="live_layout" @click="list = false")
       div(class="live_layout_yt" @click="list = false")
         iframe(class="live_layout_yt_video" @click="list = false" v-if="ytActive" v-bind:src="ytTemp.link" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         div(class="live_layout_yt_video_none" @click="list = false" v-else)
           lebel(class="live_layout_yt_video_text") 活動當天在此進行直播，詳情請關注臉書或粉絲專頁，謝謝您！
-        div(class="live_layout_yt_title" @click="list = false" ) {{ytTemp.title}}
+        div(class="live_layout_yt_title" @click="list = false")
+          label(id="title_1") {{ytTemp.title}}
+          label(id="title_2") {{ytTemp.name}}
       div(class="live_layout_list" @click="list = false")
         div(class="live_layout_list_content" ref="content" @click="list = false")
-          div(class="live_layout_list_block" v-for="items in srcList")
-            label(class="live_layout_list_block_title") {{items.title}}
-            label(class="live_layout_list_block_list" v-for="(item, index) in items.list" @click="setTemp(items.title + ' | ' + item.name, ytTemp.link=item.link, ytTemp.content=item.content); ytActive=true;") {{item.name}}
+          div(class="live_layout_list_block" v-for="(items, index) in srcList.list")
+            label(class="live_layout_list_block_title" v-bind:style="{'background-image': 'url(' + require(`../assets/14/live/title_${index + 1}.svg`) + ')'}")
+            label(class="live_layout_list_block_list" v-for="(item, i) in items.list" @click="setTemp(items.title, item.name, ytTemp.link=item.link, ytTemp.content=item.content); ytActive=true;") {{item.name}}
         div(class="live_layout_list_logo" @click="list = false")
 </template>
 
 <script>
 import srcJson from '../assets/14/live/live.json'
 export default {
+  created () {
+    window.addEventListener('resize', this.windowSizeChange)
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.windowSizeChange)
+  },
   data: function () {
     return {
       menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
@@ -42,6 +51,7 @@ export default {
       pc: this.isPC(),
       ytTemp: {
         title: '',
+        name: '',
         link: '',
         content: ''
       },
@@ -57,6 +67,13 @@ export default {
     this.setBarHeight()
   },
   methods: {
+    windowSizeChange: function (event) {
+      if (window.innerWidth > 551) {
+        this.pc = true
+      } else {
+        this.pc = false
+      }
+    },
     openTab: function (url) {
       window.open(url, '_blank')
     },
@@ -77,8 +94,9 @@ export default {
       }
       return flag
     },
-    setTemp: function (title, link, content) {
+    setTemp: function (title, name, link, content) {
       this.ytTemp.title = title
+      this.ytTemp.name = name
       this.ytTemp.link = link
       this.ytTemp.content = content
     },
@@ -99,6 +117,10 @@ export default {
     mobile layout css
   */
   @media only screen and (max-width: 551px) {
+    @keyframes flow-in {
+      from { right: -40%; }
+      to { right: 0%; }
+    }
     .live_page {
       position: absolute;
       display: flex;
@@ -110,6 +132,51 @@ export default {
       padding: 0;
       background: white;
       overflow: hidden;
+    }
+    .live_dot1 {
+      position: absolute;
+      width: 60vw;
+      height: 60vh;
+      right: 0%;
+      top: -16%;
+      transform: rotate(180deg);
+      background-image: url('../assets/14/live/mobile/dot1.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+    }
+    .live_dot2 {
+      position: absolute;
+      width: 60vw;
+      height: 60vh;
+      left: 0%;
+      top: 20%;
+      background-image: url('../assets/14/live/mobile/dot2.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+    }
+    .live_dot3 {
+      position: absolute;
+      width: 50vw;
+      height: 50vh;
+      right: 0%;
+      top: 35%;
+      background-image: url('../assets/14/live/mobile/dot3.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+    }
+    .live_dot4 {
+      position: absolute;
+      width: 60vw;
+      height: 60vh;
+      left: 0%;
+      bottom: -15%;
+      background-image: url('../assets/14/live/mobile/dot1.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
     }
     .live_top_bar_mobile {
       position: absolute;
@@ -124,9 +191,9 @@ export default {
       background-color: rgb(254,241,217);
       width: 100vw;
       height: 8vh;
-      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      box-shadow: 1px 1px 3px 1px rgba(51, 51, 51, 0.5);
       &:hover {
-        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+        box-shadow: 1px 1px 4px 2px rgba(51, 51, 51, 0.5);
       }
       .live_mobile_exit_button {
         grid-area: exit;
@@ -167,6 +234,7 @@ export default {
         border-radius: 2vw;
         background-color: transparent;
         margin: 1vh;
+        z-index: 50;
         &:hover {
           background-color: rgba(155, 155, 155, 0.8);
           filter: brightness(150%);
@@ -183,21 +251,21 @@ export default {
       grid-template-rows: repeat(8, 7vh);
       z-index: 20;
       width: 40vw;
-      height: 56vh;
+      height: 92vh;
       right: 0%;
       top: 8%;
-      background-color: rgba(100, 100, 100, 0.9);
+      background-color: rgb(250, 242, 226);
+      animation: flow-in 0.5s ease;
       label {
-        color:rgb(255, 246, 232);
+        color:rgb(75,196,245);
         line-height: 6vh;
         font-size: 2.4vh;
-        border: 1px solid rgb(50, 50, 50);
+        letter-spacing: 0.5vw;
+        border: 1px solid rgb(200, 200, 200);
         &:hover {
-          background-color: rgb(155, 155, 155);
           filter: brightness(150%);
         }
         &:active {
-          background-color: rgba(155, 155, 155, 0.8);
           filter: brightness(60%);
         }
       }
@@ -235,29 +303,174 @@ export default {
       width: 40vw;
       height: 100vh;
     }
-    .live_flower_top {
+    .live_layout {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
-      background-repeat: no-repeat;
-      background-position: center top;
-      background-size: cover;
-      z-index: 2;
-      right: 0vw;
-      top: -5vh;
-      width: 41vw;
-      height: 40vh;
+      top: 8vh;
+      width: 100vw;
+      height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .live_flower_down {
-      position: absolute;
-      background-image: url('../assets/14/flower.svg');
-      background-repeat: no-repeat;
-      background-position: center bottom;
-      background-size: cover;
-      z-index: 2;
-      right: 0vw;
-      bottom: -5vh;
-      width: 41vw;
-      height: 40vh;
+    .live_layout_yt {
+      height: auto;
+      width: 92vw;
+      margin: 3vh 0 0 0;
+      background-color: rgb(65,188,235);
+      box-shadow: 1px 1px 2px 1px rgba(150, 150, 150, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      .live_layout_yt_video {
+        width: 82vw;
+        height: 25vh;
+        grid-area: yt;
+        border-radius: 2vw;
+        background-color: rgba(255, 255, 255, 0.5);
+        margin: 3vh 4vw 1vh 4vw;
+      }
+      .live_layout_yt_video_none {
+        width: 82vw;
+        height: 26vh;
+        grid-area: yt;
+        border-radius: 2vw;
+        background-color: rgba(255, 255, 255, 0.5);
+        margin: 3vh 3vw 1vh 3vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 0px 2px 1px rgba(150, 150, 150, 0.6);
+        .live_layout_yt_video_text {
+          height: auto;
+          width: 90%;
+          line-height: 4vh;
+          color: white;
+          font-weight: bold;
+          font-size: 1.8vh;
+          letter-spacing: 0.2vw;
+        }
+      }
+      .live_layout_yt_title {
+          grid-area: title;
+          height: 4vh;
+          width: 78vw;
+          margin: 0 3vw 1vh 3vw;
+
+          display: flex;
+          align-items: center;
+          #title_1 {
+            width: auto;
+            height: 100%;
+            padding: 0 3vw 0 0;
+            text-align: left;
+            line-height: 3vh;
+            font-size: 2.4vh;
+            font-weight: bold;
+            letter-spacing: 0.6vw;
+            color: white;
+          }
+          #title_2 {
+            width: auto;
+            height: 100%;
+            text-align: left;
+            line-height: 3vh;
+            font-size: 2vh;
+            font-weight: bold;
+            letter-spacing: 0.5vw;
+            color: white;
+          }
+      }
+    }
+    .live_layout_list {
+      height: auto;
+      width: 92vw;
+      margin: 2vh 0 2vh 0;
+      border-radius: 20px;
+      background-color: rgb(254,241,217);
+      box-shadow: 1px 1px 2px 1px rgba(150, 150, 150, 0.6);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      .live_layout_list_content {
+        margin: 3vh 3vw;
+        height: 26vh;
+        width: 80vw;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 0 3vw 0 0;
+        &::-webkit-scrollbar {
+          width: 3vw;
+          border-radius: 0.5vw;
+        }
+        &::-webkit-scrollbar-track {
+          background: white;
+          border-radius: 2vw;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: rgb(103, 192, 225);
+          border-radius: 2vw;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          filter: brightness(130%);
+        }
+        .live_layout_list_block {
+          padding: 0 3vw 0 0;
+          height: auto;
+          width: 100%;
+          overflow: scroll;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-end;
+          .live_layout_list_block_title {
+            height: 5vh;
+            width: 70vw;
+            margin: 0.2vh 0 1vh 0;
+            padding: 0 0 0 6vw;
+            border-radius: 10px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            text-align: left;
+            line-height: 4.5vh;
+            font-size: 2.5vh;
+            font-weight: bold;
+            letter-spacing: 0.5vw;
+            color: rgb(128,211,246);
+            box-shadow: 1px 1px 1px 1px rgba(150, 150, 150, 0.6);
+          }
+          .live_layout_list_block_list {
+            height: 4vh;
+            width: 68vw;
+            margin: 0 1vw 0.8vh 0;
+            border-radius: 9px;
+            background-color: rgb(64,187,235);
+            box-shadow: 1px 1px 1px 1px rgba(150, 150, 150, 0.6);
+            line-height: 3.6vh;
+            color: white;
+            font-size: 2vh;
+            &:hover {
+              filter: brightness(120%);
+              transition: .5s ease;
+            }
+            &:active {
+              filter: brightness(60%);
+            }
+          }
+        }
+      }
+      .live_layout_list_logo {
+        background-image: url('../assets/14/live/logo.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 4vh;
+        width: 90%;
+      }
     }
   }
   /*
@@ -271,6 +484,7 @@ export default {
       justify-content: center;
       height: 100vh;
       width: 100vw;
+      min-width: 1000px;
       margin: 0;
       padding: 0;
       background:radial-gradient(ellipse at center,rgb(230, 230, 230),white);
@@ -290,15 +504,16 @@ export default {
       position: absolute;
       display: flex;
       justify-content: center;
+      min-width: 1000px;
       z-index: 100;
       top: 0%;
       left: 0%;
       background-color: rgb(254,241,217);
       width: 100vw;
       height: 8vh;
-      box-shadow: 0 0 3px 1px rgba(51, 51, 51, 0.5);
+      box-shadow: 1px 1px 3px 1px rgba(51, 51, 51, 0.5);
       &:hover {
-        box-shadow: 0 0 4px 2px rgba(51, 51, 51, 0.5);
+        box-shadow: 1px 1px 4px 2px rgba(51, 51, 51, 0.5);
       }
       .live_top_bar_layout {
         display: grid;
@@ -380,38 +595,38 @@ export default {
       width: 40vw;
       height: 100vh;
     }
-    .live_dot1_pc {
+    .live_dot1 {
       position: absolute;
       z-index: 2;
       left: 38%;
       top: 4%;
       width: 42vw;
       height: 42vh;
-      background-image: url('../assets/14/live/dot1.svg');
+      background-image: url('../assets/14/live/pc/dot1.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
     }
-    .live_dot2_pc {
+    .live_dot2 {
       position: absolute;
       z-index: 2;
       left: -3%;
       bottom: -2%;
       width: 60vw;
       height: 60vh;
-      background-image: url('../assets/14/live/dot2.svg');
+      background-image: url('../assets/14/live/pc/dot2.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: left bottom;
     }
-    .live_dot3_pc {
+    .live_dot3 {
       position: absolute;
       z-index: 2;
       right: -3%;
       bottom: -5%;
       width: 60vw;
       height: 60vh;
-      background-image: url('../assets/14/live/dot3.svg');
+      background-image: url('../assets/14/live/pc/dot3.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: right bottom;
@@ -432,7 +647,7 @@ export default {
       grid-area: frame;
       border-radius: 2vw;
       background-color: rgb(64,187,235);
-      box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+      box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
 
       display: grid;
       grid-template-rows: 7fr 1fr;
@@ -444,7 +659,7 @@ export default {
         grid-area: video;
         border-radius: 2vw;
         margin: 5vh 3vw 1vh 3vw;
-        box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
         width: 48vw;
         height: 50vh;
       }
@@ -456,7 +671,7 @@ export default {
         width: 48vw;
         height: 50vh;
         background-color: rgba(255, 255, 255, 0.5);
-        box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -491,7 +706,7 @@ export default {
       border-radius: 2vw;
       margin: 0 0 0 2vw;
       background-color: rgb(254,241,217);
-      box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+      box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
 
       display: grid;
       grid-template-rows: 6fr 1fr;
@@ -538,12 +753,15 @@ export default {
             padding: 0.5vh 1vw 0.5vh 1.5vw;
             border-radius: 1vw;
             background-color: white;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
             text-align: left;
             font-size: 3vh;
             letter-spacing: 0.1vh;
             line-height: 5vh;
             color: rgb(103, 192, 225);
-            box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5);
+            box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.5);
           }
           .live_layout_list_block_list {
             z-index: 7;
@@ -560,11 +778,11 @@ export default {
             line-height: 4vh;
             color: white;
             &:hover {
-              box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5);
+              box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.5);
               filter: brightness(130%);
             }
             &:active {
-              box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5);
+              box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.5);
               filter: brightness(60%);
             }
           }

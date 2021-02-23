@@ -13,7 +13,7 @@
       div(class="onlinesrc_mobile_list" @click="list = !list")
     div(class="onlinesrc_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
     div(class="onlinesrc_flower_top")
     div(class="onlinesrc_flower_down")
     div(class="onlinesrc_layout" @click="list = false")
@@ -24,7 +24,7 @@
           div(class="onlinesrc_layout_strategy_larrow" @click="scroll(-1, 'strategy')")
           div(class="onlinesrc_layout_strategy_rarrow" @click="scroll(1, 'strategy')")
           div(class="onlinesrc_item_content" id="strategy")
-            label(class="onlinesrc_item_content_list" v-for="iter in srcList['strategyList']" v-bind:key="iter.text" v-bind:data-name="iter.text" v-bind:style="{'background-image': 'url(' + `${iter.img}` + ')'}" @click="openTab(iter.link)")
+            label(class="onlinesrc_item_content_list" v-for="iter in srcList['strategyList']" v-bind:key="iter.text" v-bind:data-name="iter.text"  @click="openTab(iter.link)")
               label(class="onlinesrc_item_content_text")
                 p {{iter.text}}
       section(class="onlinesrc_layout_interview")
@@ -34,7 +34,7 @@
           div(class="onlinesrc_layout_interview_larrow" @click="scroll(-1, 'interview')")
           div(class="onlinesrc_layout_interview_rarrow" @click="scroll(1, 'interview')")
           div(class="onlinesrc_item_content" id="interview")
-            label(class="onlinesrc_item_content_list" v-for="iter in srcList['interviewList']" v-bind:key="iter.text" v-bind:data-name="iter.name" v-bind:style="{'background-image': 'url(' + `${iter.img}` + ')'}" @click="openTab(iter.link)")
+            label(class="onlinesrc_item_content_list" v-for="iter in srcList['interviewList']" v-bind:key="iter.text" v-bind:data-name="iter.name"  @click="openTab(iter.link)")
               label(class="onlinesrc_item_content_text")
                 p {{iter.text}}
       section(class="onlinesrc_layout_share")
@@ -43,7 +43,7 @@
           div(class="onlinesrc_layout_share_larrow" @click="scroll(-1, 'share')")
           div(class="onlinesrc_layout_share_rarrow" @click="scroll(1, 'share')")
           div(class="onlinesrc_item_content" id="share")
-            label(class="onlinesrc_item_content_list" v-for="iter in srcList['shareList']" v-bind:key="iter.text" v-bind:data-name="iter.text" v-bind:style="{'background-image': 'url(' + `${iter.img}` + ')'}" @click="openTab(iter.link)")
+            label(class="onlinesrc_item_content_list" v-for="iter in srcList['shareList']" v-bind:key="iter.text" v-bind:data-name="iter.text"  @click="openTab(iter.link)")
               label(class="onlinesrc_item_content_text")
                 p {{iter.text}}
       section(class="onlinesrc_layout_empty_down")
@@ -52,6 +52,12 @@
 <script>
 import srcJson from '../assets/14/online/onlinesrc.json'
 export default {
+  created () {
+    window.addEventListener('resize', this.windowSizeChange)
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.windowSizeChange)
+  },
   data: function () {
     return {
       menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
@@ -66,6 +72,13 @@ export default {
     this.pc = this.isPC()
   },
   methods: {
+    windowSizeChange: function (event) {
+      if (window.innerWidth > 551) {
+        this.pc = true
+      } else {
+        this.pc = false
+      }
+    },
     openTab: function (url) {
       window.open(url, '_blank')
     },
@@ -108,6 +121,10 @@ export default {
     mobile layout css
   */
   @media only screen and (max-width: 551px) {
+    @keyframes flow-in {
+      from { right: -40%; }
+      to { right: 0%; }
+    }
     .onlinesrc_page {
       position: absolute;
       display: flex;
@@ -192,21 +209,21 @@ export default {
       grid-template-rows: repeat(8, 7vh);
       z-index: 20;
       width: 40vw;
-      height: 56vh;
+      height: 92vh;
       right: 0%;
       top: 8%;
-      background-color: rgba(100, 100, 100, 0.9);
+      background-color: rgb(250, 242, 226);
+      animation: flow-in 0.5s ease;
       label {
-        border: 0.1vh solid rgb(50, 50, 50);
-        color:rgb(255, 246, 232);
+        color:rgb(75,196,245);
         line-height: 6vh;
         font-size: 2.4vh;
+        letter-spacing: 0.5vw;
+        border: 1px solid rgb(200, 200, 200);
         &:hover {
-          background-color: rgb(155, 155, 155);
           filter: brightness(150%);
         }
         &:active {
-          background-color: rgba(155, 155, 155, 0.8);
           filter: brightness(60%);
         }
       }
@@ -284,7 +301,7 @@ export default {
       grid-template-rows: 1fr 4fr;
       grid-template-areas: "name" "content";
       width: 100vw;
-      height: 70vh;
+      height: 120vw;
       margin: 0 0 2.5vw 0;
       .onlinesrc_item_name {
         justify-self: center;
@@ -295,7 +312,7 @@ export default {
         background-repeat: no-repeat;
         background-position-y: 55%;
         height: 12vh;
-        font-size: 3.6vh;
+        font-size: 3.2vh;
         color: rgb(103, 192, 225);
         line-height: 13vh;
         font-weight: bold;
@@ -322,12 +339,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_layout_strategy_rarrow {
@@ -341,12 +358,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_item_content {
@@ -360,11 +377,28 @@ export default {
           align-self: center;
           grid-template-columns: repeat(32, 70vw);
           overflow-x: scroll;
+          &::-webkit-scrollbar {
+            height: 0.3vh;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
           .onlinesrc_item_content_list {
-            background: black;
             background-size: contain;
-            border-radius: 2vw;
             display: grid;
+            border-radius: 20px;
+            box-shadow: 1px 1px 3px px rgba(100, 100, 100, 0.3);
+            background: white;
+            background-image: url('../assets/14/lock.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 90% 90%;
             grid-template-rows: 2fr 1fr;
             grid-template-areas: "none" "text";
             width: 66vw;
@@ -384,7 +418,7 @@ export default {
             }
             .onlinesrc_item_content_text {
               background: rgb(62,181,231);
-              border-radius: 0 0 2vw 2vw;
+              border-radius: 0 0 20px 20px;
               content: attr(data-name);
               grid-area: text;
               align-self: flex-end;
@@ -417,7 +451,7 @@ export default {
       grid-template-rows: 1fr 4fr;
       grid-template-areas: "name" "content";
       width: 100vw;
-      height: 70vh;
+      height: 120vw;
       margin: 0 0 2.5vw 0;
       .onlinesrc_item_name {
         justify-self: center;
@@ -428,7 +462,7 @@ export default {
         background-repeat: no-repeat;
         background-position-y: 55%;
         height: 12vh;
-        font-size: 3.6vh;
+        font-size: 3.2vh;
         color: rgb(103, 192, 225);
         line-height: 9vh;
         font-weight: bold;
@@ -461,12 +495,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_layout_interview_rarrow {
@@ -480,12 +514,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_item_content {
@@ -499,10 +533,27 @@ export default {
           align-self: center;
           grid-template-columns: repeat(32, 70vw);
           overflow-x: scroll;
+          &::-webkit-scrollbar {
+            height: 0.3vh;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
           .onlinesrc_item_content_list {
-            background: black;
+            background: white;
             background-size: contain;
-            border-radius: 2vw;
+            border-radius: 20px;
+            box-shadow: 1px 1px 3px px rgba(100, 100, 100, 0.3);
+            background-size: 90% 90%;
+            background-image: url('../assets/14/lock.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
             display: grid;
             grid-template-rows: 2fr 1fr;
             grid-template-areas: "none" "text";
@@ -523,7 +574,7 @@ export default {
             }
             .onlinesrc_item_content_text {
               background: rgb(62,181,231);
-              border-radius: 0 0 2vw 2vw;
+              border-radius: 0 0 20px 20px;
               content: attr(data-name);
               grid-area: text;
               align-self: flex-end;
@@ -555,7 +606,7 @@ export default {
       grid-template-rows: 1fr 4fr;
       grid-template-areas: "name" "content";
       width: 100vw;
-      height: 70vh;
+      height: 120vw;
       margin: 0 0 2.5vw 0;
       .onlinesrc_item_name {
         justify-self: center;
@@ -566,7 +617,7 @@ export default {
         background-repeat: no-repeat;
         background-position-y: 55%;
         height: 12vh;
-        font-size: 3vh;
+        font-size: 2.6vh;
         color: rgb(103, 192, 225);
         line-height: 13vh;
         font-weight: bold;
@@ -593,12 +644,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_layout_share_rarrow {
@@ -612,12 +663,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_item_content {
@@ -631,10 +682,27 @@ export default {
           align-self: center;
           grid-template-columns: repeat(32, 70vw);
           overflow-x: scroll;
+          &::-webkit-scrollbar {
+            height: 0.3vh;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
           .onlinesrc_item_content_list {
-            background: black;
+            background: white;
             background-size: contain;
-            border-radius: 2vw;
+            border-radius: 20px;
+            box-shadow: 1px 1px 3px px rgba(100, 100, 100, 0.3);
+            background-size: 90% 90%;
+            background-image: url('../assets/14/lock.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
             display: grid;
             grid-template-rows: 2fr 1fr;
             grid-template-areas: "none" "text";
@@ -655,7 +723,7 @@ export default {
             }
             .onlinesrc_item_content_text {
               background: rgb(62,181,231);
-              border-radius: 0 0 2vw 2vw;
+              border-radius: 0 0 20px 20px;
               content: attr(data-name);
               grid-area: text;
               align-self: flex-end;
@@ -727,6 +795,7 @@ export default {
       justify-content: center;
       height: 100vh;
       width: 100vw;
+      min-width: 1000px;
       margin: 0;
       padding: 0;
       background: white;
@@ -742,23 +811,11 @@ export default {
       width: 50vw;
       transform: skewX(5deg);
     }
-    // .onlinesrc_title {
-    //   position: absolute;
-    //   z-index: 20;
-    //   left: 4vw;
-    //   top: 6vh;
-
-    //   width: 17vw;
-    //   height: 8vw;
-    //   background-image: url("../assets/14/online/title.svg");
-    //   background-repeat: no-repeat;
-    //   background-size: 100% 100%;
-    //   background-position: 50% 50%;
-    // }
     .onlinesrc_top_bar_pc {
       position: absolute;
       display: flex;
       justify-content: center;
+      min-width: 1000px;
       z-index: 100;
       top: 0%;
       left: 0%;
@@ -926,12 +983,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_layout_strategy_rarrow {
@@ -945,12 +1002,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_item_content {
@@ -964,10 +1021,27 @@ export default {
           align-self: center;
           grid-template-columns: repeat(32, 26vw);
           overflow-x: scroll;
+          &::-webkit-scrollbar {
+            height: 0.3vh;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
           .onlinesrc_item_content_list {
-            background: black;
+            background: white;
             background-size: contain;
-            border-radius: 2vw;
+            border-radius: 20px;
+            box-shadow: 1px 1px 3px px rgba(100, 100, 100, 0.3);
+            background-size: 90% 90%;
+            background-image: url('../assets/14/lock.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
             display: grid;
             grid-template-rows: 2fr 1fr;
             grid-template-areas: "none" "text";
@@ -988,7 +1062,7 @@ export default {
             }
             .onlinesrc_item_content_text {
               background: rgb(62,181,231);
-              border-radius: 0 0 2vw 2vw;
+              border-radius: 0 0 20px 20px;
               content: attr(data-name);
               grid-area: text;
               align-self: flex-end;
@@ -1065,12 +1139,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_layout_interview_rarrow {
@@ -1084,12 +1158,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_item_content {
@@ -1103,10 +1177,27 @@ export default {
           align-self: center;
           grid-template-columns: repeat(32, 26vw);
           overflow-x: scroll;
+          &::-webkit-scrollbar {
+            height: 0.3vh;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
           .onlinesrc_item_content_list {
-            background: black;
+            background: white;
             background-size: contain;
-            border-radius: 2vw;
+            border-radius: 20px;
+            box-shadow: 1px 1px 3px px rgba(100, 100, 100, 0.3);
+            background-size: 90% 90%;
+            background-image: url('../assets/14/lock.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
             display: grid;
             grid-template-rows: 2fr 1fr;
             grid-template-areas: "none" "text";
@@ -1127,7 +1218,7 @@ export default {
             }
             .onlinesrc_item_content_text {
               background: rgb(62,181,231);
-              border-radius: 0 0 2vw 2vw;
+              border-radius: 0 0 20px 20px;
               content: attr(data-name);
               grid-area: text;
               align-self: flex-end;
@@ -1197,12 +1288,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_layout_share_rarrow {
@@ -1216,12 +1307,12 @@ export default {
           &:hover {
             background-size: 80% 80%;
             background-color: rgba(100, 100, 100, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
           &:active {
             background-size: 80% 80%;
             background-color: rgba(200, 200, 200, 0.3);
-            border-radius: 3px;
+            border-radius: 1vw;
           }
         }
         .onlinesrc_item_content {
@@ -1235,10 +1326,27 @@ export default {
           align-self: center;
           grid-template-columns: repeat(32, 26vw);
           overflow-x: scroll;
+          &::-webkit-scrollbar {
+            height: 0.3vh;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 0.25vw;
+          }
           .onlinesrc_item_content_list {
-            background: black;
+            background: white;
             background-size: contain;
-            border-radius: 2vw;
+            border-radius: 20px;
+            box-shadow: 1px 1px 3px px rgba(100, 100, 100, 0.3);
+            background-size: 90% 90%;
+            background-image: url('../assets/14/lock.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
             display: grid;
             grid-template-rows: 2fr 1fr;
             grid-template-areas: "none" "text";
@@ -1259,7 +1367,7 @@ export default {
             }
             .onlinesrc_item_content_text {
               background: rgb(62,181,231);
-              border-radius: 0 0 2vw 2vw;
+              border-radius: 0 0 20px 20px;
               content: attr(data-name);
               grid-area: text;
               align-self: flex-end;

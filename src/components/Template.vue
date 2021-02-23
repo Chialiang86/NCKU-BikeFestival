@@ -12,7 +12,6 @@
       div(class="onlinesrc_mobile_list" @click="list = !list")
     div(class="onlinesrc_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-    
 </template>
 
 <script>

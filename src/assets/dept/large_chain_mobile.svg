@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1000 1000" style="enable-background:new 0 0 1000 1000;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+	.st1{fill:none;stroke:#5DD3F5;stroke-width:37;stroke-miterlimit:10;}
+	.st2{fill:#67C1E1;}
+	.st3{fill:#FFFFFF;}
+	.st4{fill:none;stroke:#5DD3F5;stroke-width:6;stroke-miterlimit:10;stroke-dasharray:20,15;}
+</style>
+<rect id="backgroundrect" class="st0" width="1000" height="1000"/>
+<title>工作區域 1</title>
+<g>
+	<title>background</title>
+	<rect id="canvas_background" x="-1" y="-1" class="st0" width="1000" height="1000"/>
+</g>
+<g>
+	<title>Layer 1</title>
+	<g id="新圖">
+		<circle id="svg_1" class="st1" cx="0" cy="500" r="584.7"/>
+		<circle id="svg_2" class="st2" cx="0" cy="500" r="60"/>
+		<circle id="svg_3" class="st3" cx="0" cy="472" r="8.7"/>
+		<circle id="svg_4" class="st3" cx="0" cy="528" r="8.7"/>
+		<circle id="svg_5" class="st3" cx="24.3" cy="515" r="8.7"/>
+		<circle id="svg_6" class="st3" cx="24.3" cy="485" r="8.7"/>
+		<circle id="svg_7" class="st4" cx="0" cy="500" r="547"/>
+	</g>
+</g>
+</svg>

@@ -13,11 +13,11 @@
       div(class="dept_mobile_list" @click="list = !list")
     div(class="dept_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
     div(class="dept_decoration_top")
     div(class="dept_decoration_bottom")
-      g
-        ellipse(cx="90%" cy="540" rx="50%" ry="100" stroke="#ffffff" stroke-width="1px" fill="none")
+      //- g
+        ellipse(cx="90%" cy="540" rx="50%" ry="100" stroke="#dddddd" stroke-width="5px" fill="none")
     div(class="dept_layout" @click="list = false")
       section(class="dept_list_section")
         div(class="dept_class")
@@ -27,15 +27,22 @@
       section(class="dept_chain_section")
         div(id="small_chain" class="dept_chain_small")
         div(id="large_chain" class="dept_chain_large")
-        svg(width="60%" height="56%" viewBox="-10 -90 1000 500")
+        div(id="large_chain_mobile" class="dept_chain_large_mobile")
+        svg(width="56%" height="56%" viewBox="-10 -70 950 500")
           g(id="chain_path")
-            path(d="M854.4800244140624,253.27999999999997 a66.84,66.84 0 0 0 0,-132.24 L218.7800244140625,2.7799999999999727 A187.68,187.68 0 0 0 186.50002441406252,0 c-103,0 -186.5,83.5 -186.5,186.5 s83.5,186.5 186.5,186.5 a187.68,187.68 0 0 0 32.25,-2.7800000000000002 z" fill="none" stroke-linejoin="round"  stroke-linecap="round" stroke-width="8px" stroke="#1E5EAA" stroke-dasharray="1, 20" stroke-miterlimit="10")
-        div(v-for="(iter, index) in classKeys" v-bind:key="`${index}-${iter}-college`" class="dept_college" v-bind:class="deptBinding(index)" v-bind:style="showDeptCollege ? {} : { opacity: 0 }")
+            path(d="M854.4800244140624,253.27999999999997 a66.84,66.84 0 0 0 0,-132.24 L218.7800244140625,2.7799999999999727 A187.68,187.68 0 0 0 186.50002441406252,0 c-103,0 -186.5,83.5 -186.5,186.5 s83.5,186.5 186.5,186.5 a187.68,187.68 0 0 0 32.25,-2.7800000000000002 z" fill="none" stroke-linejoin="round"  stroke-linecap="round" stroke-width="8px" stroke="#2DB8F5" stroke-dasharray="1, 20" stroke-miterlimit="10")
+        div(v-for="(iter, index) in classKeys" v-bind:key="`${index}-${iter}-college`" class="dept_college" v-bind:class="deptBinding(index)" v-bind:style="showDeptCollege ? {} : { opacity: 1 }")
           p(v-for="(name, index) in colleges[iter]" v-bind:key="`${index}-${name}-college`") {{name}}
 </template>
 
 <script>
 export default {
+  created () {
+    window.addEventListener('resize', this.windowSizeChange)
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.windowSizeChange)
+  },
   data: function () {
     return {
       menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
@@ -43,12 +50,12 @@ export default {
       list: false,
       pc: this.isPC(),
       classes: ['規劃與設計學院', '社會科科學院', '不分學院', '工學院', '理學院', '文學院', '醫學院', '管理學院', '電機資訊學院', '生物科學與科技學院'],
-      classKeys: ['design', 'social', 'undeclear', 'engineer-1', 'science', 'humanity', 'medicine', 'management', 'computer', 'biological'],
+      classKeys: ['design', 'social', 'undeclear', 'engineer', 'science', 'humanity', 'medicine', 'management', 'computer', 'biological'],
       colleges: {
         design: ['建築', '都計', '工設'],
         social: ['政治', '經濟', '法律', '心理'],
         undeclear: ['不分系學程'],
-        'engineer-1': ['機械', '化工', '土木', '材料', '水利', '工科', '系統'],
+        engineer: ['航太', '機械', '化工', '土木', '材料', '水利', '工科', '系統'],
         science: ['數學', '化學', '物理', '地科', '光電'],
         humanity: ['中文', '外文', '歷史', '臺文'],
         medicine: ['醫學', '藥學', '護理', '物治', '職治', '醫技'],
@@ -74,6 +81,13 @@ export default {
     }, 500)
   },
   methods: {
+    windowSizeChange: function (event) {
+      if (window.innerWidth > 551) {
+        this.pc = true
+      } else {
+        this.pc = false
+      }
+    },
     openTab: function (url) {
       window.open(url, '_blank')
     },
@@ -155,232 +169,306 @@ export default {
 
 /* 2 components rotate */
 @keyframes rotate-45 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-45deg) translateX(16vw) rotate(45deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-45deg) translateX(36vw) rotate(45deg); }
 }
 @keyframes rotate-135 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(45deg) translateX(16vw) rotate(-45deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(45deg) translateX(36vw) rotate(-45deg); }
 }
 @keyframes rotate-45-disappear {
-  0% { opacity: 1; transform: rotate(-45deg) translateX(16vw) rotate(45deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-45deg) translateX(36vw) rotate(45deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-135-disappear {
-  0% { opacity: 1; transform: rotate(45deg) translateX(16vw) rotate(-45deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(45deg) translateX(36vw) rotate(-45deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
 /* 3 components rotate*/
 @keyframes rotate-30 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-60deg) translateX(16vw) rotate(60deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-60deg) translateX(36vw) rotate(60deg); }
 }
 @keyframes rotate-90 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(0deg) translateX(16vw) rotate(0deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(0deg) translateX(36vw) rotate(0deg); }
 }
 @keyframes rotate-150 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(60deg) translateX(16vw) rotate(-60deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(60deg) translateX(36vw) rotate(-60deg); }
 }
 
 @keyframes rotate-30-disappear {
-  0% { opacity: 1; transform: rotate(-60deg) translateX(16vw) rotate(60deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-60deg) translateX(36vw) rotate(60deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-90-disappear {
-  0% { opacity: 1; transform: rotate(0deg) translateX(16vw) rotate(0deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(0deg) translateX(36vw) rotate(0deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-150-disappear {
-  0% { opacity: 1; transform: rotate(60deg) translateX(16vw) rotate(-60deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(60deg) translateX(36vw) rotate(-60deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
 /* 4 components roate*/
 @keyframes rotate-23 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-67deg) translateX(16vw) rotate(67deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-67deg) translateX(36vw) rotate(67deg); }
 }
 @keyframes rotate-68 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-23deg) translateX(16vw) rotate(23deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-23deg) translateX(36vw) rotate(23deg); }
 }
 @keyframes rotate-113 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(23deg) translateX(16vw) rotate(-23deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(23deg) translateX(36vw) rotate(-23deg); }
 }
 @keyframes rotate-158 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(68deg) translateX(16vw) rotate(-68deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(68deg) translateX(36vw) rotate(-68deg); }
 }
 
 @keyframes rotate-23-disappear {
-  0% { opacity: 1; transform: rotate(-67deg) translateX(16vw) rotate(67deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-67deg) translateX(36vw) rotate(67deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-68-disappear {
-  0% { opacity: 1; transform: rotate(-23deg) translateX(16vw) rotate(23deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-23deg) translateX(36vw) rotate(23deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-113-disappear {
-  0% { opacity: 1; transform: rotate(23deg) translateX(16vw) rotate(-23deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(23deg) translateX(36vw) rotate(-23deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-158-disappear {
-  0% { opacity: 1; transform: rotate(68deg) translateX(16vw) rotate(-68deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(68deg) translateX(36vw) rotate(-68deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
 /* 5 components rotate */
 @keyframes rotate-18 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-72deg) translateX(16vw) rotate(72deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-72deg) translateX(36vw) rotate(72deg); }
 }
 @keyframes rotate-54 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-36deg) translateX(16vw) rotate(36deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-36deg) translateX(36vw) rotate(36deg); }
 }
 /*
 @keyframes rotate-90 {
-  0% { transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { transform: rotate(0deg) translateX(16vw) rotate(0deg); }
+  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { transform: rotate(0deg) translateX(36vw) rotate(0deg); }
 }
 */
 @keyframes rotate-126 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(36deg) translateX(16vw) rotate(-36deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(36deg) translateX(36vw) rotate(-36deg); }
 }
 @keyframes rotate-162 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(72deg) translateX(16vw) rotate(-72deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(72deg) translateX(36vw) rotate(-72deg); }
 }
 
 @keyframes rotate-18-disappear {
-  0% { opacity: 1; transform: rotate(-72deg) translateX(16vw) rotate(72deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-72deg) translateX(36vw) rotate(72deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-54-disappear {
-  0% { opacity: 1; transform: rotate(-36deg) translateX(16vw) rotate(36deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-36deg) translateX(36vw) rotate(36deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
 @keyframes rotate-126-disappear {
-  0% { opacity: 1; transform: rotate(36deg) translateX(16vw) rotate(-36deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(36deg) translateX(36vw) rotate(-36deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-162-disappear {
-  0% { opacity: 1; transform: rotate(72deg) translateX(16vw) rotate(-72deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(72deg) translateX(36vw) rotate(-72deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
 /* 6 components rotate */
 
 @keyframes rotate-15 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-75deg) translateX(16vw) rotate(75deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-75deg) translateX(36vw) rotate(75deg); }
 }
 /*
 @keyframes rotate-45 {
-  0% { transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { transform: rotate(-45deg) translateX(16vw) rotate(45deg); }
+  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { transform: rotate(-45deg) translateX(36vw) rotate(45deg); }
 }
 */
 @keyframes rotate-75 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-15deg) translateX(16vw) rotate(15deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-15deg) translateX(36vw) rotate(15deg); }
 }
 @keyframes rotate-105 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(15deg) translateX(16vw) rotate(-15deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(15deg) translateX(36vw) rotate(-15deg); }
 }
 /*
 @keyframes rotate-135 {
-  0% { transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { transform: rotate(45deg) translateX(16vw) rotate(-45deg); }
+  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { transform: rotate(45deg) translateX(36vw) rotate(-45deg); }
 }
 */
 @keyframes rotate-165 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(75deg) translateX(16vw) rotate(-75deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(75deg) translateX(36vw) rotate(-75deg); }
 }
 
 @keyframes rotate-15-disappear {
-  0% { opacity: 1; transform: rotate(-75deg) translateX(16vw) rotate(75deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-75deg) translateX(36vw) rotate(75deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
 @keyframes rotate-75-disappear {
-  0% { opacity: 1; transform: rotate(-15deg) translateX(16vw) rotate(15deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-15deg) translateX(36vw) rotate(15deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-105-disappear {
-  0% { opacity: 1; transform: rotate(15deg) translateX(16vw) rotate(-15deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(15deg) translateX(36vw) rotate(-15deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
 @keyframes rotate-165-disappear {
-  0% { opacity: 1; transform: rotate(75deg) translateX(16vw) rotate(-75deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(75deg) translateX(36vw) rotate(-75deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
 /* 7 components rotate */
 
 @keyframes rotate-12 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-78deg) translateX(16vw) rotate(78deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-78deg) translateX(36vw) rotate(78deg); }
 }
 @keyframes rotate-37 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-53deg) translateX(16vw) rotate(53deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-53deg) translateX(36vw) rotate(53deg); }
 }
 @keyframes rotate-63 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-27deg) translateX(16vw) rotate(27deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-27deg) translateX(36vw) rotate(27deg); }
 }
 /*
 @keyframes rotate-90 {
-  0% { transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { transform: rotate(0deg) translateX(16vw) rotate(-0deg); }
+  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { transform: rotate(0deg) translateX(36vw) rotate(-0deg); }
 }
 */
 @keyframes rotate-117 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(27deg) translateX(16vw) rotate(-27deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(27deg) translateX(36vw) rotate(-27deg); }
 }
 @keyframes rotate-143 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(53deg) translateX(16vw) rotate(-53deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(53deg) translateX(36vw) rotate(-53deg); }
 }
 @keyframes rotate-168 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(16vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(78deg) translateX(16vw) rotate(-78deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(78deg) translateX(36vw) rotate(-78deg); }
 }
 
 @keyframes rotate-12-disappear {
-  0% { opacity: 1; transform: rotate(-78deg) translateX(16vw) rotate(78deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-78deg) translateX(36vw) rotate(78deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-37-disappear {
-  0% { opacity: 1; transform: rotate(-53deg) translateX(16vw) rotate(53deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-53deg) translateX(36vw) rotate(53deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-63-disappear {
-  0% { opacity: 1; transform: rotate(-27deg) translateX(16vw) rotate(27deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-27deg) translateX(36vw) rotate(27deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-117-disappear {
-  0% { opacity: 1; transform: rotate(27deg) translateX(16vw) rotate(-27deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(27deg) translateX(36vw) rotate(-27deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-143-disappear {
-  0% { opacity: 1; transform: rotate(53deg) translateX(16vw) rotate(-53deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(53deg) translateX(36vw) rotate(-53deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 @keyframes rotate-168-disappear {
-  0% { opacity: 1; transform: rotate(78deg) translateX(16vw) rotate(-78deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(16vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(78deg) translateX(36vw) rotate(-78deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+}
+
+/* 8 components rotate */
+
+@keyframes rotate-11 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-79deg) translateX(36vw) rotate(79deg); }
+}
+@keyframes rotate-33 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-57deg) translateX(36vw) rotate(57deg); }
+}
+@keyframes rotate-56 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-34deg) translateX(36vw) rotate(34deg); }
+}
+@keyframes rotate-79 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-11deg) translateX(36vw) rotate(11deg); }
+}
+/*
+@keyframes rotate-90 {
+  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { transform: rotate(0deg) translateX(36vw) rotate(-0deg); }
+}
+*/
+@keyframes rotate-101 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(11deg) translateX(36vw) rotate(-11deg); }
+}
+@keyframes rotate-124 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(34deg) translateX(36vw) rotate(-34deg); }
+}
+@keyframes rotate-147 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(57deg) translateX(36vw) rotate(-57deg); }
+}
+@keyframes rotate-169 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(79deg) translateX(36vw) rotate(-79deg); }
+}
+
+@keyframes rotate-11-disappear {
+  0% { opacity: 1; transform: rotate(-79deg) translateX(36vw) rotate(79deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+}
+@keyframes rotate-33-disappear {
+  0% { opacity: 1; transform: rotate(-57deg) translateX(36vw) rotate(57deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+}
+@keyframes rotate-56-disappear {
+  0% { opacity: 1; transform: rotate(-34deg) translateX(36vw) rotate(34deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+}
+@keyframes rotate-79-disappear {
+  0% { opacity: 1; transform: rotate(-11deg) translateX(36vw) rotate(11deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+}
+@keyframes rotate-101-disappear {
+  0% { opacity: 1; transform: rotate(11deg) translateX(36vw) rotate(-11deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+}
+@keyframes rotate-124-disappear {
+  0% { opacity: 1; transform: rotate(34deg) translateX(36vw) rotate(-34deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+}
+@keyframes rotate-147-disappear {
+  0% { opacity: 1; transform: rotate(57deg) translateX(36vw) rotate(-57deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+}
+@keyframes rotate-169-disappear {
+  0% { opacity: 1; transform: rotate(79deg) translateX(36vw) rotate(-79deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
 }
 
   /*
@@ -396,6 +484,10 @@ export default {
     @import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC');
     *{
       font-family: 'Noto Sans TC'!important;
+    }
+    @keyframes flow-in {
+      from { right: -40%; }
+      to { right: 0%; }
     }
     .dept_page {
       display: flex;
@@ -481,21 +573,21 @@ export default {
       grid-template-rows: repeat(8, 7vh);
       z-index: 20;
       width: 40vw;
-      height: 56vh;
+      height: 92vh;
       right: 0%;
       top: 8%;
-      background-color: rgba(100, 100, 100, 0.9);
+      background-color: rgb(250, 242, 226);
+      animation: flow-in 0.5s ease;
       label {
-        color:rgb(255, 246, 232);
+        color:rgb(75,196,245);
         line-height: 6vh;
         font-size: 2.4vh;
-        border: 1px solid rgb(50, 50, 50);
+        letter-spacing: 0.5vw;
+        border: 1px solid rgb(200, 200, 200);
         &:hover {
-          background-color: rgb(155, 155, 155);
           filter: brightness(150%);
         }
         &:active {
-          background-color: rgba(155, 155, 155, 0.8);
           filter: brightness(60%);
         }
       }
@@ -527,19 +619,19 @@ export default {
         display: none;
       }
 
-      .dept_chain_large {
+      .dept_chain_large_mobile {
         z-index:1;
         position: absolute;
-        left: -100vw;
-        top: -10vh;
+        left: 0;
+        top: 0;
 
-        width: 120vh;
-        height: 120vh;
+        width: 100vh;
+        height: 100vh;
 
-        background-image: url("../assets/dept/large_chain.svg");
+        background-image: url("../assets/dept/large_chain_mobile.svg");
         opacity:0.8;
         background-repeat: no-repeat;
-        background-size: 90% 90%;
+        background-size: 100% 100%;
         background-position: 50% 50%;
 
         pointer-events: none;
@@ -560,28 +652,29 @@ export default {
     .dept_college {
       position: absolute;
       z-index: 10;
-      left: 0vw;
+      left: -20vw;
       top: 47vh;
       box-sizing: border-box;
 
       will-change: opacity, transform;
-      transform: scale(2);
+      // transform: scale(2);
       p {
         z-index: 10;
         position: absolute;
         left: 0;
         top: 0;
-        max-width: 20vw;
-        width: 7.5vw;
-        // height: auto;
+        max-width: 30vw;
+        width: 19vw;
+        height: auto;
         text-align: center;
         vertical-align: bottom;
         background-color: #eeefef;
-        color: black;
-        padding: 1px;
-        font-size: 1.5vw;
-        font-weight: 500;
-        line-height: 2.5vw;
+        margin: 2vh 0 0 20vw;
+        color: rgb(103, 192, 225);
+        border-radius: 5px;
+        padding: 2px;
+        font-size: 12px;
+        line-height: 16px;
       }
       p:hover {
         z-index: 999;
@@ -657,111 +750,119 @@ export default {
         animation-fill-mode: forwards;
       }
 
-      &.rotate-engineer-1 > p:nth-child(1) {
-        animation: rotate-12 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(1) {
+        animation: rotate-11 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(2) {
-        animation: rotate-37 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(2) {
+        animation: rotate-33 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(3) {
-        animation: rotate-63 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(3) {
+        animation: rotate-56 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(4) {
-        animation: rotate-90 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(4) {
+        animation: rotate-79 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(5) {
-        animation: rotate-117 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(5) {
+        animation: rotate-101 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(6) {
-        animation: rotate-143 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(6) {
+        animation: rotate-124 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(7) {
-        animation: rotate-168 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(7) {
+        animation: rotate-147 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-2 > p:nth-child(1) {
-        animation: rotate-15 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(8) {
+        animation: rotate-169 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-2 > p:nth-child(2) {
-        animation: rotate-45 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2 > p:nth-child(3) {
-        animation: rotate-75 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2 > p:nth-child(4) {
-        animation: rotate-105 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2 > p:nth-child(5) {
-        animation: rotate-135 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2 > p:nth-child(6) {
-        animation: rotate-165 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
+      // &.rotate-engineer-2 > p:nth-child(1) {
+      //   animation: rotate-15 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(2) {
+      //   animation: rotate-45 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(3) {
+      //   animation: rotate-75 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(4) {
+      //   animation: rotate-105 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(5) {
+      //   animation: rotate-135 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(6) {
+      //   animation: rotate-165 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
 
-      &.rotate-engineer-1-disappear > p:nth-child(1) {
-        animation: rotate-12-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(1) {
+        animation: rotate-11-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(2) {
-        animation: rotate-37-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(2) {
+        animation: rotate-33-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(3) {
-        animation: rotate-63-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(3) {
+        animation: rotate-56-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(4) {
-        animation: rotate-90-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(4) {
+        animation: rotate-79-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(5) {
-        animation: rotate-117-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(5) {
+        animation: rotate-101-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(6) {
-        animation: rotate-143-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(6) {
+        animation: rotate-124-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(7) {
-        animation: rotate-168-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(7) {
+        animation: rotate-147-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-2-disappear > p:nth-child(1) {
-        animation: rotate-15-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(8) {
+        animation: rotate-169-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-2-disappear > p:nth-child(2) {
-        animation: rotate-45-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2-disappear > p:nth-child(3) {
-        animation: rotate-75-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2-disappear > p:nth-child(4) {
-        animation: rotate-105-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2-disappear > p:nth-child(5) {
-        animation: rotate-135-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2-disappear > p:nth-child(6) {
-        animation: rotate-165-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
+      // &.rotate-engineer-2-disappear > p:nth-child(1) {
+      //   animation: rotate-1-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(2) {
+      //   animation: rotate-45-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(3) {
+      //   animation: rotate-75-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(4) {
+      //   animation: rotate-105-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(5) {
+      //   animation: rotate-135-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(6) {
+      //   animation: rotate-165-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
 
       &.rotate-science > p:nth-child(1) {
         animation: rotate-18 .5s ease-in-out;
@@ -971,8 +1072,8 @@ export default {
     .dept_list_section {
       z-index:10;
       position: absolute;
-      left: 15vw;
-      top: 18vh;
+      left: 16vw;
+      top: 20vh;
 
       max-width: 30vh;
 
@@ -991,44 +1092,45 @@ export default {
         }
 
         li[data-key="design"]  {
-          transform: translateX(20px) skewX(-5deg);
+          transform: translateX(20px);
         }
         li[data-key="social"]  {
-          transform: translateX(52px) skewX(-5deg);
+          transform: translateX(52px);
         }
         li[data-key="undeclear"]  {
-          transform: translateX(76px) skewX(-5deg);
+          transform: translateX(76px);
         }
-        li[data-key="engineer-1"]  {
-          transform: translateX(93px) skewX(-5deg);
+        li[data-key="engineer"]  {
+          transform: translateX(93px);
         }
         li[data-key="engineer-2"]  {
-          transform: translateX(100px) skewX(-5deg);
+          transform: translateX(100px);
         }
         li[data-key="science"]  {
-          transform: translateX(100px) skewX(-5deg);
+          transform: translateX(100px);
         }
         li[data-key="humanity"]  {
-          transform: translateX(100px) skewX(-5deg);
+          transform: translateX(100px);
         }
         li[data-key="medicine"]  {
-          transform: translateX(98px) skewX(-5deg);
+          transform: translateX(98px);
         }
         li[data-key="management"]  {
-          transform: translateX(88px) skewX(-5deg);
+          transform: translateX(88px);
         }
         li[data-key="computer"]  {
-          transform: translateX(72px) skewX(-5deg);
+          transform: translateX(72px);
         }
         li[data-key="biological"]  {
-          transform: translateX(46px) skewX(-5deg);
+          transform: translateX(46px);
         }
       }
 
       .dept_class_item {
         margin: 3vh;
         z-index:10;
-        font-size: 2.4vh;
+        font-size: 15px;
+        width: 45vw;
 
         p {
           width: 100%;
@@ -1038,26 +1140,27 @@ export default {
 
           text-align: right;
           border-radius: 10px;
-          color: black;
+          color: rgb(120, 120, 120);
           font-weight: 500;
           cursor: pointer;
-          transform: skewX(5deg);
         }
         &.active {
             color: white;
             border-radius: 10px;
-            background-color: #DD4A43;
-            padding: 10px;
-            font-size: 2.6vh;
-            font-weight: 500;
+            // background-color: rgb(103,193,225);
+            padding: 6px;
+            font-size: 17px;
+          font-weight: bold;
             }
         &:hover {
-          color: white;
-          border-radius: 10px;
-          background-color: #DD4A43;
-          padding: 10px;
-          font-size: 2.6vh;
-          font-weight: 500;
+          p {
+            color: rgb(103, 192, 225);
+            padding: 6px;
+            font-size: 17px;
+            font-weight: bold;
+            border-radius: 10px;
+            letter-spacing: 1px;
+          }
         }
       }
     }
@@ -1087,6 +1190,7 @@ export default {
       justify-items: flex-start;
       height: 100vh;
       width: 100vw;
+      min-width: 1000px;
       background: rgb(255, 246, 232);
       margin: 0;
       padding: 0;
@@ -1096,6 +1200,7 @@ export default {
       position: absolute;
       display: flex;
       justify-content: center;
+      min-width: 1000px;
       z-index: 100;
       top: 0%;
       left: 0%;
@@ -1185,7 +1290,7 @@ export default {
       margin-bottom: auto;
       padding-bottom: 38vw;
 
-      background: url("../assets/dept/decoration_top.svg");
+      // background: url("../assets/dept/decoration_top.svg");
       background-position: center top;
       background-repeat: no-repeat;
       background-size: contain;
@@ -1193,7 +1298,7 @@ export default {
 
     .dept_decoration_bottom {
       position: absolute;
-      top: -3vh;
+      top: -20vh;
       left: -2vw;
       height: 30vw;
       width: 25vw;
@@ -1202,7 +1307,7 @@ export default {
       margin-bottom: auto;
       padding-bottom: 38vw;
 
-      background: url("../assets//dept/decoration_bottom.svg");
+      background: url("../assets/dept/decoration_bottom.svg");
       background-position: center top;
       background-repeat: no-repeat;
       background-size: contain;
@@ -1281,31 +1386,34 @@ export default {
 
     .dept_college {
       position: absolute;
-      left: 66vw;
+      left: 70vw;
       top: 48vh;
       box-sizing: border-box;
 
       will-change: opacity, transform;
-
+      transform: scale(0.55);
       p {
         position: absolute;
         left: 0;
         top: 0;
-        width: 6vw;
-        height: auto;
+        width: 14vw;
+        height: 4vh;
         text-align: center;
         vertical-align: bottom;
         background-color: #ffffff;
-        border-radius: 10px;
-        color: #1E5EAA;
-        padding: 10px;
-        font-size: 1.2vw;
+        border-radius: 20px;
+        color: rgb(103, 192, 225);
+        padding: 18px;
+        font-size: 28px;
+        letter-spacing: 4px;
         font-weight: 500;
         cursor: pointer;
       }
       p:hover {
         z-index: 999;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        width: 13vw;
+        height: 5vh;
       }
       &.rotate-design > p:nth-child(1) {
         animation: rotate-30 .5s ease-in-out;
@@ -1377,111 +1485,119 @@ export default {
         animation-fill-mode: forwards;
       }
 
-      &.rotate-engineer-1 > p:nth-child(1) {
-        animation: rotate-12 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(1) {
+        animation: rotate-11 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(2) {
-        animation: rotate-37 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(2) {
+        animation: rotate-33 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(3) {
-        animation: rotate-63 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(3) {
+        animation: rotate-56 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(4) {
-        animation: rotate-90 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(4) {
+        animation: rotate-79 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(5) {
-        animation: rotate-117 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(5) {
+        animation: rotate-101 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(6) {
-        animation: rotate-143 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(6) {
+        animation: rotate-124 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1 > p:nth-child(7) {
-        animation: rotate-168 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(7) {
+        animation: rotate-147 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-2 > p:nth-child(1) {
-        animation: rotate-15 .5s ease-in-out;
+      &.rotate-engineer > p:nth-child(8) {
+        animation: rotate-169 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-2 > p:nth-child(2) {
-        animation: rotate-45 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2 > p:nth-child(3) {
-        animation: rotate-75 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2 > p:nth-child(4) {
-        animation: rotate-105 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2 > p:nth-child(5) {
-        animation: rotate-135 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2 > p:nth-child(6) {
-        animation: rotate-165 .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
+      // &.rotate-engineer-2 > p:nth-child(1) {
+      //   animation: rotate-15 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(2) {
+      //   animation: rotate-45 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(3) {
+      //   animation: rotate-75 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(4) {
+      //   animation: rotate-105 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(5) {
+      //   animation: rotate-135 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2 > p:nth-child(6) {
+      //   animation: rotate-165 .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
 
-      &.rotate-engineer-1-disappear > p:nth-child(1) {
-        animation: rotate-12-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(1) {
+        animation: rotate-11-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(2) {
-        animation: rotate-37-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(2) {
+        animation: rotate-33-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(3) {
-        animation: rotate-63-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(3) {
+        animation: rotate-56-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(4) {
-        animation: rotate-90-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(4) {
+        animation: rotate-79-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(5) {
-        animation: rotate-117-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(5) {
+        animation: rotate-101-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(6) {
-        animation: rotate-143-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(6) {
+        animation: rotate-124-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-1-disappear > p:nth-child(7) {
-        animation: rotate-168-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(7) {
+        animation: rotate-147-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-2-disappear > p:nth-child(1) {
-        animation: rotate-15-disappear .5s ease-in-out;
+      &.rotate-engineer-disappear > p:nth-child(8) {
+        animation: rotate-169-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      &.rotate-engineer-2-disappear > p:nth-child(2) {
-        animation: rotate-45-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2-disappear > p:nth-child(3) {
-        animation: rotate-75-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2-disappear > p:nth-child(4) {
-        animation: rotate-105-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2-disappear > p:nth-child(5) {
-        animation: rotate-135-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
-      &.rotate-engineer-2-disappear > p:nth-child(6) {
-        animation: rotate-165-disappear .5s ease-in-out;
-        animation-fill-mode: forwards;
-      }
+      // &.rotate-engineer-2-disappear > p:nth-child(1) {
+      //   animation: rotate-15-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(2) {
+      //   animation: rotate-45-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(3) {
+      //   animation: rotate-75-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(4) {
+      //   animation: rotate-105-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(5) {
+      //   animation: rotate-135-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
+      // &.rotate-engineer-2-disappear > p:nth-child(6) {
+      //   animation: rotate-165-disappear .5s ease-in-out;
+      //   animation-fill-mode: forwards;
+      // }
 
       &.rotate-science > p:nth-child(1) {
         animation: rotate-18 .5s ease-in-out;
@@ -1692,7 +1808,7 @@ export default {
       grid-area: list;
       justify-self: flex-end;
 
-      max-width: 14vw;
+      max-width: 22vw;
 
       ul {
         list-style-type: none;
@@ -1700,6 +1816,7 @@ export default {
         padding: 0;
 
         li {
+          width: auto;
           margin: 0;
           padding: 0;
 
@@ -1709,71 +1826,68 @@ export default {
         }
 
         li[data-key="design"]  {
-          transform: translateX(38px) skewX(-5deg);
+          transform: translateX(14vw);
         }
         li[data-key="social"]  {
-          transform: translateX(32px) skewX(-5deg);
+          transform: translateX(7vw);
         }
         li[data-key="undeclear"]  {
-          transform: translateX(28px) skewX(-5deg);
+          transform: translateX(5vw);
         }
-        li[data-key="engineer-1"]  {
-          transform: translateX(24px) skewX(-5deg);
+        li[data-key="engineer"]  {
+          transform: translateX(4vw);
         }
         li[data-key="engineer-2"]  {
-          transform: translateX(24px) skewX(-5deg);
+          transform: translateX(3.5vw);
         }
         li[data-key="science"]  {
-          transform: translateX(20px) skewX(-5deg);
+          transform: translateX(3vw);
         }
         li[data-key="humanity"]  {
-          transform: translateX(20px) skewX(-5deg);
+          transform: translateX(3.5vw);
         }
         li[data-key="medicine"]  {
-          transform: translateX(24px) skewX(-5deg);
+          transform: translateX(4vw);
         }
         li[data-key="management"]  {
-          transform: translateX(28px) skewX(-5deg);
+          transform: translateX(5vw);
         }
         li[data-key="computer"]  {
-          transform: translateX(36px) skewX(-5deg);
+          transform: translateX(7vw);
         }
         li[data-key="biological"]  {
-          transform: translateX(38px) skewX(-5deg);
+          transform: translateX(14vw);
         }
       }
 
       .dept_class_item {
-        margin: 2vh;
+        margin: 4vh;
 
         font-size: 1.3vw;
 
         p {
           width: 100%;
-
           margin: 0;
           padding: 0;
-
+          color: rgb(150, 150, 150);
           text-align: left;
           border-radius: 10px;
-          font-weight: 500;
+          font-weight: 300;
+          letter-spacing: 2px;
           cursor: pointer;
-          transform: skewX(5deg);
         }
         &.active {
-            color: white;
+            p {
+              color: rgb(103, 192, 225);
+              font-weight: bolder;
+            }
             border-radius: 10px;
-            background-color: #DD4A43;
-            padding: 10px;
-            font-size: 1.5vw;
-            font-weight: 500;
+            padding: 3px;
           }
         &:hover {
-          color: #DD4A43;
           border-radius: 10px;
           background-color: #eeefef;
-          padding: 10px;
-          font-size: 1.5vw;
+          padding: 3px;
           font-weight: 500;
         }
       }

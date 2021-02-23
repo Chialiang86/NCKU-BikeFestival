@@ -1,8 +1,8 @@
 <template lang="pug">
   div(id="app")
-    //- video(v-if="pc" src="./assets/14/start/startupComputer.gif" id="startup_computer" loop)
-    //- video(v-else src="./assets/14/start/startupMobile.gif" id="startup_mobile" loop)
-    div(id="logo")
+    video(v-if="pc" src="./assets/14/start/startupComputer.mp4" id="startup_computer" autoplay="true" muted="true" control="false")
+    //- video(v-else src="./assets/14/start/startupMobile.mp4" id="startup_mobile" autoplay="true" muted="true" control="false")
+    div(v-else id="logo")
       svg(viewBox="100 0 700 700")
         title logo
         path(class="cls-1" d="M609,165.86a14.27,14.27,0,1,1,14.27-14.27A14.29,14.29,0,0,1,609,165.86ZM609,145a6.55,6.55,0,1,0,6.55,6.55A6.55,6.55,0,0,0,609,145Z")
@@ -97,60 +97,58 @@ export default {
     document.addEventListener('click', this.clickEffect)
     const self = this
     const logo = this.$el.querySelector('#logo')
-    // var startup
-    // if (this.pc) {
-    //   startup = this.$el.querySelector('#startup_computer')
-    //   startup.addEventListener('ended', myHandler, false)
-    // } else {
-    //   startup = this.$el.querySelector('#startup_mobile')
-    //   startup.addEventListener('ended', myHandler, false)
-    // }
-    if (this.$route.name !== 'Intro') {
-      logo.parentNode.removeChild(logo)
-      // startup.parentNode.removeChild(startup)
-      return
-    }
-
-    // function myHandler (e) {
-    //   setTimeout(function () {
-    //     startup.classList.add('slide-up')
-    //     const transEndEvent = function () {
-    //       startup.removeEventListener('transitionend', transEndEvent)
-    //       startup.parentNode.removeChild(startup)
-    //     }
-    //     startup.addEventListener('transitionend', transEndEvent)
-    //   }, 500)
-    // }
-    // add logo line animation
-
-    anime({
-      targets: 'svg path, svg circle',
-      strokeDashoffset: [anime.setDashoffset, 0],
-      easing: 'easeInOutCubic',
-      duration: 3000,
-      delay: function (el, i) { return 0 },
-      begin: function (anim) {
-        self.$el.querySelectorAll('.cls-1').forEach(target => {
-          target.classList.add('fill-logo')
-        })
-        self.$el.querySelectorAll('.cls-2').forEach(target => {
-          target.classList.add('fill-logo')
-        })
-        self.$el.querySelectorAll('.cls-3').forEach(target => {
-          target.classList.add('fill-logo')
-        })
-      },
-      complete: function (anim) {
-        setTimeout(function () {
-          logo.classList.add('slide-up')
-          const transEndEvent = function () {
-            logo.removeEventListener('transitionend', transEndEvent)
-            logo.parentNode.removeChild(logo)
-          }
-          logo.addEventListener('transitionend', transEndEvent)
-        }, 1500)
+    var startup
+    if (this.pc) {
+      startup = this.$el.querySelector('#startup_computer')
+      startup.addEventListener('ended', myHandler, false)
+      if (this.$route.name !== 'Intro') {
+        startup.parentNode.removeChild(startup)
       }
-    })
+    } else {
+      if (this.$route.name !== 'Intro') {
+        logo.parentNode.removeChild(logo)
+        return
+      }
+      // add logo line animation
+      anime({
+        targets: 'svg path, svg circle',
+        strokeDashoffset: [anime.setDashoffset, 0],
+        easing: 'easeInOutCubic',
+        duration: 3000,
+        delay: function (el, i) { return 0 },
+        begin: function (anim) {
+          self.$el.querySelectorAll('.cls-1').forEach(target => {
+            target.classList.add('fill-logo')
+          })
+          self.$el.querySelectorAll('.cls-2').forEach(target => {
+            target.classList.add('fill-logo')
+          })
+          self.$el.querySelectorAll('.cls-3').forEach(target => {
+            target.classList.add('fill-logo')
+          })
+        },
+        complete: function (anim) {
+          setTimeout(function () {
+            logo.classList.add('slide-up')
+            const transEndEvent = function () {
+              logo.removeEventListener('transitionend', transEndEvent)
+              logo.parentNode.removeChild(logo)
+            }
+            logo.addEventListener('transitionend', transEndEvent)
+          }, 100)
+        }
+      })
+    }
+    function myHandler (e) {
+      setTimeout(function () {
+        startup.classList.add('slide-up')
+        const transEndEvent = function () {
+          startup.removeEventListener('transitionend', transEndEvent)
+          startup.parentNode.removeChild(startup)
+        }
+        startup.addEventListener('transitionend', transEndEvent)
+      }, 500)
+    }
   },
   methods: {
     isPC: function () {
@@ -212,6 +210,11 @@ export default {
     100% {
       opacity: 1;
     }
+  }
+
+  @keyframes up {
+    0% { top: 0%;}
+    100% {top: -120vh;}
   }
 
   @keyframes fill-text {
@@ -372,10 +375,14 @@ export default {
       margin: 0 auto;
       transform: translate(-10px, 0);
     }
-
     .slide-up {
-      max-height: 0 !important;
+      animation: up .5s ease;
+      animation-fill-mode:forwards;
+      -webkit-animation-fill-mode:forwards;
     }
+    // .slide-up {
+    //   max-height: 0 !important;
+    // }
 
     .fill-logo {
       animation: fill-text 3s ease-out;
@@ -473,6 +480,9 @@ export default {
       top:0;
       left:0;
       object-fit: cover;
+      video::-webkit-media-controls-fullscreen-button{display: none !important;}
+      video::-webkit-media-controls-mute-button { display: none !important;}
+      video::-internal-media-controls-overflow-button{ display: none !important;}
     }
     .cls-1, .cls-4 {
       fill: #942323;
@@ -539,9 +549,10 @@ export default {
       will-change: opacity, transform, border-width;
       pointer-events: none;
     }
-
     .slide-up {
-      max-height: 0 !important;
+      animation: up .5s ease;
+      animation-fill-mode:forwards;
+      -webkit-animation-fill-mode:forwards;
     }
   }
 </style>

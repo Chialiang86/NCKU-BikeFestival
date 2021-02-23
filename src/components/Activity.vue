@@ -1,5 +1,9 @@
 <template lang="pug">
   div(class="activity_page")
+    div(class="activity_background")
+    div(class="live_dot2")
+    div(class="live_dot3")
+    div(class="live_dot4")
     div(class="activity_top_bar_pc")
       div(class="activity_top_bar_layout" @click="scroll()")
         router-link(tag="label" class="activity_exit_button" to="/")
@@ -8,7 +12,7 @@
             div(id="bottom" v-if="index===1")
           label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
     div(class="activity_top_bar_mobile")
-      div(class="activity_mobile_title" @click="list = false; titleBlock = !titleBlock;")
+      div(class="activity_mobile_title" @click="list = false;")
       router-link(tag="div" class="activity_mobile_exit_button" to="/")
       div(class="activity_mobile_list" @click="list = !list; titleBlock = false;")
     div(class="activity_mobile_list_area" v-show="list")
@@ -16,49 +20,61 @@
       label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
     div(class="activity_flower_top" @click="list = false; titleBlock = false;")
     div(class="activity_flower_down" @click="list = false; titleBlock = false;")
-    div(class="activity_top_list_mobile" v-if="titleBlock")
+    div(class="activity_topic_list_mobile" v-if="titleBlock")
       div(class="title_block" v-for="(title, index) in titleText")
-        label(class="title_mobile" v-bind:data-key="'title_'+ `${index+1}`" @click="topicStretch(index);") {{title}}
+        label(class="title_mobile" v-bind:data-key="'title_'+ `${index+1}`" @click="selectPageTopic(index, 0); titleBlock = false;") {{title}}
         div(class="title_topic_mobile" v-bind:data-topic="'topic_'+ `${index+1}`")
-          label(v-for="(topic, i) in topicText[index]" @click="selectPageTopic(index, i); titleBlock = false;") - &nbsp {{topic}}
-    div(class="activity_layout" @click="list = false; titleBlock = false;")
-      div(class="activity_layout_titles" v-if="pc")
-        label(v-for="(item, index) in titleText" v-bind:data-key="'title_'+ `${index+1}`" @click="selectPage(index)") {{titleText[index]}}
-      div(class="top_title" v-else)
-        label {{titleText[currentIndex]}}
-        div(class="top_topic")
+          label(v-for="(topic, i) in topicText[index]" @click="selectPageTopic(index, i); titleBlock = false;") {{topic}}
+    div(class="activity_layout" @click="list = false;")
+      div(class="activity_layout_titles" v-if="pc" @click="titleBlock = false;")
+        label(v-for="(item, index) in titleText" v-bind:data-key="'title_'+ `${index+1}`" @click="selectPageTopic(index, 0); titleBlock = false;") {{titleText[index]}}
+      div(class="top_title" v-else )
+        div(class="top_title_first" @click="titleBlock = !titleBlock;" onchange="") {{titleText[currentIndex]}}
+          label(class="top_title_arrow")
+        div(class="top_topic" @click="titleBlock = false;")
           label(v-show="currentIndex===0") {{topicText[0][layout1Index]}}
           label(v-show="currentIndex===1") {{topicText[1][layout2Index]}}
           label(v-show="currentIndex===2") {{topicText[2][layout3Index]}}
           label(v-show="currentIndex===3") {{topicText[3][layout4Index]}}
       div(class="activity_layout1" v-show="currentIndex===0")
-        div(class="top_bar1" v-if="pc")
+        div(class="top_bar1" v-show="pc")
           label(v-for="(item, index) in introduceSrc" @click="selectPageTopic(0, index)") {{item.topic}} /
             div(v-if="layout1Index===index")
-        div(class="content1")
-          div(class="block1" v-for="(element, index) in layout1PageSrc.lists" v-bind:data-block="'block_'+ `${index+1}`" @click="blockStretch(index)")
+        div(class="content1" @click="titleBlock = false;")
+          div(class="block1" v-for="(element, index) in layout1PageSrc.lists" v-model="layout1PageSrc" v-bind:data-block="'block_'+ `${index+1}`" @click="blockStretch(index)")
             img(class="img1" v-bind:src="element.img")
             label(class="title1") {{element.title}}
             div(class="time1")
               label {{element.time}}
             div(class="introduce1")
               p(v-for="text in element.content") {{text}}
-      //div(class="activity_layout2"  v-bind:key="currentIndex" v-show="currentIndex===1")
-        div(class="top_bar2")
+          div(class="block1_empty")
+      div(class="activity_layout2"  v-bind:key="currentIndex" v-show="currentIndex===1")
+        div(class="top_bar2" v-show="pc" @click="titleBlock = false;")
           label(v-for="(item, index) in timeSrc" v-bind:data-day="'day_'+`${index+1}`" @click="selectPageTopic(1, index)") {{item.topic}}
-        div(class="content2")
+        div(class="content2" @click="titleBlock = false;")
           div(class="block2" v-for="(topic, index) in layout2DaySrc.lists")
             label(class="title2") ➤ &nbsp {{topic.title}}
-            table(class="table2" v-bind:id="'table_1_'+`${index+1}`")
+            table(class="table2" v-bind:data-table="'table_'+`${layout2Index+1}`+'_'+`${index+1}`")
               thead
                 tr
                   th(v-for="item in topic.table.head") {{item}}
               tbody
                 tr(v-for="items in topic.table.body")
-                  td(v-for="(item, index) in items" v-bind:id="'td_'+ `${index+1}`")
+                  td(v-for="(item, index) in items" v-bind:data-td="'td_'+ `${index+1}`")
                     p(v-for="line in item") {{line}}
-      div(class="activity_layout3" v-show="currentIndex===2")
-      div(class="activity_layout4" v-show="currentIndex===3")
+          div(class="content2_empty")
+      div(class="activity_layout3" v-show="currentIndex===2" @click="list = false; titleBlock = false;")
+        dic(class="map_block")
+          img(class="map_img" v-bind:src="layout3MapSrc" @click="layout3Index = !layout3Index;")
+          label(class="map_msg" v-show="pc")
+        label(class="map_big_msg" v-show="!pc") 點圖可放大
+      div(class="activity_layout4" v-show="currentIndex===3" @click="list = false; titleBlock = false;")
+        div(class="block4")
+          img(class="img4" v-bind:src="layout4AboutSrc.img")
+          article(class="article4" id="article")
+    div(class="activity_big_map" v-if="layout3Index" @click="layout3Index = !layout3Index;")
+      img(v-bind:src="layout3MapSrc")
 </template>
 
 <script>
@@ -71,7 +87,18 @@ export default {
     Waterfall,
     WaterfallSlot
   },
+  created () {
+    window.addEventListener('resize', this.windowSizeChange)
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.windowSizeChange)
+  },
   mounted: function () {
+    var mapElement = document.getElementsByClassName('map_img')[0]
+    var articleContent = document.getElementsByClassName('article4')[0]
+    mapElement.addEventListener('mousemove', this.mapMaxMsg)
+    mapElement.addEventListener('mouseleave', this.mapMaxMsgOut)
+    articleContent.innerHTML = this.layout4Article
     for (var i = 0; i < this.introduceSrc.length; i++) {
       var arr = new Array([])
       for (var j = 0; j < this.introduceSrc[i].lists.length; j++) {
@@ -80,7 +107,7 @@ export default {
       this.layout1FlagArr.push(arr)
     }
     this.pc = this.isPC()
-    this.selectPage(0)
+    this.selectPageTopic(0, 0)
   },
   data: function () {
     return {
@@ -103,62 +130,81 @@ export default {
       layout1FlagArr: [],
       layout2DaySrc: srcJson.time[0],
       layout2Index: 0,
-      layout3Index: 0,
+      layout3MapSrc: srcJson.map,
+      layout3Index: false,
       layout4Index: 0,
+      layout4AboutSrc: srcJson.about,
+      layout4Article: ` <p>&nbsp &nbsp &nbsp &nbsp 國立成功大學為全台首屈一指的綜合性大學，為各專業領域培育兼具實力及視野的菁英人才，除學術研究外，產學合作上均對本國有舉足輕重的影響地位。乘載著台灣歷史中的種種足跡，成大一再尋求蛻變，以「教育創新」、「研究卓越」、「社會責任」為主軸，打造「教學、研究與社會責任」整體卓越的未來大學之願景邁進。</p>
+                        <p>&nbsp &nbsp &nbsp &nbsp成大單車節，以成大學生最常使用之通勤工具而命名，傳達成大學生勤奮之正面形象，期許莘莘學子能與成大一同成長。</p>
+                        <p>&nbsp &nbsp &nbsp &nbsp今年邁入第十四屆，在去年遭遇全球疫情停辦後，全國高中生、家長和業界專家都缺少了一了解、認識成功大學的最佳途徑。</p>
+                        <br>
+                        <p style="font-weight: bold; color: #30B6F5;"><b>&nbsp &nbsp &nbsp &nbsp「以成大為中心，探索過去，開拓未來。」</b></p>
+                        <br>
+                        <p>&nbsp &nbsp &nbsp &nbsp單車節立足成大，自南方躍起，放眼全台灣，引入北部豐富的教育資源，帶動南台灣創新教育與自我探索發展，而整體活動籌備依照以下三大宗旨：</p>
+                        <br>
+                        <p><span style="font-weight: bold; color: #30B6F5;">1. 探索科系：</span>認識成大十大學院、四十六個科系的學習環境、師資設備、就業出路等，讓全台高中生探索適合自己的學系，鍵結起高中端與大學端、弭平兩造之資訊落差。</p>
+                        <p>另外，結合職涯發展，廣邀全台相關產業公司來到現場，與高中生，甚至是成大學生推廣互動。</p>
+                        <br>
+                        <p><span style="font-weight: bold; color: #30B6F5;">2. 探索成大：</span>適逢成大創校 90 周年，透過展場呈現成大過去歷史風華、未來創新趨勢，進而推廣成大教學環境特色與優勢。</p>
+                        <p>近年，第十學院、敏求智慧運算學院、台灣半導體研究中心等創新基地，全台菁英亦皆有目共睹，必能吸引廣大學生家長前來一探究竟。</p>
+                        <br>
+                        <p><span style="font-weight: bold; color: #30B6F5;">3. 探索台南：</span>匯聚人潮，帶動周邊觀光，打造舒適、適合讀書的生活環境吸引高中生來台南就學，建立起南臺灣之首的正面形象。</p>
+                        <p>結合在地歷史文化與特色小吃，呈現活力、熱情的成大人形象。</p>
+                        <br>
+                        <p>&nbsp &nbsp &nbsp &nbsp承載過去十三年來的籌備經驗、成功大學邁入九十周年的風華底蘊，由成功大學學生籌備，希望能共同承擔頂尖大學學生的社會責任，提供全台學子更新穎、多元的教育資訊！</p><br><br><br><br><br><br><br><br>`,
       pc: false
     }
   },
-  computed: {
-  },
   methods: {
-    selectPage: function (index) {
-      this.reset(index)
-      if (true) {
-        if (this.currentIndex === index) {
-          this.currentIndex = -1
-        } else {
-          this.currentIndex = index
-          var titleList = document.querySelectorAll('[data-key]')
-          for (var i = 0; i < titleList.length; i++) {
-            if (i === index) {
-              titleList[i].setAttribute('style', `
-                background-color: rgb(44,185,244);`)
-            } else {
-              titleList[i].setAttribute('style', `
-                background-color: rgb(117,210,243);`)
-            }
-          }
-        }
+    windowSizeChange: function (event) {
+      if (window.innerWidth > 551) {
+        this.pc = true
+      } else {
+        this.pc = false
       }
     },
-    reset: function (index) {
-      if (index === 0) {
-        this.selectPageTopic(0, 0)
-        for (var i = 0; i < this.layout1FlagArr.length; i++) {
-          for (var j = 0; j < this.layout1FlagArr[i].length; j++) {
+    openTab: function (url) {
+      window.open(url, '_blank')
+    },
+    mapMaxMsg: function (event) {
+      document.getElementsByClassName('map_msg')[0].setAttribute('style', 'display:absolute;' + 'left:' + (event.clientX - 100) + 'px; top:' + (event.clientY - 50) + 'px;' + 'background-color: rgb(254,246,231);' + 'box-shadow: 1px 1px 1px 2px rgb(102,102,102);')
+      document.getElementsByClassName('map_msg')[0].innerHTML = '點按可放大'
+    },
+    mapMaxMsgOut: function (event) {
+      document.getElementsByClassName('map_msg')[0].setAttribute('style', 'display:none;' + 'left:' + (event.clientX - 100) + 'px; top:' + (event.clientY - 50) + 'px;' + 'background-color: rgb(254,246,231);' + 'box-shadow: 1px 1px 1px 2px rgb(102,102,102);')
+    },
+    selectPageTopic: function (title, index) {
+      var i, j
+      this.currentIndex = title
+      var titleList = document.querySelectorAll('[data-key]')
+      for (i = 0; i < titleList.length; i++) {
+        if (i === title) {
+          titleList[i].setAttribute('style', `
+            background-color: rgb(44,185,244);`)
+        } else {
+          titleList[i].setAttribute('style', `
+            background-color: rgb(117,210,243);`)
+        }
+      }
+      if (title === 0) {
+        this.layout1Index = index
+        this.layout1PageSrc = srcJson.introduce[index]
+        for (i = 0; i < this.layout1FlagArr.length; i++) {
+          for (j = 0; j < this.layout1FlagArr[i].length; j++) {
             this.layout1FlagArr[i][j] = false
           }
         }
       }
-      if (index === 1) {
-        this.selectPageTopic(1, 0)
-      }
-    },
-    selectPageTopic: function (title, index) {
-      if (title === 0) {
-        this.layout1Index = index
-        this.layout1PageSrc = srcJson.introduce[index]
-      }
       if (title === 1) {
         this.layout2Index = index
         this.layout2DaySrc = srcJson.time[index]
-        var titleList = document.querySelectorAll('[data-day]')
-        for (var i = 0; i < titleList.length; i++) {
+        var titles = document.querySelectorAll('[data-day]')
+        for (i = 0; i < titles.length; i++) {
           if (i === index) {
-            titleList[i].setAttribute('style', `
+            titles[i].setAttribute('style', `
               background-color: rgb(75,196,245);`)
           } else {
-            titleList[i].setAttribute('style', `
+            titles[i].setAttribute('style', `
               background-color: rgb(196, 196, 196);`)
           }
         }
@@ -176,19 +222,15 @@ export default {
       var block = document.querySelectorAll('[data-block]')
       if (this.layout1FlagArr[this.layout1Index][index]) {
         this.layout1FlagArr[this.layout1Index][index] = false
-        block[index].setAttribute('style', 'height: 33vh; transition: filter .9s ease;')
         if (this.pc) {
-          block[index].setAttribute('style', 'height: 33vh; transition: filter .9s ease;')
+          block[index].setAttribute('style', 'height: 180px; transition: height .9s ease;')
         } else {
-          block[index].setAttribute('style', 'height: 22vh; transition: filter .9s ease;')
+          block[index].setAttribute('style', 'height: 25vw; transition: height .9s ease;')
         }
       } else {
         this.layout1FlagArr[this.layout1Index][index] = true
-        block[index].setAttribute('style', 'height: auto; transition: filter .9s ease;')
+        block[index].setAttribute('style', 'height: auto; transition: height .9s ease;')
       }
-    },
-    openTab: function (url) {
-      window.open(url, '_blank')
     },
     isPC: function () {
       var userAgentInfo = navigator.userAgent
@@ -222,6 +264,10 @@ export default {
     *{
       font-family: 'Noto Sans TC'!important;
     }
+    @keyframes flow-in {
+      from { right: -40%; }
+      to { right: 0%; }
+    }
     .activity_page {
       display: flex;
       align-items: center;
@@ -232,6 +278,71 @@ export default {
       padding: 0;
       background: white;
     }
+    .live_dot2 {
+      z-index: 5;
+      position: absolute;
+      width: 60vw;
+      height: 60vh;
+      left: 0%;
+      top: 20%;
+      background-image: url('../assets/14/live/mobile/dot2.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+    }
+    .live_dot3 {
+      z-index: 5;
+      position: absolute;
+      width: 50vw;
+      height: 50vh;
+      right: 0%;
+      top: 35%;
+      background-image: url('../assets/14/live/mobile/dot3.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+    }
+    .live_dot4 {
+      z-index: 5;
+      position: absolute;
+      width: 60vw;
+      height: 60vh;
+      left: 0%;
+      bottom: -15%;
+      background-image: url('../assets/14/live/mobile/dot1.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+    }
+    .activity_big_map {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 80vh;
+      overflow-x: scroll;
+      overflow-y: scroll;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      background-color: rgb(255, 255, 255);
+      &::-webkit-scrollbar {
+        width: 0.6vw;
+        border-radius: 0.5vw;
+      }
+      &::-webkit-scrollbar-track {
+        background: rgba(100, 100, 100, 0.3);
+        border-radius: 0.5vw;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgb(103, 192, 225);
+        border-radius: 0.5vw;
+      }
+      img {
+        width: 100vh;
+        height: 100vh;
+      }
+    }
     .activity_top_bar_mobile {
       position: absolute;
       display: grid;
@@ -239,7 +350,7 @@ export default {
       grid-template-areas: "exit title list";
       justify-content: center;
       justify-items: center;
-      z-index: 10;
+      z-index: 100;
       top: 0%;
       left: 0%;
       background-color: rgb(254,241,217);
@@ -304,34 +415,36 @@ export default {
       grid-template-rows: repeat(8, 7vh);
       z-index: 100;
       width: 40vw;
-      height: 56vh;
+      height: 92vh;
       right: 0%;
       top: 8%;
-      background-color: rgba(100, 100, 100, 0.9);
+      background-color: rgb(250, 242, 226);
+      animation: flow-in 0.5s ease;
       label {
-        color:rgb(255, 246, 232);
+        color:rgb(75,196,245);
         line-height: 6vh;
-        font-size: 2.4vh;
-        border: 1px solid rgb(50, 50, 50);
+        font-size: 2.3vh;
+        font-weight: bold;
+        letter-spacing: 2px;
+        border: 1px solid rgb(200, 200, 200);
         &:hover {
-          background-color: rgb(155, 155, 155);
           filter: brightness(150%);
         }
         &:active {
-          background-color: rgba(155, 155, 155, 0.8);
           filter: brightness(60%);
         }
       }
     }
-    .activity_top_list_mobile {
+    .activity_topic_list_mobile {
       position: absolute;
-      top: 8vh;
-      left: 25vw;
-      width: 50vw;
+      top: 16vh;
+      left: 5vw;
+      width: 47vw;
       height: auto;
       max-height: 70vh;
       overflow-y: scroll;
-      z-index: 10;
+      overflow-x: hidden;
+      z-index: 50;
 
       display: flex;
       flex-direction: column;
@@ -340,14 +453,15 @@ export default {
         flex-direction: column;
         border: 1px solid rgb(255,240,218);
         .title_mobile {
-          background-color: rgb(80,196,238);
-          height: 6vh;
+          background-color: rgb(75,196,243);
+          height: 5vh;
           color: white;
-          height: 6vh;
-          line-height: 6vh;
-          font-size: 2.6vh;
+          height: 5vh;
+          line-height: 5vh;
+          font-size: 15px;
           font-weight: bold;
           letter-spacing: 0.2vw;
+          text-align: center;
           &:hover {
             filter: brightness(120%);
             transition: .5s ease;
@@ -358,19 +472,19 @@ export default {
         }
         .title_topic_mobile {
           background-color: rgb(254,241,217);
-          height: 0;
+          height: auto;
           display: flex;
           flex-direction: column;
           label {
-            width: 50vw;
-            height: 5vh;
+            width: 100%;
+            height: 4.5vh;
             color: rgb(80,196,238);
-            line-height: 5vh;
-            font-size: 2.2vh;
-            letter-spacing: 0.2vw;
+            line-height: 4.5vh;
+            font-size: 1.7vh;
+            letter-spacing: 1px;
+            text-align: center;
             &:hover {
               filter: brightness(120%);
-              transition: .5s ease;
             }
             &:active {
               filter: brightness(60%);
@@ -390,6 +504,7 @@ export default {
       align-items: flex-start;
       width: 100vw;
       height: 100vh;
+      // z-index: 10;
     }
     .top_title {
       grid-area: topic;
@@ -400,18 +515,47 @@ export default {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      label {
-        width: auto;
+      .top_title_first {
+        z-index: 100;
+        width: 44vw;
         margin: 0 2vw 0 5vw;
-        padding: 1vh 5vw;
-        height: 4vh;
-        border-radius: 1.5vh;
-        background-color: rgb(75,196,245);
+        padding: 0.9vh 0 1.2vh 3vw;
+        height: 2.8vh;
+        border-radius: 10px;
+        background-color: rgb(46,183,245);
+        box-shadow: 1px 1px 2px 1px rgb(102,102,102);
         color: white;
-        font-size: 2.5vh;
+        font-size: 15px;
         font-weight: bold;
         letter-spacing: 0.8vw;
-        line-height: 4vh;
+        text-align: left;
+        line-height: 3vh;
+        display: grid;
+        grid-template-columns: 1fr 4vh;
+        grid-template-areas: ". arr";
+        justify-content: center;
+        align-items: center;
+        &:hover {
+          filter: rgb(75,196,243);
+        }
+        &:active {
+          filter: brightness(60%);
+          box-shadow: 0 0 1px 2px rgb(102,102,102);
+        }
+        .top_title_arrow {
+          grid-area: arr;
+          z-index: 20;
+          width: 1.8vh;
+          height: 1.8vh;
+          margin: 0 0 0 5px;
+          border: 5px solid transparent;
+          border-radius: 10px;
+          background-image: url('../assets/14/arrow.svg');
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center bottom;
+          transform: rotate(90deg);
+        }
       }
       .top_topic {
         height: 5vh;
@@ -421,12 +565,13 @@ export default {
         label {
           border-radius: 0%;
           height: 7vh;
-          margin: 0 2vw 0 5vw;
+          margin: 0 2vw 0 3vw;
           padding: 0;
           background-color: transparent;
           color: rgb(75,196,245);
-          font-size: 2vh;
+          font-size: 13px;
           line-height: 6vh;
+          letter-spacing: 1px;
           text-align: left;
           background-image: url('../assets/14/activity/text_bottom.png');
           background-repeat: no-repeat;
@@ -440,6 +585,7 @@ export default {
       overflow-y: scroll;
       overflow-x: hidden;
       height: 80vh;
+      z-index: 10;
       .content1 {
         overflow-y: scroll;
         overflow-x: hidden;
@@ -449,7 +595,7 @@ export default {
         align-items: center;
         .block1 {
           width: 93%;
-          height: 22vh;
+          height: 26vw;
           background-color: rgb(45,184,245);
           border-radius: 4vw;
           margin: 1vh 3vw;
@@ -469,36 +615,45 @@ export default {
           }
           .img1 {
             grid-area: img;
-            border-radius: 3vw;
+            border-radius: 2vw;
             margin: 10% 10%;
-            width: 36vw;
-            height: 30vw;
-            box-shadow: 0 0 3px 2px rgba(51, 51, 51, 0.5);
+            width: 32vw;
+            height: 18vw;
+            box-shadow: 0 0 1px 1px rgba(51, 51, 51, 0.5);
+            transition: filter .5s ease;
+            &:hover {
+              filter: brightness(120%);
+              transition: .5s ease;
+              box-shadow: 1px 1px 2px 1px rgba(51, 51, 51, 0.5);
+            }
+            &:active {
+              filter: brightness(60%);
+            }
           }
           .title1 {
             grid-area: title;
             text-align: left;
-            margin: 0.2vh 0;
+            padding: 0 2vw;
             width: 90%;
             height: 5vh;
             color: white;
-            line-height: 6vh;
-            font-size: 1.9vh;
+            line-height: 5vh;
+            font-size: 15px;
             font-weight: bold;
             letter-spacing: 0.2vw;
           }
           .time1 {
             grid-area: time;
             display: flex;
+            padding: 0.2vh 2vw;
             label {
               border-radius: 3vw;
-              margin: 1vh 0 0 0;
               background-color: rgb(255,241,191);
               padding: 0 1vw;
               width: auto;
               height: 2.6vh;
-              line-height: 2.6vh;
-              font-size: 1.5vh;
+              line-height: 2.5vh;
+              font-size: 1.2vh;
               text-align: left;
               color: rgb(153,145,114);
               font-weight: bold;
@@ -507,10 +662,11 @@ export default {
           }
           .introduce1 {
             grid-area: introduce;
-            margin: 1.5vh 0 3vh 0;
+            padding: 0 2vw;
+            margin: 0.5vh 0 1.5vh 0;
             width: 92%;
             overflow-y: scroll;
-              &::-webkit-scrollbar {
+            &::-webkit-scrollbar {
               width: 0.2vw;
               border-radius: 0.25vw;
             }
@@ -523,13 +679,299 @@ export default {
               border-radius: 0.25vw;
             }
             p {
-              line-height: 2.2vh;
-              font-size: 1.5vh;
+              line-height: 2.4vh;
+              font-size: 14px;
               color: white;
-              letter-spacing: 0.1vw;
+              letter-spacing: 0.1vh;
               text-align: left;
             }
           }
+        }
+        .block1_empty {
+          width: 93%;
+          height: 20vh;
+        }
+      }
+    }
+    .activity_layout2 {
+      grid-area: content;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      height: 80vh;
+      background-color: rgba(255, 255, 255, 0.6);
+      z-index: 10;
+      .content2 {
+        width: 100%;
+        height: 93%;
+        padding: 1vh 1vw;
+        overflow-y: scroll;
+        .block2 {
+          height: auto;
+          width: 94vw;
+          margin: 0 2.5vw 3vh 2.5vw;
+
+          display: flex;
+          flex-direction: column;
+          .title2 {
+            height: 5vh;
+            width: 100%;
+            text-align: left;
+            padding: 0.5vh 2vw;
+            color: rgb(75,196,245);
+            font-size: 2vh;
+            font-weight: bold;
+            letter-spacing: 0.5vw;
+          }
+          table {
+            grid-area: table;
+            border-collapse: separate;
+            thead {
+              background-color: rgb(75,196,245);
+              text-align: center;
+              vertical-align: middle;
+              tr {
+                height: 100%;
+                th {
+                  height: 3vh;
+                  padding: 1vh;
+                  text-align: center;
+                  vertical-align: middle;
+                  border: 1px solid rgb(75,196,245);
+                  color: white;
+                  font-weight: bold;
+                  font-size: 2vh;
+                  letter-spacing: 0.5vw;
+                  line-height: 3vh;
+                }
+                th:first-child {
+                  border-top-left-radius: 2vw;
+                }
+                th:last-child {
+                  border-top-right-radius: 2vw;
+                }
+              }
+            }
+            tbody {
+              tr {
+                height: 100%;
+                td {
+                  width: auto;
+                  height: 5vh;
+                  padding: 1vh 1.5vw;
+                  text-align: center;
+                  vertical-align: middle;
+                  border: 1px solid rgb(75,196,245);
+                  color: rgb(102,102,102);
+                  line-height: 2.5vh;
+                  font-size: 1.7vh;
+                }
+              }
+              tr:last-child td:first-child {
+                border-bottom-left-radius: 2vw;
+              }
+              tr:last-child td:last-child {
+                border-bottom-right-radius: 2vw;
+              }
+            }
+          }
+          table[data-table="table_1_1"] {
+            td[data-td="td_1"] {
+              text-align: left;
+              width: 40%;
+            }
+          }
+          table[data-table="table_1_2"] {
+            td[data-td="td_1"] {
+              text-align: left;
+              width: 30%;
+            }
+            td[data-td="td_2"] {
+              text-align: center;
+              width: 8%;
+            }
+            td[data-td="td_3"] {
+              text-align: left;
+              width: 32%;
+            }
+          }
+          table[data-table="table_1_3"] {
+            td[data-td="td_1"] {
+              text-align: left;
+              width: 30%;
+            }
+            td[data-td="td_2"] {
+              text-align: center;
+              width: 8%;
+            }
+            td[data-td="td_3"] {
+              text-align: left;
+              width: 37%;
+            }
+          }
+          table[data-table="table_1_4"] {
+            td[data-td="td_1"] {
+              text-align: center;
+              width: 22%;
+            }
+            td[data-td="td_2"] {
+              text-align: left;
+              width: 40%;
+            }
+            td[data-td="td_3"] {
+              text-align: center;
+              width: 18%;
+            }
+          }
+          table[data-table="table_1_5"] {
+            td[data-td="td_1"] {
+              text-align: center;
+              width: 25%;
+            }
+            td[data-td="td_2"] {
+              padding: 0 0 0 3vw;
+              text-align: left;
+              width: 40%;
+            }
+            td[data-td="td_3"] {
+              text-align: center;
+              width: 18%;
+            }
+          }
+          table[data-table="table_2_1"] {
+            td[data-td="td_1"] {
+              text-align: left;
+              width: 24%;
+            }
+            td[data-td="td_2"] {
+              text-align: center;
+              width: 25%;
+            }
+            td[data-td="td_3"] {
+              text-align: center;
+              width: 18%;
+            }
+          }
+          table[data-table="table_2_2"] {
+            td[data-td="td_1"] {
+              text-align: left;
+              width: 30%;
+            }
+            td[data-td="td_2"] {
+              text-align: center;
+              width: 8%;
+            }
+            td[data-td="td_3"] {
+              text-align: left;
+              width: 25%;
+            }
+          }
+          table[data-table="table_2_3"] {
+            td[data-td="td_1"] {
+              text-align: left;
+              width: 37%;
+            }
+            td[data-td="td_2"] {
+              text-align: center;
+              width: 4%;
+            }
+            td[data-td="td_3"] {
+              text-align: left;
+              width: 34%;
+            }
+          }
+          table[data-table="table_2_4"] {
+            td[data-td="td_1"] {
+              text-align: center;
+              width: 19%;
+            }
+            td[data-td="td_2"] {
+              text-align: left;
+              width: 34%;
+            }
+            td[data-td="td_3"] {
+              text-align: center;
+              width: 27%;
+            }
+          }
+          table[data-table="table_2_5"] {
+            td[data-td="td_1"] {
+              text-align: center;
+              width: 30%;
+            }
+            td[data-td="td_2"] {
+              text-align: left;
+              width: 50%;
+            }
+          }
+        }
+        .content2_empty {
+          height: 20vh;
+          width: 100%;
+        }
+      }
+    }
+    .activity_layout3 {
+      grid-area: content;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      height: 80vh;
+      z-index: 10;
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      .map_block {
+        width: 94vw;
+        height: 94vw;
+        .map_img {
+          width: 90vw;
+          height: 90vw;
+          border-radius: 30px;
+          box-shadow: 1px 1px 0 1px rgb(102,102,102);
+          &:active {
+            width: 91vw;
+            height: 91vw;
+            filter: brightness(60%);
+          }
+        }
+      }
+      .map_big_msg {
+        width: auto;
+        height: 26px;
+        margin: 0 0 0 5vw;
+        padding: 0 3vw;
+        text-align: left;
+        line-height: 25px;
+        background-color: rgb(103, 192, 225);
+        border-radius: 10px;
+        color: white;
+        box-shadow: 1px 1px 0 1px rgb(102,102,102);
+      }
+    }
+    .activity_layout4 {
+      grid-area: content;
+      height: 80vh;
+      z-index: 10;
+      .block4 {
+        width: 96vw;
+        height: 67vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        img {
+          width: 96vw;
+          height: 54vw;
+          border-radius: 20px;
+        }
+        article {
+          padding: 20px 10px;
+          text-align: left;
+          color: rgb(102,102,102);
+          background-color: rgba(255, 255, 255, 0.6);
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: 1px;
         }
       }
     }
@@ -553,17 +995,34 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      width: 100vw;
+      height: 100%;
+      width: 100%;
+      min-width: 1000px;
       margin: 0;
       padding: 0;
       background: white;
       overflow: hidden;
+      .activity_big_map {
+        width: 100vw;
+        height: 100vh;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        transition: background-color 2.5s ease;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 1000;
+        overflow: scroll;
+        img {
+          width: 95vw;
+          height: 95vw;
+        }
+      }
     }
     .activity_top_bar_pc {
       position: absolute;
       display: flex;
       justify-content: center;
+      min-width: 1000px;
       z-index: 100;
       top: 0%;
       left: 0%;
@@ -613,7 +1072,7 @@ export default {
             width: 9vw;
             height: 6vh;
             line-height: 5.6vh;
-            font-size: 2.5vh;
+            font-size: calc(6px + 1vw);
             font-weight: 700;
             background-color: transparent;
             color: rgb(103, 192, 225);
@@ -694,6 +1153,7 @@ export default {
       flex-direction: column;
       align-items: center;
       height: auto;
+      min-width: 350px;
       margin: 1vw;
       padding: 5vh 0 0 0;
       label {
@@ -713,6 +1173,9 @@ export default {
           box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
         }
       }
+      label[data-key="title_1"] {
+        background-color: rgb(44,185,244);
+      }
       label[data-key="title_2"] {
         transform: translateX(1vw);
       }
@@ -724,6 +1187,7 @@ export default {
       }
     }
     .activity_layout1 {
+      min-width: 550px;
       grid-area: page;
       width: 100%;
       height: 100%;
@@ -768,13 +1232,13 @@ export default {
         }
       }
       .content1 {
-        width: 100%;
+        width: 96%;
         height: 90%;
         overflow-y: scroll;
         overflow-x: hidden;
         transition: filter .8s ease;
         &::-webkit-scrollbar {
-          width: 0.5vw;
+          width: 0.3vw;
           border-radius: 0.25vw;
         }
         &::-webkit-scrollbar-track {
@@ -793,8 +1257,8 @@ export default {
         flex-direction: column;
         align-items: flex-start;
         .block1 {
-          width: 95%;
-          height: 33vh;
+          min-width: 400px;
+          height: 180px;
           background-color: rgb(45,184,245);
           border-radius: 2vw;
           margin: 1vw 1vw 1vw 0;
@@ -802,7 +1266,7 @@ export default {
 
           display: grid;
           grid-template-columns: 3fr 4fr;
-          grid-template-rows: 7vh 5vh 1fr;
+          grid-template-rows: 46px 34px 1fr;
           grid-template-areas: "img title" "img time" "img introduce";
           &:hover {
             box-shadow: 0.5vw 0.5vh 5px 1px rgba(51, 51, 51, 0.5);
@@ -814,21 +1278,23 @@ export default {
           }
           .img1 {
             grid-area: img;
-            border-radius: 1vw;
-            margin: 8% 12%;
-            width: 18vw;
-            height: 14vw;
+            border-radius: 0.6vw;
+            margin: 25px 0 25px 30px;
+            width: 17.6vw;
+            height: 9.9vw;
+            min-width: 160px;
+            min-height: 90px;
             box-shadow: 0 0 3px 2px rgba(51, 51, 51, 0.5);
           }
           .title1 {
             grid-area: title;
             text-align: left;
-            margin: 2.5vh 0 0 0.2vw;
+            margin: 25px 0 0 3px;
             width: 90%;
-            height: 5vh;
+            height: 20px;
             color: white;
-            line-height: 6vh;
-            font-size: 2.8vh;
+            line-height: 16px;
+            font-size: 15px;
             font-weight: bold;
             letter-spacing: 0.2vw;
           }
@@ -836,23 +1302,24 @@ export default {
             grid-area: time;
             display: flex;
             label {
+              min-height: 16px;
               border-radius: 1vw;
-              margin: 1vh 0 0 0;
+              margin: 3px 0 0 0;
               background-color: rgb(255,241,191);
-              padding: 0 1vw;
+              padding: 0 10px;
               width: auto;
-              height: 3.5vh;
-              line-height: 3vh;
-              font-size: 2vh;
+              height: 25px;
+              line-height: 24px;
+              font-size: 13px;
               text-align: left;
               color: rgb(153,145,114);
               font-weight: bold;
-              letter-spacing: 0.1vw;
+              letter-spacing: 3px;
             }
           }
           .introduce1 {
             grid-area: introduce;
-            margin: 0.5vh 0 3vh 0;
+            margin: 0 0 12px 0;
             width: 92%;
             overflow-y: scroll;
              &::-webkit-scrollbar {
@@ -868,10 +1335,10 @@ export default {
               border-radius: 0.25vw;
             }
             p {
-              line-height: 3vh;
-              font-size: 2vh;
+              line-height: 20px;
+              font-size: 15px;
               color: white;
-              letter-spacing: 0.1vw;
+              letter-spacing: 2px;
               text-align: left;
             }
           }
@@ -879,6 +1346,7 @@ export default {
       }
     }
     .activity_layout2 {
+      min-width: 550px;
       grid-area: page;
       left: 0%;
       top: 0%;
@@ -889,7 +1357,6 @@ export default {
       align-items: flex-start;
       overflow-y: scroll;
       z-index: 5;
-      overflow-y: scroll;
       .top_bar2 {
         height: 5vh;
         width: auto;
@@ -931,7 +1398,7 @@ export default {
           width: 90%;
           height: auto;
           display: grid;
-          grid-template-rows: 1fr 5fr;
+          grid-template-rows: 9vh 1fr;
           grid-template-areas: "title" "table";
           margin: 0 0 3vh 0;
           .title2 {
@@ -954,16 +1421,16 @@ export default {
               tr {
                 height: 100%;
                 th {
-                  height: 5vh;
-                  padding: 1vh;
+                  height: 25px;
+                  padding: 3px;
                   text-align: center;
                   vertical-align: middle;
                   border: 1px solid rgb(75,196,245);
                   color: white;
                   font-weight: bold;
-                  font-size: 2.5vh;
-                  letter-spacing: 0.2vw;
-                  line-height: 5vh;
+                  font-size: 16px;
+                  letter-spacing: 2px;
+                  line-height: 16px;
                 }
                 th:first-child {
                   border-top-left-radius: 2vw;
@@ -978,33 +1445,33 @@ export default {
                 height: 100%;
                 td {
                   width: auto;
-                  height: 5vh;
-                  padding: 1.5vh 1vw;
+                  height: 20px;
+                  padding: 5px 10px;
                   text-align: center;
                   vertical-align: middle;
                   border: 1px solid rgb(75,196,245);
                   color: rgb(102,102,102);
-                  line-height: 3vh;
-                  font-size: 2vh;
+                  line-height: 20px;
+                  font-size: 14px;
                 }
-                #td_1 {
-                  text-align: left;
-                  min-width: 6vw;
-                  max-width: 14vw;
-                }
-                #td_2 {
-                  text-align: left;
-                  min-width: 4vw;
-                  max-width: 14vw;
-                }
-                #td_3 {
-                  text-align: left;
-                  max-width: 10vw;
-                }
-                #td_4 {
-                  text-align: left;
-                  min-width: 6vw;
-                }
+                // td[data-td="td_1"] {
+                //   text-align: left;
+                //   min-width: 6vw;
+                //   max-width: 14vw;
+                // }
+                // td[data-td="td_2"] {
+                //   text-align: left;
+                //   min-width: 4vw;
+                //   max-width: 14vw;
+                // }
+                // td[data-td="td_3"] {
+                //   text-align: left;
+                //   max-width: 10vw;
+                // }
+                // td[data-td="td_4"] {
+                //   text-align: left;
+                //   min-width: 6vw;
+                // }
               }
               tr:last-child td:first-child {
                 border-bottom-left-radius: 2vw;
@@ -1014,6 +1481,177 @@ export default {
               }
             }
           }
+          table[data-table="table_1_1"] {
+            td[data-td="td_1"] {
+                text-align: left;
+                width: 45%;
+            }
+          }
+          table[data-table="table_1_2"] {
+            td[data-td="td_1"] {
+                text-align: left;
+                width: 35%;
+            }
+            td[data-td="td_2"] {
+                text-align: center;
+                width: 12%;
+            }
+            td[data-td="td_3"] {
+                text-align: left;
+                width: 30%;
+            }
+          }
+          table[data-table="table_1_3"] {
+            td[data-td="td_1"] {
+                text-align: left;
+                width: 27%;
+            }
+            td[data-td="td_2"] {
+                text-align: center;
+                width: 12%;
+            }
+            td[data-td="td_3"] {
+                text-align: left;
+                width: 42%;
+            }
+          }
+          table[data-table="table_1_4"] {
+            td[data-td="td_1"] {
+                text-align: center;
+                width: 25%;
+            }
+            td[data-td="td_2"] {
+                text-align: left;
+                width: 40%;
+            }
+            td[data-td="td_3"] {
+                text-align: center;
+                width: 18%;
+            }
+          }
+          table[data-table="table_2_2"] {
+            td[data-td="td_1"] {
+                text-align: left;
+                width: 32%;
+            }
+            td[data-td="td_2"] {
+                text-align: center;
+                width: 12%;
+            }
+            td[data-td="td_3"] {
+                text-align: left;
+                width: 30%;
+            }
+          }
+          table[data-table="table_2_3"] {
+            td[data-td="td_1"] {
+                text-align: left;
+                width: 32%;
+            }
+            td[data-td="td_2"] {
+                text-align: center;
+                width: 12%;
+            }
+            td[data-td="td_3"] {
+                text-align: left;
+                width: 32%;
+            }
+          }
+        }
+      }
+    }
+    .activity_layout3 {
+      min-width: 550px;
+      position: absolute;
+      left: 5vw;
+      top: 0;
+      width: 60vw;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      overflow-y: scroll;
+      z-index: 5;
+      .map_block {
+        width: 75vh;
+        height: 75vh;
+        padding: 3vh 2vw;
+        border-radius: 2vh;
+        background-color: rgb(62,186,233);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .map_img {
+          border-radius: 2vh;
+          width: 100%;
+          height: 100%;
+          &:hover {
+            filter: brightness(120%);
+            transition: filter .3s ease;
+            width: 102%;
+            height: 102%;
+          }
+          &:active {
+            filter: brightness(60%);
+          }
+        }
+        .map_msg {
+          position: absolute;
+          width: 120px;
+          height: 25px;
+          border-radius: 10px;
+          line-height: 25px;
+          color: rgb(62,186,233);
+          font-size: 15px;
+          font-weight: bold;
+          letter-spacing: 0.2vw;
+        }
+      }
+    }
+    .activity_layout4 {
+      min-width: 550px;
+      position: absolute;
+      left: 2%;
+      top: 2%;
+      width: 50vw;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      // overflow-y: scroll;
+      z-index: 5;
+      .block4 {
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 0 2vw 0 0;
+        &::-webkit-scrollbar {
+          width: 0.6vw;
+          border-radius: 0.5vw;
+        }
+        &::-webkit-scrollbar-track {
+          background: rgba(100, 100, 100, 0.3);
+          border-radius: 0.5vw;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: rgb(103, 192, 225);
+          border-radius: 0.5vw;
+        }
+        .img4 {
+          margin: 0 0 20px 0;
+          width: 48vw;
+          height: 27vw;
+          border-radius: 1vw;
+        }
+        article {
+          width: 48vw;
+          text-align: left;
+          color: rgb(102,102,102);
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: 1px;
         }
       }
     }

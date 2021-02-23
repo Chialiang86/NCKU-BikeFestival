@@ -34,7 +34,7 @@
           router-link(tag="li" v-bind:to="'/parent'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_5.svg`) + ')'}")
           router-link(tag="li" v-bind:to="'/sponsor'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_6.svg`) + ')'}")
           router-link(tag="li" v-bind:to="'/live'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_7.svg`) + ')'}")
-          a(href="https://reurl.cc/pmZKrx" target="_blank")
+          a(href="https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform" target="_blank")
             li(tag="li" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_8.svg`) + ')'}")
 </template>
 

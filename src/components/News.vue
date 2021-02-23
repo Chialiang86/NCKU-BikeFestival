@@ -13,7 +13,7 @@
       div(class="news_mobile_list" @click="list = !list")
     div(class="news_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
     div(class="news_background")
     div(class="news_logo")
     dive(class="news_flower_top" @click="list = false")
@@ -42,6 +42,12 @@
 <script>
 //  import axios from 'axios'
 export default {
+  created () {
+    window.addEventListener('resize', this.windowSizeChange)
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.windowSizeChange)
+  },
   data: function () {
     return {
       menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
@@ -51,8 +57,7 @@ export default {
       news: [
         {
           Title: '官網正式上線',
-          Content: '官網正式上線ddddddddddddddd',
-          Timestamp: '2021/2/15'
+          Timestamp: '2021/2/20'
         }
       ],
       currentIndex: -1,
@@ -80,6 +85,13 @@ export default {
     this.loader.hide()
   },
   methods: {
+    windowSizeChange: function (event) {
+      if (window.innerWidth > 551) {
+        this.pc = true
+      } else {
+        this.pc = false
+      }
+    },
     openTab: function (url) {
       window.open(url, '_blank')
     },
@@ -138,6 +150,10 @@ export default {
     mobile layout css
   */
   @media only screen and (max-width: 551px) {
+    @keyframes flow-in {
+      from { right: -40%; }
+      to { right: 0%; }
+    }
     .news_page {
       display: flex;
       align-items: center;
@@ -224,21 +240,21 @@ export default {
       grid-template-rows: repeat(8, 7vh);
       z-index: 20;
       width: 40vw;
-      height: 56vh;
+      height: 92vh;
       right: 0%;
       top: 8%;
-      background-color: rgba(100, 100, 100, 0.9);
+      background-color: rgb(250, 242, 226);
+      animation: flow-in 0.5s ease;
       label {
-        color:rgb(255, 246, 232);
+        color:rgb(75,196,245);
         line-height: 6vh;
         font-size: 2.4vh;
-        border: 1px solid rgb(50, 50, 50);
+        letter-spacing: 0.5vw;
+        border: 1px solid rgb(200, 200, 200);
         &:hover {
-          background-color: rgb(155, 155, 155);
           filter: brightness(150%);
         }
         &:active {
-          background-color: rgba(155, 155, 155, 0.8);
           filter: brightness(60%);
         }
       }
@@ -289,13 +305,13 @@ export default {
           box-sizing: border-box;
 
           li.news_content {
-            padding: 1vh;
+            padding: 2vh 0 0 0;
           }
 
           li {
             width: 100%;
 
-            background-color: rgb(103, 192, 225);
+            background-color: rgb(86,196,242);
 
             margin: 0;
             padding: 2vh 4vw;
@@ -363,6 +379,7 @@ export default {
       justify-content: center;
       height: 100vh;
       width: 100vw;
+      min-width: 1000px;
       margin: 0;
       padding: 0;
       background: white;
@@ -372,6 +389,7 @@ export default {
       position: absolute;
       display: flex;
       justify-content: center;
+      min-width: 1000px;
       z-index: 100;
       top: 0%;
       left: 0%;
@@ -399,7 +417,7 @@ export default {
           background-repeat: no-repeat;
           background-size: 80% 80%;
           background-position: 50% 50%;
-          background-color: rgb(103, 192, 225);
+          background-color: rgb(86,196,242);
           transition: filter .3s ease;
           cursor: pointer;
           &:hover {
@@ -424,7 +442,7 @@ export default {
             font-size: 2.5vh;
             font-weight: 700;
             background-color: transparent;
-            color: rgb(103, 192, 225);
+            color: rgb(86,196,242);
             letter-spacing: 0.2vw;
             #bottom {
               grid-area: "bottom";
@@ -548,7 +566,7 @@ export default {
           li {
             width: 100%;
 
-            background-color: rgb(103, 192, 225);
+            background-color: rgb(86,196,242);
 
             // margin-top: 3vw;
             padding: 2vh 2vw;
