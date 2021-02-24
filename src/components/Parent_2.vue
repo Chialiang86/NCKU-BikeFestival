@@ -32,7 +32,6 @@
             div
               p(class="article_content" v-for="(line, i) in topics.content" v-html="line")
             img(class="article_slide" v-for="(name, i) in topics.imgs" v-bind:src="name")
-        div(class="page_empty")
 </template>
 
 <script>
@@ -99,10 +98,11 @@ export default {
       for (var i = 0; i < titleList.length; i++) {
         if (i === index) {
           titleList[i].setAttribute('style', `
-            background-color: rgb(44,185,244);`)
+          background-color: rgb(44,185,244);`)
         } else {
           titleList[i].setAttribute('style', `
-            background-color: rgb(117,210,243);`)
+          background-color: transparent;`)
+          // background-color: rgb(117,210,243);`)
         }
       }
       this.tempItem = srcJson.item[index]
@@ -344,7 +344,7 @@ export default {
     .parent_layout_page {
       grid-area: content;
       width: 100%;
-      height: 100%;
+      height: 65vh;
 
       display: flex;
       flex-direction: column;
@@ -356,7 +356,7 @@ export default {
         height: 10vh;
         width: 94vw;
         margin: 0 2vw 1vh 2vw;
-        background-color: rgb(86,195,240);
+        background-color: rgb(45,184,245);
         border-radius: 10px;
         display: flex;
         flex-direction: column;
@@ -405,9 +405,6 @@ export default {
             width: 90vw;
           }
         }
-      }
-      .page_empty {
-        padding: 10vh 0;
       }
     }
   }
@@ -548,8 +545,8 @@ export default {
     .parent_layout {
       position: absolute;
       display: grid;
-      grid-template-columns: 55vw 35vw;
-      grid-template-areas: "page title";
+      grid-template-rows: 8vh 80vh;
+      grid-template-areas: "title" "page";
       justify-content: center;
       align-items: center;
       top: 12vh;
@@ -560,15 +557,15 @@ export default {
     .parent_layout_titles {
       grid-area: title;
       display: grid;
-      grid-template-columns: repeat(2, 15vw);
-      grid-template-rows: repeat(5, 10vh);
+      grid-template-columns: repeat(10, 8vw);
+    //   grid-template-rows: repeat(5, 10vh);
       align-items: center;
       height: auto;
       min-width: 350px;
-      margin: 0 1vw;
-      padding: 3vh 0 0 3vw;
+    //   margin: 0 1vw;
+    //   padding: 3vh 0 0 3vw;
       label {
-        width: 13vw;
+        width: 8.5vw;
         height: 7vh;
         border-radius: 10px;
         margin: 2vh 0;
@@ -576,11 +573,11 @@ export default {
         font-size: 3vh;
         letter-spacing: 0.2vw;
         font-weight: bold;
-        color: white;
-        background-color: rgb(117,210,243);
-        box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+        color: rgb(44,185,244);
+        // background-color: rgb(117,210,243);
+        // box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
         &:hover {
-          background-color: rgb(44,185,244);
+          color: white;
           box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
         }
       }
@@ -614,7 +611,7 @@ export default {
     }
     .parent_layout_page {
       grid-area: page;
-      width: 51vw;
+      width: 90vw;
       height: 80vh;
       overflow-x: hidden;
       overflow-y: scroll;
@@ -631,10 +628,10 @@ export default {
         border-radius: 0.5vw;
       }
       .page_block{
-        width: 46vw;
-        max-width: 46vw;
+        width: 85vw;
+        max-width: 85vw;
         height: 80px;
-        background-color: rgb(118,211,243);
+        background-color: rgb(45,184,245);
         border-radius: 15px;
         border: 1vw solid transparent;
         margin: 3vh 1vw;
@@ -651,7 +648,7 @@ export default {
         }
         &:active {
           filter: brightness(50%);
-          background-color: rgb(118,211,243);
+          background-color: rgb(45,184,245);
         }
         .page_article {
           padding: 1vh 1vw;
@@ -672,7 +669,7 @@ export default {
           div {
             margin: 1vh 0 5px 12px;
             padding: 3vh 2vw;
-            width: 38vw;
+            width: 77vw;
             background-color: rgba(255,255,255,0.6);
             .article_content {
               text-align: left;
@@ -683,7 +680,7 @@ export default {
           }
           .article_slide {
             padding: 5px 12px;
-            width: 42vw;
+            width: 81vw;
           }
         }
       }

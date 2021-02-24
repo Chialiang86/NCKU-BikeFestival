@@ -178,7 +178,8 @@ export default {
             <p align="center">
             <p style="color:rgb(42,186,243); letter-spacing: 2px; font-weight: bold; font-size: 2.5vh; line-height: 3.8vh;">萬鼎工程</p>
             <p>官網 : <a href="http://www.rei.ctci.com/"> http://www.rei.ctci.com/</a></p>
-            <p>地址 : 744台南市新市區南科二路13號</p>
+            <p>台北辦公室-地址: 台北市南港路三段48號4樓</p>
+            <p>高雄辦公室-地址: 高雄市橋頭區成功路163號</p>
             </p>`
         },
         {
@@ -582,7 +583,7 @@ export default {
       grid-area: bottom;
 
       display: grid;
-      grid-template-rows: 53vh 1fr 10vh;
+      grid-template-rows: 50vh 1fr 8vh;
       grid-template-areas: "content" "info" ".";
       justify-content: center;
       justify-items: center;
@@ -607,7 +608,8 @@ export default {
         text-align: left;
         grid-area: info;
         line-height:3vh;
-        width: 90%;
+        padding: 1vh 0 0 0;
+        width: 96%;
         height: 8vh;
       }
     }
