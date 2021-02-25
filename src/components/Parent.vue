@@ -53,9 +53,9 @@ export default {
       list: false,
       titleBlock: false,
       pc: this.isPC(),
-      tempItem: srcJson.item[0],
+      tempItem: srcJson.item[7],
       stretchArr: [],
-      currentIndex: 0,
+      currentIndex: 7,
       loader: null
     }
   },
