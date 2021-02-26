@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     windowSizeChange: function (event) {
-      if (window.innerWidth > 551) {
+      if (window.innerWidth > 999) {
         this.pc = true
       } else {
         this.pc = false
@@ -116,7 +116,7 @@ export default {
   /*
     mobile layout css
   */
-  @media only screen and (max-width: 551px) {
+  @media only screen and (max-width: 999px) {
     @keyframes flow-in {
       from { right: -40%; }
       to { right: 0%; }
@@ -476,7 +476,7 @@ export default {
   /*
     computer layout css
   */
-  @media only screen and (min-width: 552px) {
+  @media only screen and (min-width: 1000px) {
     .live_page {
       position: absolute;
       display: flex;

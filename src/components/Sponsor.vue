@@ -289,7 +289,7 @@ export default {
   },
   methods: {
     windowSizeChange: function (event) {
-      if (window.innerWidth > 551) {
+      if (window.innerWidth > 999) {
         this.pc = true
       } else {
         this.pc = false
@@ -329,7 +329,7 @@ export default {
   /*
     mobile layout css
   */
-  @media only screen and (max-width: 551px) {
+  @media only screen and (max-width: 999px) {
     @font-face {
     font-family: 'GenYoGothicTW-Bold';
     src: url('../assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
@@ -619,7 +619,7 @@ export default {
   /*
     computer layout css
   */
-  @media only screen and (min-width: 552px) {    @font-face {
+  @media only screen and (min-width: 1000px) {    @font-face {
     font-family: 'GenYoGothicTW-Bold';
     src: url('../assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
           url('../assets/fonts/GenYoGothicTW-Bold.ttf') format("truetype"),
