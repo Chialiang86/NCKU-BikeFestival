@@ -6,14 +6,14 @@
         div(class="parent_top_bar_item")
           router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
             div(id="bottom" v-if="index===4")
-          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+          label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="pc") 我要報名
     div(class="parent_top_bar_mobile")
       div(class="parent_mobile_title" @click="list = false; titleBlock = false;")
       router-link(tag="div" class="parent_mobile_exit_button" to="/")
       div(class="parent_mobile_list" @click="list = !list; titleBlock = false;")
     div(class="parent_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
+      label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="!pc") 我要報名
     div(class="parent_background")
     div(class="parent_flower_top" @click="list = false")
     div(class="parent_flower_down" @click="list = false")
@@ -25,20 +25,12 @@
       div(class="parent_layout_titles_mobile" v-else)
         div(class="current_title" @click="titleBlock = !titleBlock;") {{titleText[currentIndex]}}
           div(class="current_title_arrow")
-        //- div(class="article_back" v-show="mode===1" @click="mode=0")
         div(class="back_icon" v-show="mode===1" @click="mode=0; titleBlock = false;")
       dic(class="parent_layout_page" v-show="mode===0" @click="titleBlock = false")
         div(class="page_block" v-for="(topics, index) in tempItem" v-bind:data-block="'block_'+`${index}`" @click="selectArticle(index); mode=1;")
           label
             img(class="article_cover" v-bind:src="topics.cover")
           p(class="article_title") {{topics.title}}
-          //- article(class="page_article")
-          //- div
-          //-   p(class="article_content" v-for="(line, i) in topics.content" v-html="line" )
-          //- article(class="page_article")
-            //- div(@click="stretchArr[currentIndex][index] = true; alert(stretchArr[currentIndex][index]);")
-            //-   p(class="article_content" v-for="(line, i) in topics.content" v-html="line" )
-            //- img(class="article_slide" v-show="stretchArr[currentIndex][index]" v-for="(name, i) in topics.imgs" v-bind:src="name")
         div(class="page_empty")
       div(class="parent_article_page" v-show="mode===1" @click="titleBlock = false;")
         div(class="page_return" v-show="pc" @click="mode=0; titleBlock = false;")
@@ -53,7 +45,7 @@
 </template>
 
 <script>
-import srcJson from '../assets/14/parent/parent.json'
+import srcJson from '../assets//parent/parent.json'
 //  import axios from 'axios'
 export default {
   created () {
@@ -108,7 +100,7 @@ export default {
   },
   methods: {
     windowSizeChange: function (event) {
-      if (window.innerWidth > 999) {
+      if (window.innerWidth > 599) {
         this.pc = true
       } else {
         this.pc = false
@@ -197,7 +189,7 @@ export default {
   /*
     mobile layout css
   */
-  @media only screen and (max-width: 999px) {
+  @media only screen and (max-width: 599px){
     @keyframes flow-in {
       from { right: -40%; }
       to { right: 0%; }
@@ -237,7 +229,7 @@ export default {
         grid-area: exit;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/exit.svg');
+        background-image: url('../assets//exit.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -256,7 +248,7 @@ export default {
       .parent_mobile_title {
         grid-area: title;
         width: 60vw;
-        background-image: url('../assets/14/parent/title.svg');
+        background-image: url('../assets//parent/title.svg');
         background-repeat: no-repeat;
         background-size: 75% 75%;
         background-position: center center;
@@ -265,7 +257,7 @@ export default {
         grid-area: list;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/list.svg');
+        background-image: url('../assets//list.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -388,10 +380,10 @@ export default {
         }
         .current_title_arrow {
           grid-area: arr;
-          width: 20px;
-          height: 20px;
+          width: 3vh;
+          height: 3vh;
           transform: rotate(90deg);
-          background-image: url('../assets/14/arrow.svg');
+          background-image: url('../assets//arrow.svg');
           background-size: contain;
           background-repeat: no-repeat;
           background-position: center bottom;
@@ -402,7 +394,7 @@ export default {
         grid-area: return;
         width: 3vh;
         height: 3vh;
-        background-image: url('../assets/14/parent/return.svg')
+        background-image: url('../assets//parent/return.svg')
       }
     }
 
@@ -472,6 +464,18 @@ export default {
       border-radius: 10px;
       overflow-x: hidden;
       overflow-y: scroll;
+      &::-webkit-scrollbar {
+        width: 1vw;
+        border-radius: 0.5vw;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 0.5vw;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgb(103, 192, 225);
+        border-radius: 0.5vw;
+      }
 
       display: flex;
       flex-direction: column;
@@ -501,6 +505,7 @@ export default {
             color: rgb(117,210,243);
             font-size: 2.4vh;
             letter-spacing: 3px;
+            font-weight: bold;
           }
           div {
             padding: 3vh 1vw;
@@ -509,7 +514,7 @@ export default {
             .article_content {
               padding: 0 2vw;
               text-align: left;
-              line-height: 3vh;
+              line-height: 3.5vh;
               font-size: 1.8vh;
               color: rgb(100, 100, 100);
               span.topic {
@@ -535,7 +540,7 @@ export default {
   /*
     computer layout css
   */
-  @media only screen and (min-width: 1000px) {
+  @media only screen and (min-width: 600px) {
     .parent_page {
       position: absolute;
       display: flex;
@@ -577,7 +582,7 @@ export default {
           width: 12vw;
           height: 8vh;
           background-color: transparent;
-          background-image: url("../assets/14/logoHome.svg");
+          background-image: url("../assets//logoHome.svg");
           background-repeat: no-repeat;
           background-size: 80% 80%;
           background-position: 50% 50%;
@@ -646,7 +651,7 @@ export default {
     }
     .parent_flower_top {
       position: absolute;
-      // background-image: url('../assets/14/flower.svg');
+      // background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center top;
       background-size: cover;
@@ -658,7 +663,7 @@ export default {
     }
     .parent_flower_down {
       position: absolute;
-      // background-image: url('../assets/14/flower.svg');
+      // background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center bottom;
       background-size: cover;
@@ -800,18 +805,6 @@ export default {
           font-weight: bold;
           letter-spacing: 3px;
         }
-        div {
-          // margin: 1vh 0 5px 12px;
-          padding: 3vh 2vw;
-          width: calc(100% - 4vw);
-          background-color: rgba(255,255,255,0.4);
-          .article_content {
-            text-align: left;
-            line-height: 25px;
-            font-size: 16px;
-            color: rgb(100, 100, 100);
-          }
-        }
         label {
           width: 100%;
           height: 80%;
@@ -851,7 +844,7 @@ export default {
         .back_icon {
           width: 5vh;
           height: 5vh;
-          background-image: url('../assets/14/parent/return.svg')
+          background-image: url('../assets//parent/return.svg')
         }
       }
       .page_block{
@@ -871,7 +864,6 @@ export default {
         justify-content: flex-start;
         align-items: flex-start;
         .page_article {
-          // padding: 1vh 1vw;
           height: auto;
           display: flex;
           flex-direction: column;
@@ -894,7 +886,7 @@ export default {
             background-color: rgba(255,255,255,0.6);
             .article_content {
               text-align: left;
-              line-height: 25px;
+              line-height: 3.2vh;
               font-size: 2.8vh;
               letter-spacing: 3px;
               color: rgb(100, 100, 100);

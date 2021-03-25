@@ -1,7 +1,7 @@
 <template lang="pug">
   div(id="app")
-    video(v-if="pc" src="./assets/14/start/startupComputer.mp4" id="startup_computer" autoplay="true" muted="true" control="false")
-    //- video(v-else src="./assets/14/start/startupMobile.mp4" id="startup_mobile" autoplay="true" muted="true" control="false")
+    video(v-if="pc" src="./assets//start/startupComputer.mp4" id="startup_computer" autoplay="true" muted="true" control="false")
+    //- video(v-else src="./assets//start/startupMobile.mp4" id="startup_mobile" autoplay="true" muted="true" control="false")
     div(v-else id="logo")
       svg(viewBox="100 0 700 700")
         title logo

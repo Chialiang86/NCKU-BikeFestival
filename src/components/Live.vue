@@ -6,14 +6,14 @@
         div(class="live_top_bar_item")
           router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
             div(id="bottom" v-if="index===6")
-          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+          label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="pc") 我要報名
     div(class="live_top_bar_mobile")
       div(class="live_mobile_title" @click="list = false")
       router-link(tag="div" class="live_mobile_exit_button" to="/")
       div(class="live_mobile_list" @click="list = !list")
     div(class="live_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
+      label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="!pc") 我要報名
     div(class="live_dot1")
     div(class="live_dot2")
     div(class="live_dot3")
@@ -25,17 +25,19 @@
           lebel(class="live_layout_yt_video_text") 活動當天在此進行直播，詳情請關注臉書或粉絲專頁，謝謝您！
         div(class="live_layout_yt_title" @click="list = false")
           label(id="title_1") {{ytTemp.title}}
-          label(id="title_2") {{ytTemp.name}}
+          div(id="title_2")
+            p {{ytTemp.name}}
       div(class="live_layout_list" @click="list = false")
         div(class="live_layout_list_content" ref="content" @click="list = false")
           div(class="live_layout_list_block" v-for="(items, index) in srcList.list")
-            label(class="live_layout_list_block_title" v-bind:style="{'background-image': 'url(' + require(`../assets/14/live/title_${index + 1}.svg`) + ')'}")
-            label(class="live_layout_list_block_list" v-for="(item, i) in items.list" @click="setTemp(items.title, item.name, ytTemp.link=item.link, ytTemp.content=item.content); ytActive=true;") {{item.name}}
+            label(class="live_layout_list_block_title" v-bind:style="{'background-image': 'url(' + require(`../assets//live/title_${index + 1}.svg`) + ')'}")
+            label(class="live_layout_list_block_list" v-for="(item, i) in items.list" @click="setTemp(items.title, item.name, ytTemp.link=item.link, ytTemp.content=item.content); ytActive=true;")
+              p {{item.name}}
         div(class="live_layout_list_logo" @click="list = false")
 </template>
 
 <script>
-import srcJson from '../assets/14/live/live.json'
+import srcJson from '../assets//live/live.json'
 export default {
   created () {
     window.addEventListener('resize', this.windowSizeChange)
@@ -68,7 +70,7 @@ export default {
   },
   methods: {
     windowSizeChange: function (event) {
-      if (window.innerWidth > 999) {
+      if (window.innerWidth > 600) {
         this.pc = true
       } else {
         this.pc = false
@@ -116,7 +118,7 @@ export default {
   /*
     mobile layout css
   */
-  @media only screen and (max-width: 999px) {
+  @media only screen and (max-width: 600px) {
     @keyframes flow-in {
       from { right: -40%; }
       to { right: 0%; }
@@ -140,7 +142,7 @@ export default {
       right: 0%;
       top: -16%;
       transform: rotate(180deg);
-      background-image: url('../assets/14/live/mobile/dot1.svg');
+      background-image: url('../assets//live/mobile/dot1.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -151,7 +153,7 @@ export default {
       height: 60vh;
       left: 0%;
       top: 20%;
-      background-image: url('../assets/14/live/mobile/dot2.svg');
+      background-image: url('../assets//live/mobile/dot2.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -162,7 +164,7 @@ export default {
       height: 50vh;
       right: 0%;
       top: 35%;
-      background-image: url('../assets/14/live/mobile/dot3.svg');
+      background-image: url('../assets//live/mobile/dot3.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -173,7 +175,7 @@ export default {
       height: 60vh;
       left: 0%;
       bottom: -15%;
-      background-image: url('../assets/14/live/mobile/dot1.svg');
+      background-image: url('../assets//live/mobile/dot1.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -199,7 +201,7 @@ export default {
         grid-area: exit;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/exit.svg');
+        background-image: url('../assets//exit.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -218,7 +220,7 @@ export default {
       .live_mobile_title {
         grid-area: title;
         width: 60vw;
-        background-image: url('../assets/14/live/title.svg');
+        background-image: url('../assets//live/title.svg');
         background-repeat: no-repeat;
         background-size: 75% 75%;
         background-position: center center;
@@ -227,7 +229,7 @@ export default {
         grid-area: list;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/list.svg');
+        background-image: url('../assets//list.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -286,14 +288,14 @@ export default {
       top: 8vh;
       width: 40vw;
       height: 20vw;
-      background-image: url("../assets/14/live/title.svg");
+      background-image: url("../assets//live/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: center top 10%;
     }
     .live_logo {
       position: absolute;
-      background-image: url('../assets/14/pageLogo.svg');
+      background-image: url('../assets//pageLogo.svg');
       background-repeat: no-repeat;
       background-position: center bottom 40%;
       background-size: 50% 50%;
@@ -359,11 +361,11 @@ export default {
           margin: 0 3vw 1vh 3vw;
 
           display: flex;
-          align-items: center;
+          align-items:flex-start;
           #title_1 {
-            width: auto;
+            width: 65vw;
             height: 100%;
-            padding: 0 3vw 0 0;
+            padding: 0 2vw 0 0;
             text-align: left;
             line-height: 3vh;
             font-size: 2.4vh;
@@ -374,12 +376,18 @@ export default {
           #title_2 {
             width: auto;
             height: 100%;
+            padding: 0 2vw;
             text-align: left;
             line-height: 3vh;
             font-size: 2vh;
             font-weight: bold;
             letter-spacing: 0.5vw;
-            color: white;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            p {
+              width: 1000%;
+              color: white;
+            }
           }
       }
     }
@@ -448,12 +456,19 @@ export default {
             height: 4vh;
             width: 68vw;
             margin: 0 1vw 0.8vh 0;
+            padding: 0 0 0 3vw;
             border-radius: 9px;
             background-color: rgb(64,187,235);
             box-shadow: 1px 1px 1px 1px rgba(150, 150, 150, 0.6);
             line-height: 3.6vh;
             color: white;
             font-size: 2vh;
+            overflow-x: scroll;
+            p {
+              width: 300%;
+              text-align: left;
+              color: white;
+            }
             &:hover {
               filter: brightness(120%);
               transition: .5s ease;
@@ -465,7 +480,7 @@ export default {
         }
       }
       .live_layout_list_logo {
-        background-image: url('../assets/14/live/logo.svg');
+        background-image: url('../assets//live/logo.svg');
         background-repeat: no-repeat;
         background-size: contain;
         height: 4vh;
@@ -476,7 +491,7 @@ export default {
   /*
     computer layout css
   */
-  @media only screen and (min-width: 1000px) {
+  @media only screen and (min-width: 600px) {
     .live_page {
       position: absolute;
       display: flex;
@@ -528,7 +543,7 @@ export default {
           width: 12vw;
           height: 8vh;
           background-color: transparent;
-          background-image: url("../assets/14/logoHome.svg");
+          background-image: url("../assets//logoHome.svg");
           background-repeat: no-repeat;
           background-size: 80% 80%;
           background-position: 50% 50%;
@@ -585,7 +600,7 @@ export default {
     }
     .live_logo {
       position: absolute;
-      background-image: url('../assets/14/pageLogo.svg');
+      background-image: url('../assets//pageLogo.svg');
       background-repeat: no-repeat;
       background-position: center bottom 40%;
       background-size: 50% 50%;
@@ -602,7 +617,7 @@ export default {
       top: 4%;
       width: 42vw;
       height: 42vh;
-      background-image: url('../assets/14/live/pc/dot1.svg');
+      background-image: url('../assets//live/pc/dot1.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -614,7 +629,7 @@ export default {
       bottom: -2%;
       width: 60vw;
       height: 60vh;
-      background-image: url('../assets/14/live/pc/dot2.svg');
+      background-image: url('../assets//live/pc/dot2.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: left bottom;
@@ -626,7 +641,7 @@ export default {
       bottom: -5%;
       width: 60vw;
       height: 60vh;
-      background-image: url('../assets/14/live/pc/dot3.svg');
+      background-image: url('../assets//live/pc/dot3.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: right bottom;
@@ -792,7 +807,7 @@ export default {
         grid-area: logo;
         border-radius: 1vw;
         margin: 1vh 4vw 1vh 4vw;
-        background-image: url('../assets/14/live/logo.svg');
+        background-image: url('../assets//live/logo.svg');
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center center;

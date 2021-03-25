@@ -6,36 +6,53 @@
         div(class="dept_top_bar_item")
           router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
             div(id="bottom" v-if="index===2")
-          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
-    div(class="dept_top_bar_mobile")
+          label(@click="openTab('hhttps://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="pc") 我要報名
+    div(class="dept_top_bar_mobile" @click="deptList=false")
       div(class="dept_mobile_title" @click="list = false")
       router-link(tag="div" class="dept_mobile_exit_button" to="/")
       div(class="dept_mobile_list" @click="list = !list")
     div(class="dept_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
+      label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="!pc") 我要報名
     div(class="dept_decoration_top")
     div(class="dept_decoration_bottom")
       //- g
         ellipse(cx="90%" cy="540" rx="50%" ry="100" stroke="#dddddd" stroke-width="5px" fill="none")
-    div(class="dept_layout" @click="list = false")
+    div(class="dept_layout" v-show="mode===0" @click="list = false;")
+      div(class="dept_select" v-show="!pc" @click="deptList=!deptList") {{tempClass}}
+        div(class="dept_select_arrow")
       section(class="dept_list_section")
-        div(class="dept_class")
+        div(class="dept_class" v-show="pc")
           ul
             li(v-for="(iter, index) in classes" v-bind:key="`${index}-${iter}`" v-bind:data-key="classKeys[index]" class="dept_class_item" v-on:click="chooseClass(index)" v-bind:class="{active: currentIndex === index}" )
               p {{iter}}
-      section(class="dept_chain_section")
+        div(class="dept_class_mobile" v-show="!pc && deptList")
+          label(v-for="(iter, index) in classes" v-bind:key="`${index}-${iter}`" v-bind:data-key="classKeys[index]" class="dept_class_item" v-on:click="chooseClass(index); tempClass=iter; deptList=false;" v-bind:class="{active: currentIndex === index}" ) {{iter}}
+      section(class="dept_chain_section" @click="deptList=false")
         div(id="small_chain" class="dept_chain_small")
         div(id="large_chain" class="dept_chain_large")
         div(id="large_chain_mobile" class="dept_chain_large_mobile")
-        svg(width="56%" height="56%" viewBox="-10 -70 950 500")
+        svg(width="56%" height="56%" viewBox="-10 -80 950 500")
           g(id="chain_path")
             path(d="M854.4800244140624,253.27999999999997 a66.84,66.84 0 0 0 0,-132.24 L218.7800244140625,2.7799999999999727 A187.68,187.68 0 0 0 186.50002441406252,0 c-103,0 -186.5,83.5 -186.5,186.5 s83.5,186.5 186.5,186.5 a187.68,187.68 0 0 0 32.25,-2.7800000000000002 z" fill="none" stroke-linejoin="round"  stroke-linecap="round" stroke-width="8px" stroke="#2DB8F5" stroke-dasharray="1, 20" stroke-miterlimit="10")
         div(v-for="(iter, index) in classKeys" v-bind:key="`${index}-${iter}-college`" class="dept_college" v-bind:class="deptBinding(index)" v-bind:style="showDeptCollege ? {} : { opacity: 1 }")
-          p(v-for="(name, index) in colleges[iter]" v-bind:key="`${index}-${name}-college`") {{name}}
+          p(v-for="(name, index) in colleges[iter]" v-bind:key="`${index}-${name}-college`" @click="tempClassKey=iter; tempDept=name; tempDeptFormal=collegesFormal[iter][index]; mode=1; showSlide();") {{name}}
+    div(class="dept_layout_page" v-show="mode===1" @click="list = false;")
+      div(class="return_section")
+        div(class="back_icon" @click="mode=0") 回上頁
+      div(class="list_section" v-show="pc")
+        div(class="class_list_section")
+          div(class="class_name") - {{classes[currentIndex]}} -
+          div(class="class_list")
+            div(id="temp_dept") {{tempDeptFormal}}
+            label(v-for="(dept, index) in collegesFormal[tempClassKey]" v-show="dept!==tempDeptFormal" @click="tempDept=colleges[tempClassKey][index]; tempDeptFormal=collegesFormal[tempClassKey][index]; mode=1; showSlide();") {{dept}}
+      div(id="dept_slide")
+        img(v-for="(img, index) in deptSlides[tempDept]" v-bind:src="img")
+        div(class="dept_empty")
 </template>
 
 <script>
+import srcJson from '../assets//dept/dept.json'
 export default {
   created () {
     window.addEventListener('resize', this.windowSizeChange)
@@ -47,21 +64,40 @@ export default {
     return {
       menuText: ['最新消息', '活動介紹', '科系概覽', '線上資源', '家長專欄', '合作單位', '直播專區'],
       urlText: ['news', 'activity', 'department', 'online', 'parent', 'sponsor', 'live'],
+      mode: 0,
       list: false,
+      deptList: false,
+      deptSlides: srcJson,
+      tempClassKey: '',
+      tempClass: '選擇學院',
+      tempDept: '',
+      tempDeptFormal: '',
       pc: this.isPC(),
-      classes: ['規劃與設計學院', '社會科科學院', '不分學院', '工學院', '理學院', '文學院', '醫學院', '管理學院', '電機資訊學院', '生物科學與科技學院'],
+      classes: ['規劃與設計學院', '社會科學院', '不分學院', '工學院', '理學院', '文學院', '醫學院', '管理學院', '電機資訊學院', '生物科學與科技學院'],
       classKeys: ['design', 'social', 'undeclear', 'engineer', 'science', 'humanity', 'medicine', 'management', 'computer', 'biological'],
       colleges: {
         design: ['建築', '都計', '工設'],
         social: ['政治', '經濟', '法律', '心理'],
         undeclear: ['不分系學程'],
-        engineer: ['航太', '機械', '化工', '土木', '材料', '水利', '工科', '系統'],
+        engineer: ['航太', '機械', '材料', '化工', '土木', '水利', '測量', '環工', '資源', '醫工', '能源', '工科', '系統'],
         science: ['數學', '化學', '物理', '地科', '光電'],
-        humanity: ['中文', '外文', '歷史', '臺文'],
-        medicine: ['醫學', '藥學', '護理', '物治', '職治', '醫技'],
+        humanity: ['中文', '外文', '歷史', '台文'],
+        medicine: ['醫學', '牙醫', '藥學', '護理', '物治', '職治', '醫技'],
         management: ['會計', '統計', '企管', '交管', '工資管'],
         computer: ['資訊', '電機'],
         biological: ['生科', '生技']
+      },
+      collegesFormal: {
+        design: ['建築學系', '都市計劃學系', '工業設計學系'],
+        social: ['政治學系', '經濟學系', '法律學系', '心理學系'],
+        undeclear: ['全校不分系學士學位學程'],
+        engineer: ['航空太空工程學系', '機械工程學系', '材料科學及工程學系', '化學工程學系', '土木工程學系', '水利及海洋工程學系', '測量及空間資訊學系', '環境工程學系', '資源工程學系', '生物醫學工程學系', '能源國際學士學位學程', '工程科學系', '系統及船舶機電工程學系'],
+        science: ['數學系', '化學系', '物理學系', '地球科學系', '光電科學與工程學系'],
+        humanity: ['中國文學系', '外國語文學系', '歷史學系', '台灣文學系'],
+        medicine: ['醫學系', '牙醫學系', '藥學系', '護理學系', '物理治療學系', '職能治療學系', '醫學檢驗生物技術學系'],
+        management: ['會計學系', '統計學系', '企業管理學系', '交通管理科學系', '工業與資訊管理學系'],
+        computer: ['資訊工程學系', '電機工程學系'],
+        biological: ['生命科學系', '生物科技與產業科學系']
       },
       currentIndex: -1,
       check: false
@@ -81,8 +117,17 @@ export default {
     }, 500)
   },
   methods: {
+    showSlide: function () {
+      var slide = document.getElementById('dept_slide')
+      slide.classList.add('show-slide')
+      const endEvent = function () {
+        slide.classList.remove('show-slide')
+        slide.removeEventListener('animationend', endEvent)
+      }
+      slide.addEventListener('animationend', endEvent)
+    },
     windowSizeChange: function (event) {
-      if (window.innerWidth > 999) {
+      if (window.innerWidth > 599) {
         this.pc = true
       } else {
         this.pc = false
@@ -149,6 +194,16 @@ export default {
   to { stroke-dashoffset: 100; }
 }
 
+@keyframes show {
+  0% {height: 0%;}
+  100% {height: 100%;}
+}
+
+@keyframes scroll {
+  0% {width: 0%;}
+  100% {width: 92%;}
+}
+
 @keyframes chain {
   0% { transform: rotateZ(0deg); }
   100% { transform: rotateZ(60deg); }
@@ -169,312 +224,334 @@ export default {
 
 /* 2 components rotate */
 @keyframes rotate-45 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-45deg) translateX(36vw) rotate(45deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-45deg) translateX(55vw) rotate(45deg); }
 }
 @keyframes rotate-135 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(45deg) translateX(36vw) rotate(-45deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(45deg) translateX(55vw) rotate(-45deg); }
 }
 @keyframes rotate-45-disappear {
-  0% { opacity: 1; transform: rotate(-45deg) translateX(36vw) rotate(45deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-45deg) translateX(55vw) rotate(45deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-135-disappear {
-  0% { opacity: 1; transform: rotate(45deg) translateX(36vw) rotate(-45deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(45deg) translateX(55vw) rotate(-45deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
 /* 3 components rotate*/
 @keyframes rotate-30 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-60deg) translateX(36vw) rotate(60deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-60deg) translateX(55vw) rotate(60deg); }
 }
 @keyframes rotate-90 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(0deg) translateX(36vw) rotate(0deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(0deg) translateX(55vw) rotate(0deg); }
 }
 @keyframes rotate-150 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(60deg) translateX(36vw) rotate(-60deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(60deg) translateX(55vw) rotate(-60deg); }
 }
 
 @keyframes rotate-30-disappear {
-  0% { opacity: 1; transform: rotate(-60deg) translateX(36vw) rotate(60deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-60deg) translateX(55vw) rotate(60deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-90-disappear {
-  0% { opacity: 1; transform: rotate(0deg) translateX(36vw) rotate(0deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(0deg) translateX(55vw) rotate(0deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-150-disappear {
-  0% { opacity: 1; transform: rotate(60deg) translateX(36vw) rotate(-60deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(60deg) translateX(55vw) rotate(-60deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
 /* 4 components roate*/
 @keyframes rotate-23 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-67deg) translateX(36vw) rotate(67deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-67deg) translateX(55vw) rotate(67deg); }
 }
 @keyframes rotate-68 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-23deg) translateX(36vw) rotate(23deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-23deg) translateX(55vw) rotate(23deg); }
 }
 @keyframes rotate-113 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(23deg) translateX(36vw) rotate(-23deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(23deg) translateX(55vw) rotate(-23deg); }
 }
 @keyframes rotate-158 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(68deg) translateX(36vw) rotate(-68deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(68deg) translateX(55vw) rotate(-68deg); }
 }
 
 @keyframes rotate-23-disappear {
-  0% { opacity: 1; transform: rotate(-67deg) translateX(36vw) rotate(67deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-67deg) translateX(55vw) rotate(67deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-68-disappear {
-  0% { opacity: 1; transform: rotate(-23deg) translateX(36vw) rotate(23deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-23deg) translateX(55vw) rotate(23deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-113-disappear {
-  0% { opacity: 1; transform: rotate(23deg) translateX(36vw) rotate(-23deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(23deg) translateX(55vw) rotate(-23deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-158-disappear {
-  0% { opacity: 1; transform: rotate(68deg) translateX(36vw) rotate(-68deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(68deg) translateX(55vw) rotate(-68deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
 /* 5 components rotate */
 @keyframes rotate-18 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-72deg) translateX(36vw) rotate(72deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-72deg) translateX(55vw) rotate(72deg); }
 }
 @keyframes rotate-54 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-36deg) translateX(36vw) rotate(36deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-36deg) translateX(55vw) rotate(36deg); }
 }
 /*
 @keyframes rotate-90 {
-  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { transform: rotate(0deg) translateX(36vw) rotate(0deg); }
+  0% { transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { transform: rotate(0deg) translateX(55vw) rotate(0deg); }
 }
 */
 @keyframes rotate-126 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(36deg) translateX(36vw) rotate(-36deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(36deg) translateX(55vw) rotate(-36deg); }
 }
 @keyframes rotate-162 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(72deg) translateX(36vw) rotate(-72deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(72deg) translateX(55vw) rotate(-72deg); }
 }
 
 @keyframes rotate-18-disappear {
-  0% { opacity: 1; transform: rotate(-72deg) translateX(36vw) rotate(72deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-72deg) translateX(55vw) rotate(72deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-54-disappear {
-  0% { opacity: 1; transform: rotate(-36deg) translateX(36vw) rotate(36deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-36deg) translateX(55vw) rotate(36deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
 @keyframes rotate-126-disappear {
-  0% { opacity: 1; transform: rotate(36deg) translateX(36vw) rotate(-36deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(36deg) translateX(55vw) rotate(-36deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-162-disappear {
-  0% { opacity: 1; transform: rotate(72deg) translateX(36vw) rotate(-72deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(72deg) translateX(55vw) rotate(-72deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
 /* 6 components rotate */
 
 @keyframes rotate-15 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-75deg) translateX(36vw) rotate(75deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-75deg) translateX(55vw) rotate(75deg); }
 }
 /*
 @keyframes rotate-45 {
-  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { transform: rotate(-45deg) translateX(36vw) rotate(45deg); }
+  0% { transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { transform: rotate(-45deg) translateX(55vw) rotate(45deg); }
 }
 */
 @keyframes rotate-75 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-15deg) translateX(36vw) rotate(15deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-15deg) translateX(55vw) rotate(15deg); }
 }
 @keyframes rotate-105 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(15deg) translateX(36vw) rotate(-15deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(15deg) translateX(55vw) rotate(-15deg); }
 }
 /*
 @keyframes rotate-135 {
-  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { transform: rotate(45deg) translateX(36vw) rotate(-45deg); }
+  0% { transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { transform: rotate(45deg) translateX(55vw) rotate(-45deg); }
 }
 */
 @keyframes rotate-165 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(75deg) translateX(36vw) rotate(-75deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(75deg) translateX(55vw) rotate(-75deg); }
 }
 
 @keyframes rotate-15-disappear {
-  0% { opacity: 1; transform: rotate(-75deg) translateX(36vw) rotate(75deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-75deg) translateX(55vw) rotate(75deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
 @keyframes rotate-75-disappear {
-  0% { opacity: 1; transform: rotate(-15deg) translateX(36vw) rotate(15deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-15deg) translateX(55vw) rotate(15deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-105-disappear {
-  0% { opacity: 1; transform: rotate(15deg) translateX(36vw) rotate(-15deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(15deg) translateX(55vw) rotate(-15deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
 @keyframes rotate-165-disappear {
-  0% { opacity: 1; transform: rotate(75deg) translateX(36vw) rotate(-75deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(75deg) translateX(55vw) rotate(-75deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
 /* 7 components rotate */
 
 @keyframes rotate-12 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-78deg) translateX(36vw) rotate(78deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-78deg) translateX(55vw) rotate(78deg); }
 }
 @keyframes rotate-37 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-53deg) translateX(36vw) rotate(53deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-53deg) translateX(55vw) rotate(53deg); }
 }
 @keyframes rotate-63 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-27deg) translateX(36vw) rotate(27deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-27deg) translateX(55vw) rotate(27deg); }
 }
-/*
-@keyframes rotate-90 {
-  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { transform: rotate(0deg) translateX(36vw) rotate(-0deg); }
-}
-*/
+
 @keyframes rotate-117 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(27deg) translateX(36vw) rotate(-27deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(27deg) translateX(55vw) rotate(-27deg); }
 }
 @keyframes rotate-143 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(53deg) translateX(36vw) rotate(-53deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(53deg) translateX(55vw) rotate(-53deg); }
 }
 @keyframes rotate-168 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(78deg) translateX(36vw) rotate(-78deg); }
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(78deg) translateX(55vw) rotate(-78deg); }
 }
 
 @keyframes rotate-12-disappear {
-  0% { opacity: 1; transform: rotate(-78deg) translateX(36vw) rotate(78deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-78deg) translateX(55vw) rotate(78deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-37-disappear {
-  0% { opacity: 1; transform: rotate(-53deg) translateX(36vw) rotate(53deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-53deg) translateX(55vw) rotate(53deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-63-disappear {
-  0% { opacity: 1; transform: rotate(-27deg) translateX(36vw) rotate(27deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(-27deg) translateX(55vw) rotate(27deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-117-disappear {
-  0% { opacity: 1; transform: rotate(27deg) translateX(36vw) rotate(-27deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(27deg) translateX(55vw) rotate(-27deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-143-disappear {
-  0% { opacity: 1; transform: rotate(53deg) translateX(36vw) rotate(-53deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(53deg) translateX(55vw) rotate(-53deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 @keyframes rotate-168-disappear {
-  0% { opacity: 1; transform: rotate(78deg) translateX(36vw) rotate(-78deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+  0% { opacity: 1; transform: rotate(78deg) translateX(55vw) rotate(-78deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
 }
 
-/* 8 components rotate */
+/* 13 components rotate */
 
-@keyframes rotate-11 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(38vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-88deg) translateX(38vw) rotate(88deg); }
+@keyframes rotate-1 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(56vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-85deg) translateX(56vw) rotate(85deg); }
 }
-@keyframes rotate-33 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-57deg) translateX(36vw) rotate(57deg); }
+@keyframes rotate-25 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-63deg) translateX(55vw) rotate(63deg); }
 }
-@keyframes rotate-56 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-34deg) translateX(36vw) rotate(34deg); }
+@keyframes rotate-44 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-47deg) translateX(55vw) rotate(47deg); }
 }
-@keyframes rotate-79 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(-11deg) translateX(36vw) rotate(11deg); }
+@keyframes rotate-59 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-34deg) translateX(55vw) rotate(34deg); }
 }
-/*
-@keyframes rotate-90 {
-  0% { transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { transform: rotate(0deg) translateX(36vw) rotate(-0deg); }
+@keyframes rotate-71 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-22deg) translateX(55vw) rotate(22deg); }
 }
-*/
-@keyframes rotate-101 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(11deg) translateX(36vw) rotate(-11deg); }
-}
-@keyframes rotate-124 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(34deg) translateX(36vw) rotate(-34deg); }
-}
-@keyframes rotate-147 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(36vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(57deg) translateX(36vw) rotate(-57deg); }
-}
-@keyframes rotate-169 {
-  0% { opacity: 0; transform: rotate(-90deg) translateX(38vw) rotate(90deg); }
-  100% { opacity: 1; transform: rotate(88deg) translateX(38vw) rotate(-88deg); }
+@keyframes rotate-81 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(-11deg) translateX(55vw) rotate(11deg); }
 }
 
-@keyframes rotate-11-disappear {
-  0% { opacity: 1; transform: rotate(-88deg) translateX(38vw) rotate(88deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(38vw) rotate(-90deg); }
+@keyframes rotate-99 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(11deg) translateX(55vw) rotate(-11deg); }
 }
-@keyframes rotate-33-disappear {
-  0% { opacity: 1; transform: rotate(-57deg) translateX(36vw) rotate(57deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+@keyframes rotate-109 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(22deg) translateX(55vw) rotate(-22deg); }
 }
-@keyframes rotate-56-disappear {
-  0% { opacity: 1; transform: rotate(-34deg) translateX(36vw) rotate(34deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+@keyframes rotate-121 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(34deg) translateX(55vw) rotate(-34deg); }
 }
-@keyframes rotate-79-disappear {
-  0% { opacity: 1; transform: rotate(-11deg) translateX(36vw) rotate(11deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+@keyframes rotate-136 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(47deg) translateX(55vw) rotate(-47deg); }
 }
-@keyframes rotate-101-disappear {
-  0% { opacity: 1; transform: rotate(11deg) translateX(36vw) rotate(-11deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+@keyframes rotate-155 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(55vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(63deg) translateX(55vw) rotate(-63deg); }
 }
-@keyframes rotate-124-disappear {
-  0% { opacity: 1; transform: rotate(34deg) translateX(36vw) rotate(-34deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+@keyframes rotate-179 {
+  0% { opacity: 0; transform: rotate(-90deg) translateX(56vw) rotate(90deg); }
+  100% { opacity: 1; transform: rotate(85deg) translateX(56vw) rotate(-85deg); }
 }
-@keyframes rotate-147-disappear {
-  0% { opacity: 1; transform: rotate(57deg) translateX(36vw) rotate(-57deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(36vw) rotate(-90deg); }
+
+@keyframes rotate-1-disappear {
+  0% { opacity: 1; transform: rotate(-85deg) translateX(56vw) rotate(85deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(56vw) rotate(-90deg); }
 }
-@keyframes rotate-169-disappear {
-  0% { opacity: 1; transform: rotate(88deg) translateX(38vw) rotate(-88deg); }
-  100% { opacity: 0; transform: rotate(90deg) translateX(38vw) rotate(-90deg); }
+@keyframes rotate-25-disappear {
+  0% { opacity: 1; transform: rotate(-63deg) translateX(55vw) rotate(63deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-44-disappear {
+  0% { opacity: 1; transform: rotate(-47deg) translateX(55vw) rotate(47deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-59-disappear {
+  0% { opacity: 1; transform: rotate(-34deg) translateX(55vw) rotate(34deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-71-disappear {
+  0% { opacity: 1; transform: rotate(-22deg) translateX(55vw) rotate(22deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-81-disappear {
+  0% { opacity: 1; transform: rotate(-11deg) translateX(55vw) rotate(11deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-99-disappear {
+  0% { opacity: 1; transform: rotate(11deg) translateX(55vw) rotate(-11deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-109-disappear {
+  0% { opacity: 1; transform: rotate(22deg) translateX(55vw) rotate(-22deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-121-disappear {
+  0% { opacity: 1; transform: rotate(34deg) translateX(55vw) rotate(-34deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-136-disappear {
+  0% { opacity: 1; transform: rotate(47deg) translateX(55vw) rotate(-47deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-155-disappear {
+  0% { opacity: 1; transform: rotate(63deg) translateX(55vw) rotate(-63deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(55vw) rotate(-90deg); }
+}
+@keyframes rotate-179-disappear {
+  0% { opacity: 1; transform: rotate(85deg) translateX(56vw) rotate(-85deg); }
+  100% { opacity: 0; transform: rotate(90deg) translateX(56vw) rotate(-90deg); }
 }
 
   /*
     phone layout css
   */
-  @media only screen and (max-width: 999px) {
+  @media only screen and (max-width: 599px) {
     @font-face {
     font-family: 'GenYoGothicTW-Bold';
     src: url('../assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
@@ -522,7 +599,7 @@ export default {
         grid-area: exit;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/exit.svg');
+        background-image: url('../assets//exit.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -541,7 +618,7 @@ export default {
       .dept_mobile_title {
         grid-area: title;
         width: 60vw;
-        background-image: url('../assets/14/dept/title.svg');
+        background-image: url('../assets//dept/title.svg');
         background-repeat: no-repeat;
         background-size: 75% 75%;
         background-position: center center;
@@ -550,7 +627,7 @@ export default {
         grid-area: list;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/list.svg');
+        background-image: url('../assets//list.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -571,7 +648,7 @@ export default {
       position: absolute;
       display: grid;
       grid-template-rows: repeat(8, 7vh);
-      z-index: 20;
+      z-index: 100;
       width: 40vw;
       height: 92vh;
       right: 0%;
@@ -642,7 +719,7 @@ export default {
         top: 0;
         bottom: 0;
         margin: auto 0;
-        left: -145vw;
+        left: -155vw;
 
         transform: scale(6);
         pointer-events: none;
@@ -664,11 +741,11 @@ export default {
         left: 0;
         top: 0;
         max-width: 30vw;
-        width: 20vw;
+        width: 22vw;
         height: 2.6vh;
         text-align: center;
         vertical-align: bottom;
-        background-color: rgb(79, 224, 224);
+        background-color: rgb(44,185,244);
         margin: 2vh 0 0 20vw;
         color: white;
         border-radius: 5px;
@@ -751,118 +828,110 @@ export default {
       }
 
       &.rotate-engineer > p:nth-child(1) {
-        animation: rotate-11 .5s ease-in-out;
+        animation: rotate-1 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(2) {
-        animation: rotate-33 .5s ease-in-out;
+        animation: rotate-25 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(3) {
-        animation: rotate-56 .5s ease-in-out;
+        animation: rotate-44 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(4) {
-        animation: rotate-79 .5s ease-in-out;
+        animation: rotate-59 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(5) {
-        animation: rotate-101 .5s ease-in-out;
+        animation: rotate-71 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(6) {
-        animation: rotate-124 .5s ease-in-out;
+        animation: rotate-81 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(7) {
-        animation: rotate-147 .5s ease-in-out;
+        animation: rotate-90 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(8) {
-        animation: rotate-169 .5s ease-in-out;
+        animation: rotate-99 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      // &.rotate-engineer-2 > p:nth-child(1) {
-      //   animation: rotate-15 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(2) {
-      //   animation: rotate-45 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(3) {
-      //   animation: rotate-75 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(4) {
-      //   animation: rotate-105 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(5) {
-      //   animation: rotate-135 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(6) {
-      //   animation: rotate-165 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
+      &.rotate-engineer > p:nth-child(9) {
+        animation: rotate-109 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer > p:nth-child(10) {
+        animation: rotate-121 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer > p:nth-child(11) {
+        animation: rotate-136 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer > p:nth-child(12) {
+        animation: rotate-155 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer > p:nth-child(13) {
+        animation: rotate-179 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
 
       &.rotate-engineer-disappear > p:nth-child(1) {
-        animation: rotate-11-disappear .5s ease-in-out;
+        animation: rotate-1-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(2) {
-        animation: rotate-33-disappear .5s ease-in-out;
+        animation: rotate-25-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(3) {
-        animation: rotate-56-disappear .5s ease-in-out;
+        animation: rotate-44-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(4) {
-        animation: rotate-79-disappear .5s ease-in-out;
+        animation: rotate-59-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(5) {
-        animation: rotate-101-disappear .5s ease-in-out;
+        animation: rotate-71-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(6) {
-        animation: rotate-124-disappear .5s ease-in-out;
+        animation: rotate-81-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(7) {
-        animation: rotate-147-disappear .5s ease-in-out;
+        animation: rotate-90-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(8) {
-        animation: rotate-169-disappear .5s ease-in-out;
+        animation: rotate-99-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      // &.rotate-engineer-2-disappear > p:nth-child(1) {
-      //   animation: rotate-1-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(2) {
-      //   animation: rotate-45-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(3) {
-      //   animation: rotate-75-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(4) {
-      //   animation: rotate-105-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(5) {
-      //   animation: rotate-135-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(6) {
-      //   animation: rotate-165-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
+      &.rotate-engineer-disappear > p:nth-child(9) {
+        animation: rotate-109-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer-disappear > p:nth-child(10) {
+        animation: rotate-121-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer-disappear > p:nth-child(11) {
+        animation: rotate-136-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer-disappear > p:nth-child(12) {
+        animation: rotate-155-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer-disappear > p:nth-child(13) {
+        animation: rotate-179-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
 
       &.rotate-science > p:nth-child(1) {
         animation: rotate-18 .5s ease-in-out;
@@ -941,52 +1010,60 @@ export default {
       }
 
       &.rotate-medicine > p:nth-child(1) {
-        animation: rotate-15 .5s ease-in-out;
+        animation: rotate-12 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(2) {
-        animation: rotate-45 .5s ease-in-out;
+        animation: rotate-37 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(3) {
-        animation: rotate-75 .5s ease-in-out;
+        animation: rotate-63 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(4) {
-        animation: rotate-105 .5s ease-in-out;
+        animation: rotate-90 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(5) {
-        animation: rotate-135 .5s ease-in-out;
+        animation: rotate-117 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(6) {
-        animation: rotate-165 .5s ease-in-out;
+        animation: rotate-143 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-medicine > p:nth-child(7) {
+        animation: rotate-168 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
 
       &.rotate-medicine-disappear > p:nth-child(1) {
-        animation: rotate-15-disappear .5s ease-in-out;
+        animation: rotate-12-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(2) {
-        animation: rotate-45-disappear .5s ease-in-out;
+        animation: rotate-37-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(3) {
-        animation: rotate-75-disappear .5s ease-in-out;
+        animation: rotate-63-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(4) {
-        animation: rotate-105-disappear .5s ease-in-out;
+        animation: rotate-90-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(5) {
-        animation: rotate-135-disappear .5s ease-in-out;
+        animation: rotate-117-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(6) {
-        animation: rotate-165-disappear .5s ease-in-out;
+        animation: rotate-143-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-medicine-disappear > p:nth-child(7) {
+        animation: rotate-168-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
 
@@ -1069,99 +1146,125 @@ export default {
 
     }
 
-    .dept_list_section {
-      z-index:10;
+    .dept_select {
+      z-index:50;
       position: absolute;
-      left: 16vw;
-      top: 20vh;
+      left: 2vw;
+      top: 10vh;
+      width: 52vw;
+      padding: 1vh 0 1vh 4vw;
+      height: 3vh;
+      // border: 1px solid rgb(180, 180, 180);
+      background-color: rgb(131,218,242);
+      color: white;
+      text-align: left;
+      line-height: 3vh;
+      font-size: 2vh;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-radius: 10px;
+      box-shadow: 1px 1px 2px 1px rgb(150, 150, 150);
 
-      max-width: 30vh;
-
-      ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-
-        li {
-          margin: 0;
-          padding: 0;
-
-          transition-property: font-size, text-align, background-color, padding;
-          transition-duration: .3s;
-          transition-timing-function: ease;
+      .dept_select_arrow {
+        position: absolute;
+        padding: 1vh;
+        margin: 0.5vh;
+        right: 0;
+        top: 0;
+        width: 2vh;
+        height: 2vh;
+        transform: rotate(90deg);
+        background-image: url('../assets//arrow.svg');
+        background-size: 60% 60%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        border-radius: 5px;
+        &:hover {
+          filter: brightness(110%);
         }
-
-        li[data-key="design"]  {
-          transform: translateX(20px);
-        }
-        li[data-key="social"]  {
-          transform: translateX(52px);
-        }
-        li[data-key="undeclear"]  {
-          transform: translateX(76px);
-        }
-        li[data-key="engineer"]  {
-          transform: translateX(93px);
-        }
-        li[data-key="engineer-2"]  {
-          transform: translateX(100px);
-        }
-        li[data-key="science"]  {
-          transform: translateX(100px);
-        }
-        li[data-key="humanity"]  {
-          transform: translateX(100px);
-        }
-        li[data-key="medicine"]  {
-          transform: translateX(98px);
-        }
-        li[data-key="management"]  {
-          transform: translateX(88px);
-        }
-        li[data-key="computer"]  {
-          transform: translateX(72px);
-        }
-        li[data-key="biological"]  {
-          transform: translateX(46px);
+        &:active {
+          filter: brightness(60%);
+          background-color: rgba(255, 255, 255, 0.4);
         }
       }
+    }
 
-      .dept_class_item {
-        margin: 3vh;
-        z-index:10;
-        font-size: 15px;
-        width: 45vw;
-
-        p {
-          width: 100%;
-
-          margin: 0;
-          padding: 10;
-
-          text-align: right;
-          border-radius: 10px;
-          color: rgb(120, 120, 120);
-          font-weight: 500;
-          cursor: pointer;
-        }
-        &.active {
-            color: white;
-            border-radius: 10px;
-            // background-color: rgb(103,193,225);
-            padding: 6px;
-            font-size: 17px;
+    .dept_list_section {
+      z-index:50;
+      position: absolute;
+      left: 2vw;
+      top: 16vh;
+      .dept_class_mobile {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        label {
+          padding: 1vh 1vw;
+          height: 3vh;
+          width: 54vw;
+          border: 1px solid rgb(254,241,217);
           font-weight: bold;
-            }
-        &:hover {
-          p {
-            color: rgb(103, 192, 225);
-            padding: 6px;
-            font-size: 17px;
-            font-weight: bold;
-            border-radius: 10px;
-            letter-spacing: 1px;
-          }
+          letter-spacing: 1px;
+          background-color: rgb(131,218,242);
+          // background-color: rgb(254,241,217);
+          color: white;
+          line-height: 3vh;
+          font-size: 2vh;
         }
+      }
+    }
+    .dept_layout_page {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 8vh 8vh 1fr;
+      grid-template-areas: "." "return" "slide";
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .return_section {
+      grid-area: return;
+      width: 100vw;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .back_icon {
+        margin: 2vh 5vw;
+        width: 26vw;
+        height: 4vh;
+        background-color: rgb(131,218,242);
+        color: white;
+        font-size: 2.5vh;
+        font-weight: bold;
+        line-height: 4vh;
+        letter-spacing: 2px;
+        border-radius: 10px;
+        // background-image: url('../assets//return.svg');
+        &:hover {
+          filter: brightness(110%);
+        }
+        &:active {
+          filter: brightness(60%);
+        }
+      }
+    }
+    #dept_slide {
+      grid-area: slide;
+      width: 100vw;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+
+      display: flex;
+      flex-direction: column;
+      img {
+        padding: 0 1vw 1vh 1vw;
+        width: 98vw;
+      }
+      .dept_empty {
+        width: 98vw;
+        padding: 10vh 0;
       }
     }
   }
@@ -1169,7 +1272,7 @@ export default {
   /*
     computer layout css
   */
-  @media only screen and (min-width: 1000px) {
+  @media only screen and (min-width: 600px) {
 
     @font-face {
     font-family: 'GenYoGothicTW-Bold';
@@ -1224,7 +1327,7 @@ export default {
           width: 12vw;
           height: 8vh;
           background-color: transparent;
-          background-image: url("../assets/14/logoHome.svg");
+          background-image: url("../assets//logoHome.svg");
           background-repeat: no-repeat;
           background-size: 80% 80%;
           background-position: 50% 50%;
@@ -1321,13 +1424,15 @@ export default {
     .dept_layout {
       display: grid;
       grid-template-columns: 22vw 78vw;
-      grid-template-areas: "list chain";
+      grid-template-rows: 6vh 1fr;
+      grid-template-areas: ". ." "list chain";
 
       justify-content: center;
       justify-items: center;
       align-items: center;
 
       width: 100vw;
+      min-width: 1000px;
       height: 100vh;
     }
 
@@ -1336,7 +1441,7 @@ export default {
 
       display: grid;
       grid-template-columns: 4vw repeat(5, 1fr);
-      grid-template-rows: 5vw repeat(3, 1fr) 5vw;
+      grid-template-rows: 4vw repeat(3, 1fr) 6vw;
       grid-template-areas: ". . . . . exit"
         ". . large large large large"
         ". small large large large large "
@@ -1352,7 +1457,7 @@ export default {
       .dept_chain_small {
         grid-area: small;
 
-        left: 50vw;
+        left: 52vw;
         top: 20vh;
         width: 13vw;
         height: 13vw;
@@ -1387,32 +1492,34 @@ export default {
     .dept_college {
       position: absolute;
       left: 70vw;
-      top: 48vh;
+      top: 50vh;
       box-sizing: border-box;
 
       will-change: opacity, transform;
-      transform: scale(0.55);
+      transform: scale(0.36);
       p {
         position: absolute;
         left: 0;
         top: 0;
-        width: 14vw;
-        height: 4vh;
+        width: 18vw;
+        height: 5vh;
         text-align: center;
         vertical-align: bottom;
         background-color: #ffffff;
         border-radius: 20px;
         color: rgb(103, 192, 225);
         padding: 18px;
-        font-size: 28px;
+        font-size: 5vh;
+        line-height: 5vh;
         letter-spacing: 4px;
         font-weight: 500;
         cursor: pointer;
+        z-index: 100;
       }
       p:hover {
         z-index: 999;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-        width: 13vw;
+        width: 18vw;
         height: 5vh;
       }
       &.rotate-design > p:nth-child(1) {
@@ -1486,118 +1593,110 @@ export default {
       }
 
       &.rotate-engineer > p:nth-child(1) {
-        animation: rotate-11 .5s ease-in-out;
+        animation: rotate-1 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(2) {
-        animation: rotate-33 .5s ease-in-out;
+        animation: rotate-25 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(3) {
-        animation: rotate-56 .5s ease-in-out;
+        animation: rotate-44 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(4) {
-        animation: rotate-79 .5s ease-in-out;
+        animation: rotate-59 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(5) {
-        animation: rotate-101 .5s ease-in-out;
+        animation: rotate-71 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(6) {
-        animation: rotate-124 .5s ease-in-out;
+        animation: rotate-81 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(7) {
-        animation: rotate-147 .5s ease-in-out;
+        animation: rotate-90 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer > p:nth-child(8) {
-        animation: rotate-169 .5s ease-in-out;
+        animation: rotate-99 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      // &.rotate-engineer-2 > p:nth-child(1) {
-      //   animation: rotate-15 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(2) {
-      //   animation: rotate-45 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(3) {
-      //   animation: rotate-75 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(4) {
-      //   animation: rotate-105 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(5) {
-      //   animation: rotate-135 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2 > p:nth-child(6) {
-      //   animation: rotate-165 .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
+      &.rotate-engineer > p:nth-child(9) {
+        animation: rotate-109 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer > p:nth-child(10) {
+        animation: rotate-121 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer > p:nth-child(11) {
+        animation: rotate-136 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer > p:nth-child(12) {
+        animation: rotate-155 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer > p:nth-child(13) {
+        animation: rotate-179 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
 
       &.rotate-engineer-disappear > p:nth-child(1) {
-        animation: rotate-11-disappear .5s ease-in-out;
+        animation: rotate-1-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(2) {
-        animation: rotate-33-disappear .5s ease-in-out;
+        animation: rotate-25-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(3) {
-        animation: rotate-56-disappear .5s ease-in-out;
+        animation: rotate-44-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(4) {
-        animation: rotate-79-disappear .5s ease-in-out;
+        animation: rotate-59-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(5) {
-        animation: rotate-101-disappear .5s ease-in-out;
+        animation: rotate-71-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(6) {
-        animation: rotate-124-disappear .5s ease-in-out;
+        animation: rotate-81-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(7) {
-        animation: rotate-147-disappear .5s ease-in-out;
+        animation: rotate-90-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-engineer-disappear > p:nth-child(8) {
-        animation: rotate-169-disappear .5s ease-in-out;
+        animation: rotate-99-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
-      // &.rotate-engineer-2-disappear > p:nth-child(1) {
-      //   animation: rotate-15-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(2) {
-      //   animation: rotate-45-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(3) {
-      //   animation: rotate-75-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(4) {
-      //   animation: rotate-105-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(5) {
-      //   animation: rotate-135-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
-      // &.rotate-engineer-2-disappear > p:nth-child(6) {
-      //   animation: rotate-165-disappear .5s ease-in-out;
-      //   animation-fill-mode: forwards;
-      // }
+      &.rotate-engineer-disappear > p:nth-child(9) {
+        animation: rotate-109-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer-disappear > p:nth-child(10) {
+        animation: rotate-121-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer-disappear > p:nth-child(11) {
+        animation: rotate-136-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer-disappear > p:nth-child(12) {
+        animation: rotate-155-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-engineer-disappear > p:nth-child(13) {
+        animation: rotate-179-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
 
       &.rotate-science > p:nth-child(1) {
         animation: rotate-18 .5s ease-in-out;
@@ -1676,52 +1775,60 @@ export default {
       }
 
       &.rotate-medicine > p:nth-child(1) {
-        animation: rotate-15 .5s ease-in-out;
+        animation: rotate-12 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(2) {
-        animation: rotate-45 .5s ease-in-out;
+        animation: rotate-37 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(3) {
-        animation: rotate-75 .5s ease-in-out;
+        animation: rotate-63 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(4) {
-        animation: rotate-105 .5s ease-in-out;
+        animation: rotate-90 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(5) {
-        animation: rotate-135 .5s ease-in-out;
+        animation: rotate-117 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine > p:nth-child(6) {
-        animation: rotate-165 .5s ease-in-out;
+        animation: rotate-143 .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-medicine > p:nth-child(7) {
+        animation: rotate-168 .5s ease-in-out;
         animation-fill-mode: forwards;
       }
 
       &.rotate-medicine-disappear > p:nth-child(1) {
-        animation: rotate-15-disappear .5s ease-in-out;
+        animation: rotate-12-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(2) {
-        animation: rotate-45-disappear .5s ease-in-out;
+        animation: rotate-37-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(3) {
-        animation: rotate-75-disappear .5s ease-in-out;
+        animation: rotate-63-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(4) {
-        animation: rotate-105-disappear .5s ease-in-out;
+        animation: rotate-90-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(5) {
-        animation: rotate-135-disappear .5s ease-in-out;
+        animation: rotate-117-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
       &.rotate-medicine-disappear > p:nth-child(6) {
-        animation: rotate-165-disappear .5s ease-in-out;
+        animation: rotate-143-disappear .5s ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.rotate-medicine-disappear > p:nth-child(7) {
+        animation: rotate-168-disappear .5s ease-in-out;
         animation-fill-mode: forwards;
       }
 
@@ -1808,7 +1915,7 @@ export default {
       grid-area: list;
       justify-self: flex-end;
 
-      max-width: 22vw;
+      max-width: 24vw;
 
       ul {
         list-style-type: none;
@@ -1826,7 +1933,7 @@ export default {
         }
 
         li[data-key="design"]  {
-          transform: translateX(14vw);
+          transform: translateX(10vw);
         }
         li[data-key="social"]  {
           transform: translateX(7vw);
@@ -1856,7 +1963,7 @@ export default {
           transform: translateX(7vw);
         }
         li[data-key="biological"]  {
-          transform: translateX(14vw);
+          transform: translateX(10vw);
         }
       }
 
@@ -1864,6 +1971,7 @@ export default {
         margin: 4vh;
 
         font-size: 1.3vw;
+        z-index: 100;
 
         p {
           width: 100%;
@@ -1882,15 +1990,169 @@ export default {
               font-weight: bolder;
             }
             border-radius: 10px;
-            padding: 3px;
+          font-size: 1.4vw;
           }
         &:hover {
           border-radius: 10px;
           background-color: #eeefef;
-          padding: 3px;
+          font-size: 1.4vw;
           font-weight: 500;
         }
       }
+    }
+    .dept_layout_page {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 10vh 1fr;
+      grid-template-columns: 32vw 1fr 13vw;
+      grid-template-areas: ". . ." "list slide return";
+      justify-content: center;
+      justify-items: center;
+      align-items: flex-start;
+    }
+    .return_section {
+      grid-area: return;
+      z-index: 50;
+      .back_icon {
+        margin: 1vh 1vw;
+        width: 8vw;
+        height: 5vh;
+        background-color: rgb(131,218,242);
+        color: white;
+        font-size: 3vh;
+        font-weight: bold;
+        line-height: 4.5vh;
+        letter-spacing: 2px;
+        border-radius: 5px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        border-radius: 10px;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+          filter: brightness(110%);
+        }
+        &:active {
+          filter: brightness(60%);
+        }
+      }
+    }
+    .list_section {
+      grid-area: list;
+      width: 92%;
+      height: 100%;
+      z-index: 50;
+      background-image: url('../assets//main_blue.svg');
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: show .6s ease;
+      .class_list_section {
+        margin: 2vh 1vw;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        z-index: 50;
+        .class_name {
+          width: 100%;
+          margin: 1vh 0 2vh 0;
+          padding: 3vh 1vw;
+          line-height: 4vh;
+          font-size: 4vh;
+          font-weight: bold;
+          letter-spacing: 4px;
+          color: white;
+        }
+        .class_list {
+          height: 65vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          overflow-y: scroll;
+          overflow-x: hidden;
+          &::-webkit-scrollbar {
+            width: 0.3vw;
+            border-radius: 0.5vw;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 0.5vw;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: white;
+            border-radius: 0.5vw;
+          }
+          #temp_dept {
+            margin: 0 0 1vh 0;
+            padding: 2vh 1vw;
+            color:white;
+            line-height: 3.2vh;
+            font-size: 3.2vh;
+            font-weight: bold;
+            letter-spacing: 2px;
+            background-color: rgba(255, 255, 255, 0.4);
+            width: 24vw;
+            height: 4vh;
+          }
+          label {
+            margin: 0 0 1vh 0;
+            padding: 2vh 1vw;
+            color:white;
+            line-height: 3vh;
+            font-size: 3vh;
+            letter-spacing: 2px;
+            width: 24vw;
+            height: 4vh;
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.2);
+            }
+            &:active {
+              filter: brightness(60%);
+            }
+          }
+        }
+      }
+    }
+    #dept_slide {
+      grid-area: slide;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      z-index: 50;
+      // background-color: rgb(255, 255, 255);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      &::-webkit-scrollbar {
+        width: 0.5vw;
+        border-radius: 0.5vw;
+      }
+      &::-webkit-scrollbar-track {
+        background: rgba(100, 100, 100, 0.3);
+        border-radius: 0.5vw;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgb(103, 192, 225);
+        border-radius: 0.5vw;
+      }
+
+      display: flex;
+      flex-direction: column;
+      img {
+        padding: 0 0 1vh 0;
+        width: 98%;
+      }
+    }
+    .show-slide {
+      animation: show .6s ease;
     }
   }
 </style>

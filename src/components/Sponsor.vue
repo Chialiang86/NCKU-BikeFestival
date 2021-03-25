@@ -7,14 +7,14 @@
         div(class="live_top_bar_item")
           router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
             div(id="bottom" v-if="index===5")
-          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+          label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="pc") 我要報名
     div(class="live_top_bar_mobile")
       div(class="live_mobile_title" @click="list = false")
       router-link(tag="div" class="live_mobile_exit_button" to="/")
       div(class="live_mobile_list" @click="list = !list")
     div(class="live_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
+      label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="!pc") 我要報名
     button(v-show="mode === 1" class="sponsor_return_button" v-on:click="mode = 0; currentIndex = -1;")
     div(class="sponsor_layout_1" v-show="mode === 0" @click="list = false")
       section(class="sponsor_list")
@@ -289,7 +289,7 @@ export default {
   },
   methods: {
     windowSizeChange: function (event) {
-      if (window.innerWidth > 999) {
+      if (window.innerWidth > 599) {
         this.pc = true
       } else {
         this.pc = false
@@ -329,7 +329,7 @@ export default {
   /*
     mobile layout css
   */
-  @media only screen and (max-width: 999px) {
+  @media only screen and (max-width: 599px) {
     @font-face {
     font-family: 'GenYoGothicTW-Bold';
     src: url('../assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
@@ -377,7 +377,7 @@ export default {
         grid-area: exit;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/exit.svg');
+        background-image: url('../assets//exit.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -397,7 +397,7 @@ export default {
         z-index: 100;
         grid-area: title;
         width: 60vw;
-        background-image: url('../assets/14/sponsor/title.svg');
+        background-image: url('../assets//sponsor/title.svg');
         background-repeat: no-repeat;
         background-size: 75% 75%;
         background-position: center center;
@@ -407,7 +407,7 @@ export default {
         grid-area: list;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/list.svg');
+        background-image: url('../assets//list.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -460,7 +460,7 @@ export default {
 
       width: 45vw;
       height: 20vw;
-      background-image: url("../assets/14/sponsor/title.svg");
+      background-image: url("../assets//sponsor/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: center top 10%;
@@ -474,7 +474,7 @@ export default {
       width: 7.5vw;
       height: 7.5vw;
       background-color: transparent;
-      background-image: url("../assets/14/return.svg");
+      background-image: url("../assets//return.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
@@ -619,7 +619,7 @@ export default {
   /*
     computer layout css
   */
-  @media only screen and (min-width: 1000px) {    @font-face {
+  @media only screen and (min-width: 600px) {    @font-face {
     font-family: 'GenYoGothicTW-Bold';
     src: url('../assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
           url('../assets/fonts/GenYoGothicTW-Bold.ttf') format("truetype"),
@@ -668,7 +668,7 @@ export default {
           width: 12vw;
           height: 8vh;
           background-color: transparent;
-          background-image: url("../assets/14/logoHome.svg");
+          background-image: url("../assets//logoHome.svg");
           background-repeat: no-repeat;
           background-size: 80% 80%;
           background-position: 50% 50%;
@@ -732,7 +732,7 @@ export default {
 
       width: 17vw;
       height: 8vw;
-      background-image: url("../assets/14/sponsor/title.svg");
+      background-image: url("../assets//sponsor/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
@@ -747,7 +747,7 @@ export default {
       width: 3vw;
       height: 3vw;
       background-color: transparent;
-      background-image: url("../assets/14/return.svg");
+      background-image: url("../assets//return.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
@@ -857,7 +857,10 @@ export default {
       justify-items: center;
       align-content: center;
       align-items: center;
+      // transform: skewX(3deg);
 
+      position: absolute;
+      left: -2vw;
       width: 100%;
       height: 100%;
       background-color: rgb(255, 246, 232);
@@ -868,6 +871,7 @@ export default {
         color: rgb(48,182,245);
         font-size: 40px;
         letter-spacing: 4px;
+        // transform: skewX(-3deg);
       }
 
       label {
@@ -881,10 +885,12 @@ export default {
         border-radius: 30px;
         box-shadow: 1px 1px 2px 1px rgba(55, 55, 55, 0.3);
         border: 15px solid transparent;
+        transform: skewX(-3deg);
 
         cursor: pointer;
         transition: .2s transform ease-in-out;
         &:hover {
+          // transform: scale(1.05) skewX(-3deg);
           transform: scale(1.05);
         }
         &:after {
@@ -893,7 +899,7 @@ export default {
           content: '';
           width: 3vw;
           height: 3vw;
-          background-image: url("../assets/14/mouse.svg");
+          background-image: url("../assets//mouse.svg");
           background-position: 50% 50%;
           background-size: contain;
 
@@ -952,7 +958,7 @@ export default {
         margin: 0 0 0 38vw;
         width: 15vw;
         height: 6vh;
-        background-image: url("../assets/14/logoSmall.svg");
+        background-image: url("../assets//logoSmall.svg");
         background-position: left center;
         background-size: contain;
         background-repeat: no-repeat;

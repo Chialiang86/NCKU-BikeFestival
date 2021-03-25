@@ -6,14 +6,14 @@
         div(class="news_top_bar_item")
           router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
             div(id="bottom" v-if="index===0")
-          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+          label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="pc") 我要報名
     div(class="news_top_bar_mobile")
       div(class="news_mobile_title" @click="list = false")
       router-link(tag="div" class="news_mobile_exit_button" to="/")
       div(class="news_mobile_list" @click="list = !list")
     div(class="news_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
+      label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="!pc") 我要報名
     div(class="news_background")
     div(class="news_logo")
     dive(class="news_flower_top" @click="list = false")
@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     windowSizeChange: function (event) {
-      if (window.innerWidth > 999) {
+      if (window.innerWidth > 599) {
         this.pc = true
       } else {
         this.pc = false
@@ -149,7 +149,7 @@ export default {
   /*
     mobile layout css
   */
-  @media only screen and (max-width: 999px) {
+  @media only screen and (max-width: 599px) {
     @keyframes flow-in {
       from { right: -40%; }
       to { right: 0%; }
@@ -189,7 +189,7 @@ export default {
         grid-area: exit;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/exit.svg');
+        background-image: url('../assets//exit.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -208,7 +208,7 @@ export default {
       .news_mobile_title {
         grid-area: title;
         width: 60vw;
-        background-image: url('../assets/14/news/title.svg');
+        background-image: url('../assets//news/title.svg');
         background-repeat: no-repeat;
         background-size: 75% 75%;
         background-position: center center;
@@ -217,7 +217,7 @@ export default {
         grid-area: list;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/list.svg');
+        background-image: url('../assets//list.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -371,7 +371,7 @@ export default {
   /*
     computer layout css
   */
-  @media only screen and (min-width: 1000px) {
+  @media only screen and (min-width: 600px) {
     .news_page {
       position: absolute;
       display: flex;
@@ -413,7 +413,7 @@ export default {
           width: 12vw;
           height: 8vh;
           background-color: transparent;
-          background-image: url("../assets/14/logoHome.svg");
+          background-image: url("../assets//logoHome.svg");
           background-repeat: no-repeat;
           background-size: 80% 80%;
           background-position: 50% 50%;
@@ -480,7 +480,7 @@ export default {
     }
     .news_logo {
       position: absolute;
-      background-image: url('../assets/14/pageLogo.svg');
+      background-image: url('../assets//pageLogo.svg');
       background-repeat: no-repeat;
       background-position: center bottom 40%;
       background-size: 50% 50%;
@@ -492,7 +492,7 @@ export default {
     }
     .news_flower_top {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
+      background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center top;
       background-size: cover;
@@ -504,7 +504,7 @@ export default {
     }
     .news_flower_down {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
+      background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center bottom;
       background-size: cover;

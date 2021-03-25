@@ -3,13 +3,13 @@
     <style>
       .cls-1 {
         fill: #fff;
-        stroke: #1e5eaa;
+        stroke: #31B5F5;
         stroke-miterlimit: 10;
         stroke-width: 6px;
       }
 
       .cls-2 {
-        fill: #1e5eaa;
+        fill: #31B5F5;
         opacity: 0.71;
       }
     </style>

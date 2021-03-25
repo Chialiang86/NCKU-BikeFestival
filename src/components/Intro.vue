@@ -25,17 +25,17 @@
       //div(class="intro_dot2")
       div(class="intro_menu")
         ul
-          //router-link(tag="li" v-bind:to="'/' + urlText[index]" v-for="(text, index) of menuText" v-bind:key="text" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_${index + 1}.svg`) + ')'}")
+          //router-link(tag="li" v-bind:to="'/' + urlText[index]" v-for="(text, index) of menuText" v-bind:key="text" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_${index + 1}.svg`) + ')'}")
             p {{text}}
-          router-link(tag="li" v-bind:to="'/news'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_1.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/activity'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_2.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/department'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_3.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/online'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_4.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/parent'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_5.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/sponsor'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_6.svg`) + ')'}")
-          router-link(tag="li" v-bind:to="'/live'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_7.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/news'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_1.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/activity'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_2.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/department'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_3.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/online'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_4.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/parent'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_5.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/sponsor'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_6.svg`) + ')'}")
+          router-link(tag="li" v-bind:to="'/live'" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_7.svg`) + ')'}")
           a(href="https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform" target="_blank")
-            li(tag="li" v-bind:style="{'backgroundImage': 'url(' + require(`../assets/14/intro/menu_8.svg`) + ')'}")
+            li(tag="li" v-bind:style="{'backgroundImage': 'url(' + require(`../assets//intro/menu_8.svg`) + ')'}")
 </template>
 
 <script>
@@ -146,7 +146,7 @@ export default {
     .intro_background {
       position: absolute;
       z-index: -1;
-      background-image: url("../assets/14/intro/mobile/background.svg");
+      background-image: url("../assets//intro/mobile/background.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -158,7 +158,7 @@ export default {
 
     .intro_background_dot_1 {
       position: absolute;
-      background-image: url("../assets/14/intro/mobile/dot1.svg");
+      background-image: url("../assets//intro/mobile/dot1.svg");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 90% 90%;
@@ -170,7 +170,7 @@ export default {
 
     .intro_background_dot_2 {
       position: absolute;
-      background-image: url("../assets/14/intro/mobile/dot2.svg");
+      background-image: url("../assets//intro/mobile/dot2.svg");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 90% 90%;
@@ -182,7 +182,7 @@ export default {
 
     .intro_background_dot_3 {
       position: absolute;
-      background-image: url("../assets/14/intro/mobile/dot3.svg");
+      background-image: url("../assets//intro/mobile/dot3.svg");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 95% 95%;
@@ -194,7 +194,7 @@ export default {
 
     .intro_background_dot_4 {
       position: absolute;
-      background-image: url("../assets/14/intro/mobile/dot4.svg");
+      background-image: url("../assets//intro/mobile/dot4.svg");
       background-repeat: no-repeat;
       background-position: right top;
       background-size: 80% 80%;
@@ -250,7 +250,7 @@ export default {
       height: 80vw;
 
       //  background-image: url("../assets/logo.svg");
-      background-image: url("../assets/14/intro/mobile/logo.svg");
+      background-image: url("../assets//intro/mobile/logo.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -267,7 +267,7 @@ export default {
       display: flex;
       width: 100%;
       height: 100%;
-      background-image: url("../assets/14/intro/mobile/background_down.svg");
+      background-image: url("../assets//intro/mobile/background_down.svg");
       background-size: 128% 128%;
       background-repeat: no-repeat;
       background-position: center top 95%;
@@ -357,7 +357,7 @@ export default {
     .intro_background {
       position: absolute;
       z-index: -1;
-      background-image: url("../assets/14/intro/computer/background.svg");
+      background-image: url("../assets//intro/computer/background.svg");
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -368,7 +368,7 @@ export default {
 
     .intro_background_dot_1 {
       position: absolute;
-      background-image: url("../assets/14/intro/computer/dot1.svg");
+      background-image: url("../assets//intro/computer/dot1.svg");
       background-repeat: no-repeat;
       background-position: center top 25%;
       background-size: 80% 80%;
@@ -380,7 +380,7 @@ export default {
 
     .intro_background_dot_2 {
       position: absolute;
-      background-image: url("../assets/14/intro/computer/dot2.svg");
+      background-image: url("../assets//intro/computer/dot2.svg");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 80% 80%;
@@ -392,7 +392,7 @@ export default {
 
     .intro_background_dot_3 {
       position: absolute;
-      background-image: url("../assets/14/intro/computer/dot3.svg");
+      background-image: url("../assets//intro/computer/dot3.svg");
       background-repeat: no-repeat;
       background-position: center top 25%;
       background-size: 80% 80%;
@@ -404,7 +404,7 @@ export default {
 
     .intro_background_dot_4 {
       position: absolute;
-      background-image: url("../assets/14/intro/computer/dot4.svg");
+      background-image: url("../assets//intro/computer/dot4.svg");
       background-repeat: no-repeat;
       background-position: center top 25%;
       background-size: 80% 80%;
@@ -419,7 +419,7 @@ export default {
       right:0vw;
       top:-22vw;
       z-index: 0;
-      background-image: url("../assets/intro/dotssss.svg");
+      // background-image: url("../assets/intro/dotssss.svg");
       background-repeat: no-repeat;
       height: 40vw;
       width: 40vw;
@@ -430,7 +430,7 @@ export default {
       left:-2vw;
       bottom:-22vw;
       z-index: 0;
-      background-image: url("../assets/intro/dotssss.svg");
+      // background-image: url("../assets/intro/dotssss.svg");
       background-repeat: no-repeat;
       height: 40vw;
       width: 40vw;
@@ -460,7 +460,7 @@ export default {
       grid-template-rows: 3fr 1fr;
       grid-template-areas: "empty" "dot";
       //background-image: url("../assets/countdown.svg");
-      background-image: url("../assets/14/intro/computer/logo.svg");
+      // background-image: url("../assets//intro/computer/logo.svg");
       background-repeat: no-repeat;
       background-position: center top 25%;
       background-size: 63% 63%;
@@ -478,7 +478,6 @@ export default {
           width: 20%;
           height: 50%;
           margin-bottom: 15vw;
-          background-image: url("../assets/number_0.svg");
           background-size: 125% 125%;
           background-position: 50% 0%;
         }
@@ -491,7 +490,7 @@ export default {
         justify-items: center;
         justify-content: center;
         align-items: center;
-        background-image: url("../assets/14/intro/computer/logoTiny.svg");
+        background-image: url("../assets//intro/computer/logoTiny.svg");
         background-repeat: no-repeat;
         background-size: 36% 36%;
         background-position: center 0%;
@@ -501,7 +500,7 @@ export default {
           height: 1.5vw;
           margin: 0.8vw;
           margin-bottom: 10vw;
-          background-image: url("../assets/14/intro/computer/logoTiny.svg");
+          background-image: url("../assets//intro/computer/logoTiny.svg");
           background-repeat: no-repeat;
           background-size: 100% 100%;
           background-position: 30% 0%;

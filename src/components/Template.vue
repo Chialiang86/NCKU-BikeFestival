@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import srcJson from '../assets/14/online/onlinesrc.json'
+import srcJson from '../assets//online/onlinesrc.json'
 export default {
   data: function () {
     return {
@@ -106,7 +106,7 @@ export default {
         grid-area: exit;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/exit.svg');
+        background-image: url('../assets//exit.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -125,7 +125,7 @@ export default {
       .onlinesrc_mobile_title {
         grid-area: title;
         width: 60vw;
-        background-image: url('../assets/14/online/title.svg');
+        background-image: url('../assets//online/title.svg');
         background-repeat: no-repeat;
         background-size: 75% 75%;
         background-position: center center;
@@ -134,7 +134,7 @@ export default {
         grid-area: list;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/list.svg');
+        background-image: url('../assets//list.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -192,14 +192,14 @@ export default {
       top: 8vh;
       width: 40vw;
       height: 20vw;
-      background-image: url("../assets/14/live/title.svg");
+      background-image: url("../assets//live/title.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: center top 10%;
     }
     .onlinesrc_logo {
       position: absolute;
-      background-image: url('../assets/14/pageLogo.svg');
+      background-image: url('../assets//pageLogo.svg');
       background-repeat: no-repeat;
       background-position: center bottom 40%;
       background-size: 50% 50%;
@@ -211,7 +211,7 @@ export default {
     }
     .onlinesrc_flower_top {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
+      background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center top;
       background-size: cover;
@@ -223,7 +223,7 @@ export default {
     }
     .onlinesrc_flower_down {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
+      background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center bottom;
       background-size: cover;
@@ -255,7 +255,7 @@ export default {
         justify-self: center;
         grid-area: name;
         width: 95vw;
-        background-image: url('../assets/14/online/pink_cross.svg');
+        background-image: url('../assets//online/pink_cross.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position-y: 55%;
@@ -280,7 +280,7 @@ export default {
           grid-area: la;
           width: 10vw;
           height: 12vw;
-          background-image: url('../assets/14/online/left_arrow.svg');
+          background-image: url('../assets//online/left_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -299,7 +299,7 @@ export default {
           grid-area: ra;
           width: 10vw;
           height: 12vw;
-          background-image: url('../assets/14/online/right_arrow.svg');
+          background-image: url('../assets//online/right_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -388,7 +388,7 @@ export default {
         justify-self: center;
         grid-area: name;
         width: 95vw;
-        background-image: url('../assets/14/online/yellow_cross.svg');
+        background-image: url('../assets//online/yellow_cross.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position-y: 55%;
@@ -419,7 +419,7 @@ export default {
           grid-area: la;
           width: 10vw;
           height: 12vw;
-          background-image: url('../assets/14/online/left_arrow.svg');
+          background-image: url('../assets//online/left_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -438,7 +438,7 @@ export default {
           grid-area: ra;
           width: 10vw;
           height: 12vw;
-          background-image: url('../assets/14/online/right_arrow.svg');
+          background-image: url('../assets//online/right_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -526,7 +526,7 @@ export default {
         justify-self: center;
         grid-area: name;
         width: 95vw;
-        background-image: url('../assets/14/online/green_cross.svg');
+        background-image: url('../assets//online/green_cross.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position-y: 55%;
@@ -551,7 +551,7 @@ export default {
           grid-area: la;
           width: 10vw;
           height: 12vw;
-          background-image: url('../assets/14/online/left_arrow.svg');
+          background-image: url('../assets//online/left_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -570,7 +570,7 @@ export default {
           grid-area: ra;
           width: 10vw;
           height: 12vw;
-          background-image: url('../assets/14/online/right_arrow.svg');
+          background-image: url('../assets//online/right_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -661,7 +661,7 @@ export default {
         width: 10vw;
         height: 10vw;
         background-color: transparent;
-        background-image: url("../assets/14/home.svg");
+        background-image: url("../assets//home.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: 50% 50%;
@@ -715,7 +715,7 @@ export default {
 
     //   width: 17vw;
     //   height: 8vw;
-    //   background-image: url("../assets/14/online/title.svg");
+    //   background-image: url("../assets//online/title.svg");
     //   background-repeat: no-repeat;
     //   background-size: 100% 100%;
     //   background-position: 50% 50%;
@@ -747,7 +747,7 @@ export default {
           width: 12vw;
           height: 8vh;
           background-color: transparent;
-          background-image: url("../assets/14/logoHome.svg");
+          background-image: url("../assets//logoHome.svg");
           background-repeat: no-repeat;
           background-size: 80% 80%;
           background-position: 50% 50%;
@@ -804,7 +804,7 @@ export default {
     }
     .onlinesrc_logo {
       position: absolute;
-      background-image: url('../assets/14/pageLogo.svg');
+      background-image: url('../assets//pageLogo.svg');
       background-repeat: no-repeat;
       background-position: center bottom 40%;
       background-size: 50% 50%;
@@ -816,7 +816,7 @@ export default {
     }
     .onlinesrc_flower_top {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
+      background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center top;
       background-size: cover;
@@ -828,7 +828,7 @@ export default {
     }
     .onlinesrc_flower_down {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
+      background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center bottom;
       background-size: cover;
@@ -859,7 +859,7 @@ export default {
         justify-self: center;
         grid-area: name;
         width: 90vw;
-        background-image: url('../assets/14/online/pink_cross.svg');
+        background-image: url('../assets//online/pink_cross.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position-y: 50%;
@@ -884,7 +884,7 @@ export default {
           grid-area: la;
           width: 5vw;
           height: 6vw;
-          background-image: url('../assets/14/online/left_arrow.svg');
+          background-image: url('../assets//online/left_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -903,7 +903,7 @@ export default {
           grid-area: ra;
           width: 5vw;
           height: 6vw;
-          background-image: url('../assets/14/online/right_arrow.svg');
+          background-image: url('../assets//online/right_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -992,7 +992,7 @@ export default {
         justify-self: center;
         grid-area: name;
         width: 90vw;
-        background-image: url('../assets/14/online/yellow_cross.svg');
+        background-image: url('../assets//online/yellow_cross.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position-y: 50%;
@@ -1023,7 +1023,7 @@ export default {
           grid-area: la;
           width: 5vw;
           height: 6vw;
-          background-image: url('../assets/14/online/left_arrow.svg');
+          background-image: url('../assets//online/left_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -1042,7 +1042,7 @@ export default {
           grid-area: ra;
           width: 5vw;
           height: 6vw;
-          background-image: url('../assets/14/online/right_arrow.svg');
+          background-image: url('../assets//online/right_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -1130,7 +1130,7 @@ export default {
         justify-self: center;
         grid-area: name;
         width: 90vw;
-        background-image: url('../assets/14/online/green_cross.svg');
+        background-image: url('../assets//online/green_cross.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position-y: 50%;
@@ -1155,7 +1155,7 @@ export default {
           grid-area: la;
           width: 5vw;
           height: 6vw;
-          background-image: url('../assets/14/online/left_arrow.svg');
+          background-image: url('../assets//online/left_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;
@@ -1174,7 +1174,7 @@ export default {
           grid-area: ra;
           width: 5vw;
           height: 6vw;
-          background-image: url('../assets/14/online/right_arrow.svg');
+          background-image: url('../assets//online/right_arrow.svg');
           background-repeat: no-repeat;
           background-size: 65% 65%;
           background-position: center center;

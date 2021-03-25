@@ -109,7 +109,7 @@ export default {
     .about_facebook_qr_code {
       grid-area: facebook_qrcode;
 
-      background-image: url("../assets/about/nckubikefestival-facebook.svg");
+      // background-image: url("../assets/about/nckubikefestival-facebook.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
@@ -143,7 +143,7 @@ export default {
 
     .about_instagram_qr_code {
       grid-area: instagram_qrcode;
-      background-image: url("../assets/about/nckubikefestival-instagram.svg");
+      // background-image: url("../assets/about/nckubikefestival-instagram.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
@@ -176,7 +176,7 @@ export default {
 
     .about_website_qr_code {
       grid-area: website_qrcode;
-      background-image: url("../assets/about/nckubikefestival-website.svg");
+      // background-image: url("../assets/about/nckubikefestival-website.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
@@ -196,7 +196,7 @@ export default {
       width: 7.5vw;
       height: 7.5vw;
       background-color: transparent;
-      background-image: url("../assets/14/home.svg");
+      // background-image: url("../assets//home.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
@@ -304,7 +304,7 @@ export default {
     .about_facebook_qr_code {
       grid-area: facebook_qrcode;
 
-      background-image: url("../assets/about/nckubikefestival-facebook.svg");
+      // background-image: url("../assets/about/nckubikefestival-facebook.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
@@ -334,7 +334,7 @@ export default {
 
     .about_instagram_qr_code {
       grid-area: instagram_qrcode;
-      background-image: url("../assets/about/nckubikefestival-instagram.svg");
+      // background-image: url("../assets/about/nckubikefestival-instagram.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
@@ -367,7 +367,7 @@ export default {
 
     .about_website_qr_code {
       grid-area: website_qrcode;
-      background-image: url("../assets/about/nckubikefestival-website.svg");
+      // background-image: url("../assets/about/nckubikefestival-website.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;
@@ -387,7 +387,7 @@ export default {
       width: 2.5vw;
       height: 2.5vw;
       background-color: transparent;
-      background-image: url("../assets/14/home.svg");
+      // background-image: url("../assets//home.svg");
       background-repeat: no-repeat;
       background-size: 150% 150%;
       background-position: 50% 50%;

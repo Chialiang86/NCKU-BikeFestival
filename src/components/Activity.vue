@@ -10,14 +10,14 @@
         div(class="activity_top_bar_item")
           router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]" v-if="pc") {{text}}
             div(id="bottom" v-if="index===1")
-          label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="pc") 我要報名
+          label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="pc") 我要報名
     div(class="activity_top_bar_mobile")
       div(class="activity_mobile_title" @click="list = false;")
       router-link(tag="div" class="activity_mobile_exit_button" to="/")
       div(class="activity_mobile_list" @click="list = !list; titleBlock = false;")
     div(class="activity_mobile_list_area" v-show="list")
       router-link(tag="label" v-for="(text, index) of menuText" v-bind:key="text" v-bind:to="'/' + urlText[index]") {{text}}
-      label(@click="openTab('https://reurl.cc/pmZKrx'); list = false;" v-if="!pc") 我要報名
+      label(@click="openTab('https://docs.google.com/forms/d/e/1FAIpQLSfx69xLr9XCqz6y8OEn4d8n6gc4qw3KzOn8FHb7Dm94pGwwmg/viewform'); list = false;" v-if="!pc") 我要報名
     div(class="activity_flower_top" @click="list = false; titleBlock = false;")
     div(class="activity_flower_down" @click="list = false; titleBlock = false;")
     div(class="activity_topic_list_mobile" v-if="titleBlock")
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import srcJson from '../assets/14/activity/activity.json'
+import srcJson from '../assets//activity/activity.json'
 import Waterfall from 'vue-waterfall/lib/waterfall'
 import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 
@@ -123,6 +123,7 @@ export default {
       ],
       list: false,
       titleBlock: false,
+      titleFlag: false,
       introduceSrc: srcJson.introduce,
       timeSrc: srcJson.time,
       layout1PageSrc: srcJson.introduce[0],
@@ -155,9 +156,25 @@ export default {
       pc: false
     }
   },
+  updated: function () {
+    var pc = this.pc
+    if (this.titleFlag) {
+      setTimeout(function () {
+        var block = document.querySelectorAll('[data-block]')
+        for (var i = 0; i < block.length; i++) {
+          if (pc) {
+            block[i].setAttribute('style', 'height: 28vh; transition: height .9s ease;')
+          } else {
+            block[i].setAttribute('style', 'height: 26vw; transition: height .9s ease;')
+          }
+        }
+      }, 100)
+      this.titleFlag = false
+    }
+  },
   methods: {
     windowSizeChange: function (event) {
-      if (window.innerWidth > 999) {
+      if (window.innerWidth > 599) {
         this.pc = true
       } else {
         this.pc = false
@@ -176,6 +193,7 @@ export default {
     selectPageTopic: function (title, index) {
       var i, j
       this.currentIndex = title
+      this.titleFlag = true
       var titleList = document.querySelectorAll('[data-key]')
       for (i = 0; i < titleList.length; i++) {
         if (i === title) {
@@ -225,7 +243,7 @@ export default {
         if (this.pc) {
           block[index].setAttribute('style', 'height: 28vh; transition: height .9s ease;')
         } else {
-          block[index].setAttribute('style', 'height: 25vw; transition: height .9s ease;')
+          block[index].setAttribute('style', 'height: 26vw; transition: height .9s ease;')
         }
       } else {
         this.layout1FlagArr[this.layout1Index][index] = true
@@ -253,7 +271,7 @@ export default {
   /*
     mobile layout css
   */
-  @media only screen and (max-width: 999px) {
+  @media only screen and (max-width: 599px) {
     @font-face {
     font-family: 'GenYoGothicTW-Bold';
     src: url('../assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
@@ -285,7 +303,7 @@ export default {
       height: 60vh;
       left: 0%;
       top: 20%;
-      background-image: url('../assets/14/live/mobile/dot2.svg');
+      background-image: url('../assets//live/mobile/dot2.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -297,7 +315,7 @@ export default {
       height: 50vh;
       right: 0%;
       top: 35%;
-      background-image: url('../assets/14/live/mobile/dot3.svg');
+      background-image: url('../assets//live/mobile/dot3.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -309,7 +327,7 @@ export default {
       height: 60vh;
       left: 0%;
       bottom: -15%;
-      background-image: url('../assets/14/live/mobile/dot1.svg');
+      background-image: url('../assets//live/mobile/dot1.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
@@ -364,7 +382,7 @@ export default {
         grid-area: exit;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/exit.svg');
+        background-image: url('../assets//exit.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -383,7 +401,7 @@ export default {
       .activity_mobile_title {
         grid-area: title;
         width: 60vw;
-        background-image: url('../assets/14/activity/title.svg');
+        background-image: url('../assets//activity/title.svg');
         background-repeat: no-repeat;
         background-size: 75% 75%;
         background-position: center center;
@@ -392,7 +410,7 @@ export default {
         grid-area: list;
         width: 6vh;
         height: 6vh;
-        background-image: url('../assets/14/list.svg');
+        background-image: url('../assets//list.svg');
         background-repeat: no-repeat;
         background-size: 60% 60%;
         background-position: center center;
@@ -550,7 +568,7 @@ export default {
           margin: 0 0 0 5px;
           border: 5px solid transparent;
           border-radius: 10px;
-          background-image: url('../assets/14/arrow.svg');
+          background-image: url('../assets//arrow.svg');
           background-repeat: no-repeat;
           background-size: contain;
           background-position: center bottom;
@@ -573,7 +591,7 @@ export default {
           line-height: 6vh;
           letter-spacing: 1px;
           text-align: left;
-          background-image: url('../assets/14/activity/text_bottom.png');
+          background-image: url('../assets//activity/text_bottom.png');
           background-repeat: no-repeat;
           background-size: 100% 40%;
           background-position-y: bottom;
@@ -633,12 +651,12 @@ export default {
           .title1 {
             grid-area: title;
             text-align: left;
-            padding: 0 2vw;
+            padding: 1.2vh 2vw 0 2vw;
             width: 90%;
-            height: 5vh;
+            // height: 30px;
             color: white;
-            line-height: 5vh;
-            font-size: 15px;
+            // line-height: 26px;
+            font-size: 1.8vh;
             font-weight: bold;
             letter-spacing: 0.2vw;
           }
@@ -653,7 +671,7 @@ export default {
               width: auto;
               height: 2.6vh;
               line-height: 2.5vh;
-              font-size: 1.2vh;
+              font-size: 1.5vh;
               text-align: left;
               color: rgb(153,145,114);
               font-weight: bold;
@@ -679,8 +697,8 @@ export default {
               border-radius: 0.25vw;
             }
             p {
-              line-height: 2.4vh;
-              font-size: 14px;
+              line-height: 2.5vh;
+              font-size: 1.7vh;
               color: white;
               letter-spacing: 0.1vh;
               text-align: left;
@@ -979,7 +997,7 @@ export default {
   /*
     computer layout css
   */
-  @media only screen and (min-width: 1000px) {
+  @media only screen and (min-width: 600px) {
     @font-face {
     font-family: 'GenYoGothicTW-Bold';
     src: url('../assets/fonts/GenYoGothicTW-Bold.woff') format("woff"),
@@ -997,7 +1015,7 @@ export default {
       justify-content: center;
       height: 100%;
       width: 100%;
-      min-width: 1000px;
+      min-width: 600px;
       margin: 0;
       padding: 0;
       background: white;
@@ -1022,7 +1040,7 @@ export default {
       position: absolute;
       display: flex;
       justify-content: center;
-      min-width: 1000px;
+      min-width: 600px;
       z-index: 100;
       top: 0%;
       left: 0%;
@@ -1046,7 +1064,7 @@ export default {
           width: 12vw;
           height: 8vh;
           background-color: transparent;
-          background-image: url("../assets/14/logoHome.svg");
+          background-image: url("../assets//logoHome.svg");
           background-repeat: no-repeat;
           background-size: 80% 80%;
           background-position: 50% 50%;
@@ -1113,7 +1131,7 @@ export default {
     }
     .activity_flower_top {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
+      background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center top;
       background-size: cover;
@@ -1125,7 +1143,7 @@ export default {
     }
     .activity_flower_down {
       position: absolute;
-      background-image: url('../assets/14/flower.svg');
+      background-image: url('../assets//flower.svg');
       background-repeat: no-repeat;
       background-position: center bottom;
       background-size: cover;

@@ -236,7 +236,7 @@ export default {
       top: 0;
       bottom: 0;
 
-      background-image: url("../assets/signup/bike.svg");
+      // background-image: url("../assets/signup/bike.svg");
       background-repeat: no-repeat;
       background-position: 0% 50%;
       background-size: 7.5% 12%;
@@ -261,7 +261,7 @@ export default {
       width: 15vw;
       height: 15vw;
       background-color: transparent;
-      background-image: url("../assets/14/home.svg");
+      // background-image: url("../assets//home.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
@@ -423,7 +423,7 @@ export default {
       top: 0;
       bottom: 0;
 
-      background-image: url("../assets/signup/bike.svg");
+      // background-image: url("../assets/signup/bike.svg");
       background-repeat: no-repeat;
       background-position: 0% 50%;
       background-size: 7.5% 12%;
@@ -437,7 +437,7 @@ export default {
       justify-self: center;
       align-self: flex-start;
 
-      background-image: url("../assets/decoration_top.svg");
+      // background-image: url("../assets/decoration_top.svg");
       background-repeat: no-repeat;
       background-position: 50% 50%;
       background-size: 100% 100%;
@@ -451,7 +451,7 @@ export default {
       justify-self: center;
       align-self: flex-end;
 
-      background-image: url("../assets/decoration_bottom.svg");
+      // background-image: url("../assets/decoration_bottom.svg");
       background-repeat: no-repeat;
       background-position: 50% 50%;
       background-size: 100% 100%;
@@ -468,7 +468,7 @@ export default {
       width: 6vw;
       height: 6vw;
       background-color: transparent;
-      background-image: url("../assets/14/home.svg");
+      // background-image: url("../assets//home.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: 50% 50%;
